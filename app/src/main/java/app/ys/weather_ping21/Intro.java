@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,7 +17,9 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.app.ActionBar;
 
@@ -33,6 +36,9 @@ public class Intro extends AppCompatActivity implements LocationListener {
     String name;
     String email;
     RadioGroup radioGroup;
+    TextView t1,t2,t3,t4;
+    RadioButton rb1,rb2;
+
 
 
 
@@ -48,6 +54,8 @@ public class Intro extends AppCompatActivity implements LocationListener {
         ActionBar myActionBar = getSupportActionBar();
         myActionBar.hide();
         getLocation();
+        Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/YanoneKaffeesatz-Light.ttf");
 
 
 sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
@@ -55,6 +63,21 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
         next = (Button)findViewById(R.id.button);
         e1=(EditText)findViewById(R.id.editText);
         e2=(EditText)findViewById(R.id.editText2);
+        t1=(TextView) findViewById(R.id.textView);
+        t2=(TextView) findViewById(R.id.textView4);
+        t3=(TextView) findViewById(R.id.textView5);
+        t4=(TextView) findViewById(R.id.editText);
+        rb1=(RadioButton)findViewById(R.id.radioButton3);
+        rb2=(RadioButton)findViewById(R.id.radioButton4);
+
+        next.setTypeface(tf);
+        t1.setTypeface(tf);
+        t2.setTypeface(tf);
+        t3.setTypeface(tf);
+        t4.setTypeface(tf);
+        rb1.setTypeface(tf);
+        rb2.setTypeface(tf);
+
 
         radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

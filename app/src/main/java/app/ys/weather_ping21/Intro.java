@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.support.v7.app.ActionBar;
 
 /**
  * Created by YS on 10-12-2017.
@@ -44,6 +45,8 @@ public class Intro extends AppCompatActivity implements LocationListener {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.intro);
+        ActionBar myActionBar = getSupportActionBar();
+        myActionBar.hide();
         getLocation();
 
 
@@ -110,7 +113,7 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
                     editor.putString("Email", email);
                     editor.apply();
 
-                    Intent i= new Intent(Intro.this,Home.class);
+                    Intent i= new Intent(Intro.this,Main.class);
                     //i.putExtra("lat",lat);
                     //i.putExtra("lon",lon);
                     startActivity(i);

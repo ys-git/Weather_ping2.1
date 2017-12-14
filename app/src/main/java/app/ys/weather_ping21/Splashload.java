@@ -59,7 +59,7 @@ public class Splashload extends Activity {
                 if (sdata.getString("Name", null)!=null) {
 
                     Intent intent = new Intent();
-                    intent.setClass(Splashload.this, Home.class);
+                    intent.setClass(Splashload.this, Main.class);
                     Splashload.this.startActivity(intent);
                     Splashload.this.finish();
                     // transition from splash to main menu

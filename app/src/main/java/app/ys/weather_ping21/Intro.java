@@ -55,7 +55,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
         myActionBar.hide();
         getLocation();
         Typeface tf = Typeface.createFromAsset(getAssets(),
-                "fonts/YanoneKaffeesatz-Light.ttf");
+                "fonts/YanoneKaffeesatz-Thin.ttf");
 
 
 sdata= getSharedPreferences("my",Context.MODE_PRIVATE);

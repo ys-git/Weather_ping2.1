@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    tools:context="app.ys.splashload.Splashload"
+    android:background="#000000">
+
+    <!--<TextView
+        android:id="@+id/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="64dp"
+        android:layout_marginStart="64dp"
+        android:text="Weather"
+        android:textColor="#808080"
+        android:textSize="45sp"
+        />
+
+    <TextView
+        android:id="@+id/t2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/t1"
+        android:layout_alignBottom="@+id/t1"
+        android:layout_toEndOf="@+id/t1"
+        android:layout_toRightOf="@+id/t1"
+        android:fontFamily="@font/yanone_kaffeesatz_extralight"
+        android:text=" Ping!"
+        android:textColor="#2F4F4F"
+        android:textSize="36sp"
+         />-->
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/imageView2"
+        android:layout_toStartOf="@+id/imageView2"
+        android:adjustViewBounds="true"
+        android:maxHeight="110dp"
+        android:maxWidth="160dp"
+        android:src="@drawable/weather1" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="67dp"
+        android:layout_marginRight="67dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="140dp"
+        android:maxWidth="85dp"
+        android:src="@drawable/ping1" />
+</RelativeLayout>

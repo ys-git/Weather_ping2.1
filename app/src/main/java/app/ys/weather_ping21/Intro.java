@@ -1,6 +1,8 @@
 package app.ys.weather_ping21;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.CycleInterpolator;
@@ -38,6 +41,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
     RadioGroup radioGroup;
     TextView t1,t2,t3,t4;
     RadioButton rb1,rb2;
+    Integer k;
 
 
 
@@ -45,6 +49,8 @@ public class Intro extends AppCompatActivity implements LocationListener {
     LocationManager locationManager;
 
     SharedPreferences sdata;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +101,12 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
         });
 
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        //if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+           // ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
 
-        }
+        //}
+        checkLocationPermission();
         name =  e1.getText().toString();
         email =  e2.getText().toString();
 
@@ -144,6 +151,36 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
 
 
         });
+    }
+
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+    new AlertDialog.Builder(this)
+            .setTitle("WeatherPing")
+            .setMessage("Please allow the app to access Device Location")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //Prompt the user once explanation has been shown
+                    ActivityCompat.requestPermissions(Intro.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            MY_PERMISSIONS_REQUEST_LOCATION);
+                    checkLocationPermission();
+                }
+            })
+            .create()
+            .show();
+
+
+
+
+        } else {
+            return true;
+        }return true;
     }
 
     void getLocation() {

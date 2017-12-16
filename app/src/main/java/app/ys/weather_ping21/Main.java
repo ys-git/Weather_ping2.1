@@ -48,9 +48,9 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     TextView cityField, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField;
 
     Typeface weatherFont;
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     double lat,lon;
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private GoogleApiClient googleApiClient;
     LocationManager locationManager;
     String s,q;
@@ -62,37 +62,42 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.main);
+        checkLocationPermission();
+
         getLocation();
-
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-
-            //ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-            new AlertDialog.Builder(this)
-                    .setTitle("Location Permission")
-                    .setMessage("Please allow the app to access Device Location")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //Prompt the user once explanation has been shown
-                                    ActivityCompat.requestPermissions(Main.this,
-                                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                            MY_PERMISSIONS_REQUEST_LOCATION);
-                                }
-        }
-
-
-
-
-       // if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-        //        != PackageManager.PERMISSION_GRANTED) {
-        //    ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
-        //            PERMISSION_ACCESS_COARSE_LOCATION);
-        //}
 
 
         googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
 
+    }
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("WeatherPing")
+                    .setMessage("Please allow the app to access Device Location")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Prompt the user once explanation has been shown
+                            ActivityCompat.requestPermissions(Main.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    MY_PERMISSIONS_REQUEST_LOCATION);
+                            checkLocationPermission();
+                        }
+                    })
+                    .create()
+                    .show();
+
+
+
+
+        } else {
+            return true;
+        }return true;
     }
 
     @Override
@@ -168,14 +173,13 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     }
     @Override
     public void onConnectionSuspended(int i) {
-
     }
-
-
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i(Main.class.getSimpleName(), "Can't connect to Google Play Services!");
     }
+
+
     //Check if loc is enabled
     void getLocation() {
         try {
@@ -200,13 +204,6 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     }
     @Override
     public void onProviderDisabled(String provider) {
-        /*Toast toast = Toast.makeText(getApplicationContext(),
-                "Custom toast background color",
-                Toast.LENGTH_SHORT);
-
-        View toastView = toast.getView();
-        toastView.setBackgroundResource(R.drawable.toast_drawable);
-        toast.show();*/
 
         Toast.makeText(Main.this, "Please Enable Location", Toast.LENGTH_SHORT).show();
     }

@@ -84,11 +84,9 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_above="@+id/textView4"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="21dp"
-                android:layout_marginLeft="50dp"
-
                 android:text="Please take a moment to help us know You better..."
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#ffcc0000" />

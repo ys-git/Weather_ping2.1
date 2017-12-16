@@ -66,7 +66,6 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
         t1=(TextView) findViewById(R.id.textView);
         t2=(TextView) findViewById(R.id.textView4);
         t3=(TextView) findViewById(R.id.textView5);
-        t4=(TextView) findViewById(R.id.editText);
         rb1=(RadioButton)findViewById(R.id.radioButton3);
         rb2=(RadioButton)findViewById(R.id.radioButton4);
 
@@ -74,7 +73,6 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
         t1.setTypeface(tf);
         t2.setTypeface(tf);
         t3.setTypeface(tf);
-        t4.setTypeface(tf);
         rb1.setTypeface(tf);
         rb2.setTypeface(tf);
 
@@ -137,8 +135,8 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
                     editor.apply();
 
                     Intent i= new Intent(Intro.this,Main.class);
-                    //i.putExtra("lat",lat);
-                    //i.putExtra("lon",lon);
+                    i.putExtra("lat",lat);
+                    i.putExtra("lon",lon);
                     startActivity(i);
 
                 }

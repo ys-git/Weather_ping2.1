@@ -110,6 +110,20 @@
             android:layout_height="341dp">
 
             <ImageView
+                android:id="@+id/imageView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignEnd="@+id/textView10"
+                android:layout_alignRight="@+id/textView10"
+                android:layout_below="@+id/imageView10"
+                android:layout_marginTop="28dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="5dp"
+                android:maxWidth="200dp"
+                app:srcCompat="@drawable/and" />
+
+            <ImageView
                 android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -179,6 +193,36 @@
                 android:layout_marginRight="15dp"
                 android:text="TextView"
                 android:textColor="#ffffff" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageView5"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="90dp"
+                android:maxWidth="300dp"
+                app:srcCompat="@drawable/line" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView10"
+                android:layout_toLeftOf="@+id/textView3"
+                android:layout_toStartOf="@+id/textView3"
+                app:srcCompat="@drawable/srise" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView8"
+                android:layout_toEndOf="@+id/imageView6"
+                android:layout_toRightOf="@+id/imageView6"
+                app:srcCompat="@drawable/sset" />
 
         </RelativeLayout>
 

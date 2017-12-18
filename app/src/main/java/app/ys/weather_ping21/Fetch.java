@@ -13,10 +13,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
-
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Fetch {
 
@@ -59,7 +62,7 @@ public class Fetch {
 
     public interface AsyncResponse {
 
-        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13);
+        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13,String output14,String output15,String output16,String output17);
     }
 
 
@@ -90,13 +93,17 @@ public class Fetch {
 
         @Override
         protected void onPostExecute(JSONObject json) {
+            Long s1,s2;
+            String k,l;
             try {
                 if(json != null){
                     JSONObject details = json.getJSONArray("weather").getJSONObject(0);
                     JSONObject main = json.getJSONObject("main");
                     JSONObject wind = json.getJSONObject("wind");
-                    JSONObject sun=json.getJSONObject("sys");
+                    JSONObject cl=json.getJSONObject("clouds");
+                    JSONObject rn=json.getJSONObject("rain");
                     DateFormat df = DateFormat.getDateTimeInstance();
+
 
 
                     String city = json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country");
@@ -104,17 +111,35 @@ public class Fetch {
                     String temperature = String.format("%.2f", main.getDouble("temp"))+ "°C";
                     String humidity = main.getString("humidity") + "%";
                     String pressure = main.getString("pressure") + " hPa";
+                    String min = String.format("%.2f", main.getDouble("temp_min"))+ "°C";
+                    String max = String.format("%.2f", main.getDouble("temp_max"))+ "°C";
                     String slvl = main.getString("sea_level") + " hPa";
                     String glvl = main.getString("grnd_level") + " hPa";
-                    String wsp = wind.getString("speed") + " hPa";
-                    String wdeg = wind.getString("deg") + " hPa";
+                    String wsp = wind.getString("speed") + " m/s";
+                    String wdeg = wind.getString("deg") + "°";
                     String updatedOn = df.format(new Date(json.getLong("dt")*1000));
                     String iconText = setWeatherIcon(details.getInt("id"),
                             json.getJSONObject("sys").getLong("sunrise") * 1000,
                             json.getJSONObject("sys").getLong("sunset") * 1000);
+                    s1=json.getJSONObject("sys").getLong("sunrise")*1000;
+                    s2=json.getJSONObject("sys").getLong("sunset")*1000;
+                    String clo = cl.getString("all") + "%";
+                    String rain = rn.getString("3h") + "mm";
 
 
-                    delegate.processFinish(city, description, temperature, humidity, pressure,slvl,glvl,wsp,wdeg,updatedOn, iconText, ""+ (json.getJSONObject("sys").getLong("sunrise") * 1000),""+ (json.getJSONObject("sys").getLong("sunset") * 1000));
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
+                    k=String.valueOf(simpleDateFormat.format(s1));
+                    l=String.valueOf(simpleDateFormat.format(s2));
+
+
+
+
+
+
+
+
+                    delegate.processFinish(city, description, temperature, humidity, pressure,min,max,slvl,glvl,wsp,wdeg,updatedOn, iconText,k,l,clo,rain);
+                            //""+ (json.getJSONObject("sys").getLong("sunrise") * 1000),""+ (json.getJSONObject("sys").getLong("sunset") * 1000));
 
                 }
             } catch (JSONException e) {

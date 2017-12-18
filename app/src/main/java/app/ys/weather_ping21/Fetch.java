@@ -59,7 +59,7 @@ public class Fetch {
 
     public interface AsyncResponse {
 
-        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8);
+        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13);
     }
 
 
@@ -94,20 +94,27 @@ public class Fetch {
                 if(json != null){
                     JSONObject details = json.getJSONArray("weather").getJSONObject(0);
                     JSONObject main = json.getJSONObject("main");
+                    JSONObject wind = json.getJSONObject("wind");
+                    JSONObject sun=json.getJSONObject("sys");
                     DateFormat df = DateFormat.getDateTimeInstance();
 
 
                     String city = json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country");
                     String description = details.getString("description").toUpperCase(Locale.US);
-                    String temperature = String.format("%.2f", main.getDouble("temp"))+ "°";
+                    String temperature = String.format("%.2f", main.getDouble("temp"))+ "°C";
                     String humidity = main.getString("humidity") + "%";
                     String pressure = main.getString("pressure") + " hPa";
+                    String slvl = main.getString("sea_level") + " hPa";
+                    String glvl = main.getString("grnd_level") + " hPa";
+                    String wsp = wind.getString("speed") + " hPa";
+                    String wdeg = wind.getString("deg") + " hPa";
                     String updatedOn = df.format(new Date(json.getLong("dt")*1000));
                     String iconText = setWeatherIcon(details.getInt("id"),
                             json.getJSONObject("sys").getLong("sunrise") * 1000,
                             json.getJSONObject("sys").getLong("sunset") * 1000);
 
-                    delegate.processFinish(city, description, temperature, humidity, pressure, updatedOn, iconText, ""+ (json.getJSONObject("sys").getLong("sunrise") * 1000));
+
+                    delegate.processFinish(city, description, temperature, humidity, pressure,slvl,glvl,wsp,wdeg,updatedOn, iconText, ""+ (json.getJSONObject("sys").getLong("sunrise") * 1000),""+ (json.getJSONObject("sys").getLong("sunset") * 1000));
 
                 }
             } catch (JSONException e) {

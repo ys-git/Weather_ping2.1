@@ -45,7 +45,7 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     // www.androstock.com
 
 
-    TextView cityField, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField;
+    TextView cityField,mtemp, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField;
 
     Typeface weatherFont;
     double lat,lon;
@@ -139,30 +139,47 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
             q=String.valueOf(lon);
             //t1.setText(s);
             //t2.setText(q);
+            Typeface tf = Typeface.createFromAsset(getAssets(),
+                    "fonts/YanoneKaffeesatz-Thin.ttf");
 
             weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
-            cityField = (TextView)findViewById(R.id.textView8);
-            //updatedField = (TextView)findViewById(R.id.updated_field);
-            //detailsField = (TextView)findViewById(R.id.details_field);
-            //currentTemperatureField = (TextView)findViewById(R.id.current_temperature_field);
-            //humidity_field = (TextView)findViewById(R.id.humidity_field);
-            //pressure_field = (TextView)findViewById(R.id.pressure_field);
-            //weatherIcon = (TextView)findViewById(R.id.weather_icon);
-            //weatherIcon.setTypeface(weatherFont);
+            cityField = (TextView)findViewById(R.id.textView20);
+            mtemp = (TextView)findViewById(R.id.textView7);
+            updatedField = (TextView)findViewById(R.id.textView2);
+            detailsField = (TextView)findViewById(R.id.textView9);
+            currentTemperatureField = (TextView)findViewById(R.id.textView6);
+            humidity_field = (TextView)findViewById(R.id.textView15);
+            pressure_field = (TextView)findViewById(R.id.textView16);
+            weatherIcon = (TextView)findViewById(R.id.textView19);
+            weatherIcon.setTypeface(weatherFont);
+
+            cityField.setTypeface(tf);
+            mtemp.setTypeface(tf);
+            updatedField.setTypeface(tf);
+            detailsField.setTypeface(tf);
+            currentTemperatureField.setTypeface(tf);
+            humidity_field.setTypeface(tf);
+            pressure_field.setTypeface(tf);
+            pressure_field.setTypeface(tf);
+            humidity_field.setTypeface(tf);
+            humidity_field.setTypeface(tf);
+
+
+
 
 
 
             Fetch.placeIdTask asyncTask =new Fetch.placeIdTask(new Fetch.AsyncResponse() {
-                public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+                public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String slv,String glv,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set) {
 
                     cityField.setText(weather_city);
-                    //updatedField.setText(weather_updatedOn);
-                    //detailsField.setText(weather_description);
-                    //currentTemperatureField.setText(weather_temperature);
-                    //humidity_field.setText("Humidity: "+weather_humidity);
-                    //pressure_field.setText("Pressure: "+weather_pressure);
-                    //weatherIcon.setText(Html.fromHtml(weather_iconText));
+                    updatedField.setText(weather_updatedOn);
+                    detailsField.setText(weather_description);
+                    currentTemperatureField.setText(weather_temperature);
+                    humidity_field.setText(weather_humidity);
+                    pressure_field.setText(weather_pressure);
+                    weatherIcon.setText(Html.fromHtml(weather_iconText));
 
                 }
             });

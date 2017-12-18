@@ -62,7 +62,7 @@ public class Fetch {
 
     public interface AsyncResponse {
 
-        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13,String output14,String output15,String output16,String output17);
+        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13,String output14,String output15,String output16);
     }
 
 
@@ -100,13 +100,13 @@ public class Fetch {
                     JSONObject details = json.getJSONArray("weather").getJSONObject(0);
                     JSONObject main = json.getJSONObject("main");
                     JSONObject wind = json.getJSONObject("wind");
-                    JSONObject cl=json.getJSONObject("clouds");
-                    JSONObject rn=json.getJSONObject("rain");
+                    JSONObject clouds=json.getJSONObject("clouds");
+                    //JSONObject rain=json.getJSONObject("rain");
                     DateFormat df = DateFormat.getDateTimeInstance();
 
 
 
-                    String city = json.getString("name").toUpperCase(Locale.US) + ", " + json.getJSONObject("sys").getString("country");
+                    String city = json.getString("name") + ", " + json.getJSONObject("sys").getString("country");
                     String description = details.getString("description").toUpperCase(Locale.US);
                     String temperature = String.format("%.2f", main.getDouble("temp"))+ "°C";
                     String humidity = main.getString("humidity") + "%";
@@ -123,8 +123,8 @@ public class Fetch {
                             json.getJSONObject("sys").getLong("sunset") * 1000);
                     s1=json.getJSONObject("sys").getLong("sunrise")*1000;
                     s2=json.getJSONObject("sys").getLong("sunset")*1000;
-                    String clo = cl.getString("all") + "%";
-                    String rain = rn.getString("3h") + "mm";
+                    String clo = clouds.getString("all") + "%";
+                    //String rains = rain.getString("3h") + "mm";
 
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
@@ -138,7 +138,7 @@ public class Fetch {
 
 
 
-                    delegate.processFinish(city, description, temperature, humidity, pressure,min,max,slvl,glvl,wsp,wdeg,updatedOn, iconText,k,l,clo,rain);
+                    delegate.processFinish(city, description, temperature, humidity, pressure,min,max,slvl,glvl,wsp,wdeg,updatedOn, iconText,k,l,clo);//,clo,rains);
                             //""+ (json.getJSONObject("sys").getLong("sunrise") * 1000),""+ (json.getJSONObject("sys").getLong("sunset") * 1000));
 
                 }

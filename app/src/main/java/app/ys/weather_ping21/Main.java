@@ -45,7 +45,7 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     // www.androstock.com
 
 
-    TextView cityField,clouds,rain, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,sealevel,groundlevel,windspeed,winddeg,sun,set;
+    TextView cityField,cloud,rain, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,sealevel,groundlevel,windspeed,winddeg,sun,set;
 
     Typeface weatherFont;
     double lat,lon;
@@ -159,8 +159,8 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
             pressure_field = (TextView)findViewById(R.id.textView10);
             weatherIcon = (TextView)findViewById(R.id.textView19);
             //mint = (TextView)findViewById(R.id.textView7);
-            clouds = (TextView)findViewById(R.id.textView21);
-            rain = (TextView)findViewById(R.id.textView22);
+            cloud = (TextView)findViewById(R.id.textView21);
+            //rain = (TextView)findViewById(R.id.textView22);
             weatherIcon.setTypeface(weatherFont);
 
 
@@ -175,8 +175,8 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
             groundlevel.setTypeface(tf);
             windspeed.setTypeface(tf);
             winddeg.setTypeface(tf);
-            rain.setTypeface(tf);
-            clouds.setTypeface(tf);
+            //rain.setTypeface(tf);
+            cloud.setTypeface(tf);
 
 
 
@@ -184,7 +184,7 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
 
 
             Fetch.placeIdTask asyncTask =new Fetch.placeIdTask(new Fetch.AsyncResponse() {
-                public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String mit,String mat, String slv,String glv,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set,String cl,String rn) {
+                public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String mit,String mat, String slv,String glv,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set,String cloudss) {
 
 
                     cityField.setText(weather_city);
@@ -200,8 +200,8 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
                     windspeed.setText(wind_sp);
                     winddeg.setText(wind_deg);
                     //mint.setText(mit+" /"+mat);
-                    rain.setText(rn);
-                    clouds.setText(cl);
+                    //rain.setText(rn);
+                    cloud.setText(cloudss);
                     weatherIcon.setText(Html.fromHtml(weather_iconText));
 
                 }

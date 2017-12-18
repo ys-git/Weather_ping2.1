@@ -45,7 +45,7 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     // www.androstock.com
 
 
-    TextView cityField,cloud,rain, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,sealevel,groundlevel,windspeed,winddeg,sun,set;
+    TextView cityField,cloud,rain,latt, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,sealevel,groundlevel,windspeed,winddeg,sun,set;
 
     Typeface weatherFont;
     double lat,lon;
@@ -150,16 +150,17 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
             currentTemperatureField = (TextView)findViewById(R.id.textView6);
             humidity_field = (TextView)findViewById(R.id.textView3);
             pressure_field = (TextView)findViewById(R.id.textView10);
-            sealevel = (TextView)findViewById(R.id.textView11);
-            groundlevel = (TextView)findViewById(R.id.textView12);
-            windspeed = (TextView)findViewById(R.id.textView13);
-            winddeg = (TextView)findViewById(R.id.textView14);
-            sun = (TextView)findViewById(R.id.textView15);
-            set = (TextView)findViewById(R.id.textView16);
+            sealevel = (TextView)findViewById(R.id.textView35);
+            groundlevel = (TextView)findViewById(R.id.textView36);
+            windspeed = (TextView)findViewById(R.id.textView29);
+            winddeg = (TextView)findViewById(R.id.textView30);
+            sun = (TextView)findViewById(R.id.textView26);
+            set = (TextView)findViewById(R.id.textView27);
             pressure_field = (TextView)findViewById(R.id.textView10);
             weatherIcon = (TextView)findViewById(R.id.textView19);
             //mint = (TextView)findViewById(R.id.textView7);
-            cloud = (TextView)findViewById(R.id.textView21);
+            cloud = (TextView)findViewById(R.id.textView34);
+            latt = (TextView)findViewById(R.id.textView37);
             //rain = (TextView)findViewById(R.id.textView22);
             weatherIcon.setTypeface(weatherFont);
 
@@ -175,6 +176,12 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
             groundlevel.setTypeface(tf);
             windspeed.setTypeface(tf);
             winddeg.setTypeface(tf);
+            latt.setTypeface(tf);
+            cloud.setTypeface(tf);
+            sun.setTypeface(tf);
+            set.setTypeface(tf);
+            sealevel.setTypeface(tf);
+            groundlevel.setTypeface(tf);
             //rain.setTypeface(tf);
             cloud.setTypeface(tf);
 
@@ -191,17 +198,18 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
                     updatedField.setText("Updated on: "+weather_updatedOn);
                     detailsField.setText(weather_description);
                     currentTemperatureField.setText(weather_temperature);
-                    humidity_field.setText(weather_humidity);
+                    humidity_field.setText("         "+weather_humidity);
                     pressure_field.setText(weather_pressure);
                     sun.setText(sun_rise);
                     set.setText(sun_set);
-                    sealevel.setText(slv);
-                    groundlevel.setText(glv);
-                    windspeed.setText(wind_sp);
-                    winddeg.setText(wind_deg);
+                    sealevel.setText("Sea Level: "+slv);
+                    groundlevel.setText("Ground Level: "+glv);
+                    windspeed.setText("Speed "+wind_sp);
+                    winddeg.setText("Direction "+wind_deg);
                     //mint.setText(mit+" /"+mat);
                     //rain.setText(rn);
                     cloud.setText(cloudss);
+                    latt.setText("Lat: "+s+"    Long: "+q);
                     weatherIcon.setText(Html.fromHtml(weather_iconText));
 
                 }

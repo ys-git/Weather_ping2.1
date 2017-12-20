@@ -3,6 +3,8 @@ package app.ys.weather_ping21;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +57,7 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     LocationManager locationManager;
     String s,q;
     //TextView t1,t2;
+    boolean connected = false;
 
 
     @Override
@@ -62,6 +65,18 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.main);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        } else
+            connected = false;
+
+        if (connected == false) {
+
+            Toast.makeText(Main.this, "Please Enable Internet", Toast.LENGTH_LONG).show();
+        }
         checkLocationPermission();
 
         getLocation();
@@ -124,6 +139,17 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     public void onConnected(Bundle bundle) {
         Log.i(Main.class.getSimpleName(), "Connected to Google Play Services!");
 
+        if(Integer.valueOf(android.os.Build.VERSION.SDK)<23);
+        {
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            lat = lastLocation.getLatitude();
+            lon = lastLocation.getLongitude();
+            s=String.valueOf(lat);
+            q=String.valueOf(lon);
+            ex();
+        }
+
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
@@ -137,84 +163,7 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
 
             s=String.valueOf(lat);
             q=String.valueOf(lon);
-            //t1.setText(s);
-            //t2.setText(q);
-            Typeface tf = Typeface.createFromAsset(getAssets(),
-                    "fonts/YanoneKaffeesatz-Thin.ttf");
-
-            weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
-
-            cityField = (TextView)findViewById(R.id.textView20);
-            updatedField = (TextView)findViewById(R.id.textView2);
-            detailsField = (TextView)findViewById(R.id.textView9);
-            currentTemperatureField = (TextView)findViewById(R.id.textView6);
-            humidity_field = (TextView)findViewById(R.id.textView3);
-            pressure_field = (TextView)findViewById(R.id.textView10);
-            sealevel = (TextView)findViewById(R.id.textView35);
-            groundlevel = (TextView)findViewById(R.id.textView36);
-            windspeed = (TextView)findViewById(R.id.textView29);
-            winddeg = (TextView)findViewById(R.id.textView30);
-            sun = (TextView)findViewById(R.id.textView26);
-            set = (TextView)findViewById(R.id.textView27);
-            pressure_field = (TextView)findViewById(R.id.textView10);
-            weatherIcon = (TextView)findViewById(R.id.textView19);
-            //mint = (TextView)findViewById(R.id.textView7);
-            cloud = (TextView)findViewById(R.id.textView34);
-            latt = (TextView)findViewById(R.id.textView37);
-            //rain = (TextView)findViewById(R.id.textView22);
-            weatherIcon.setTypeface(weatherFont);
-
-
-            cityField.setTypeface(tf);
-           // mint.setTypeface(tf);
-            updatedField.setTypeface(tf);
-            detailsField.setTypeface(tf);
-            currentTemperatureField.setTypeface(tf);
-            humidity_field.setTypeface(tf);
-            pressure_field.setTypeface(tf);
-            sealevel.setTypeface(tf);
-            groundlevel.setTypeface(tf);
-            windspeed.setTypeface(tf);
-            winddeg.setTypeface(tf);
-            latt.setTypeface(tf);
-            cloud.setTypeface(tf);
-            sun.setTypeface(tf);
-            set.setTypeface(tf);
-            sealevel.setTypeface(tf);
-            groundlevel.setTypeface(tf);
-            //rain.setTypeface(tf);
-            cloud.setTypeface(tf);
-
-
-
-
-
-
-            Fetch.placeIdTask asyncTask =new Fetch.placeIdTask(new Fetch.AsyncResponse() {
-                public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String mit,String mat, String slv,String glv,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set,String cloudss) {
-
-
-                    cityField.setText(weather_city);
-                    updatedField.setText("Updated on: "+weather_updatedOn);
-                    detailsField.setText(weather_description);
-                    currentTemperatureField.setText(weather_temperature);
-                    humidity_field.setText("         "+weather_humidity);
-                    pressure_field.setText(weather_pressure);
-                    sun.setText(sun_rise);
-                    set.setText(sun_set);
-                    sealevel.setText("Sea Level: "+slv);
-                    groundlevel.setText("Ground Level: "+glv);
-                    windspeed.setText("Speed "+wind_sp);
-                    winddeg.setText("Direction "+wind_deg);
-                    //mint.setText(mit+" /"+mat);
-                    //rain.setText(rn);
-                    cloud.setText(cloudss);
-                    latt.setText("Lat: "+s+"    Long: "+q);
-                    weatherIcon.setText(Html.fromHtml(weather_iconText));
-
-                }
-            });
-            asyncTask.execute(s,q); //  asyncTask.execute("Latitude", "Longitude")
+            ex();
 
 
         }
@@ -254,6 +203,86 @@ public class Main extends AppCompatActivity implements GoogleApiClient.Connectio
     public void onProviderDisabled(String provider) {
 
         Toast.makeText(Main.this, "Please Enable Location", Toast.LENGTH_SHORT).show();
+    }
+    public void ex()
+    {
+        Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/YanoneKaffeesatz-Thin.ttf");
+
+        weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
+
+        cityField = (TextView)findViewById(R.id.textView20);
+        updatedField = (TextView)findViewById(R.id.textView2);
+        detailsField = (TextView)findViewById(R.id.textView9);
+        currentTemperatureField = (TextView)findViewById(R.id.textView6);
+        humidity_field = (TextView)findViewById(R.id.textView3);
+        pressure_field = (TextView)findViewById(R.id.textView10);
+        sealevel = (TextView)findViewById(R.id.textView35);
+        groundlevel = (TextView)findViewById(R.id.textView36);
+        windspeed = (TextView)findViewById(R.id.textView29);
+        winddeg = (TextView)findViewById(R.id.textView30);
+        sun = (TextView)findViewById(R.id.textView26);
+        set = (TextView)findViewById(R.id.textView27);
+        pressure_field = (TextView)findViewById(R.id.textView10);
+        weatherIcon = (TextView)findViewById(R.id.textView19);
+        //mint = (TextView)findViewById(R.id.textView7);
+        cloud = (TextView)findViewById(R.id.textView34);
+        latt = (TextView)findViewById(R.id.textView37);
+        //rain = (TextView)findViewById(R.id.textView22);
+        weatherIcon.setTypeface(weatherFont);
+
+
+        cityField.setTypeface(tf);
+        // mint.setTypeface(tf);
+        //updatedField.setTypeface(tf);
+        detailsField.setTypeface(tf);
+        currentTemperatureField.setTypeface(tf);
+        humidity_field.setTypeface(tf);
+        pressure_field.setTypeface(tf);
+        sealevel.setTypeface(tf);
+        groundlevel.setTypeface(tf);
+        windspeed.setTypeface(tf);
+        winddeg.setTypeface(tf);
+        latt.setTypeface(tf);
+        cloud.setTypeface(tf);
+        sun.setTypeface(tf);
+        set.setTypeface(tf);
+        sealevel.setTypeface(tf);
+        groundlevel.setTypeface(tf);
+        //rain.setTypeface(tf);
+        cloud.setTypeface(tf);
+
+
+
+
+
+
+        Fetch.placeIdTask asyncTask =new Fetch.placeIdTask(new Fetch.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String mit,String mat, String slv,String glv,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set,String cloudss) {
+
+
+                cityField.setText(weather_city);
+                updatedField.setText("Updated on: "+weather_updatedOn);
+                detailsField.setText(weather_description);
+                currentTemperatureField.setText(weather_temperature);
+                humidity_field.setText("         "+weather_humidity);
+                pressure_field.setText(weather_pressure);
+                sun.setText(sun_rise);
+                set.setText(sun_set);
+                sealevel.setText("Sea Level: "+slv);
+                groundlevel.setText("Ground Level: "+glv);
+                windspeed.setText("Speed "+wind_sp);
+                winddeg.setText("Direction "+wind_deg);
+                //mint.setText(mit+" /"+mat);
+                //rain.setText(rn);
+                cloud.setText(cloudss);
+                latt.setText("Lat: "+s+"    Long: "+q);
+                weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+            }
+        });
+        asyncTask.execute(s,q); //  asyncTask.execute("Latitude", "Longitude")
+
     }
 
 

@@ -1,6 +1,7 @@
 package app.ys.weather_ping21;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +28,9 @@ import java.util.Locale;
 public class Main extends AppCompatActivity implements LocationListener {
 
     Button getLocationBtn;
+    public ProgressDialog pDialog;
     TextView locationText;
+    ImageView img,setts;
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
     LocationManager locationManager;
@@ -39,6 +43,8 @@ public class Main extends AppCompatActivity implements LocationListener {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.main);
+        img=(ImageView)findViewById(R.id.rld);
+        setts=(ImageView)findViewById(R.id.sett);
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
         // locationText = (TextView)findViewById(R.id.locationText);
@@ -53,6 +59,37 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
                 getLocation();
+
+        img.setOnClickListener(new View.OnClickListener() {
+             @Override
+              public void onClick(View v) {
+                 pDialog = new ProgressDialog(Main.this);
+                 pDialog.setMessage("Refreshing..."); // Setting Message
+                 pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                 pDialog.show(); // Display Progress Dialog
+                 pDialog.setCancelable(false);
+                 new Thread(new Runnable() {
+                     public void run() {
+                         try {
+                             ex();
+                             Thread.sleep(500);
+                         } catch (Exception e) {
+                             e.printStackTrace();
+                         }
+                         pDialog.dismiss();
+                     }
+                 }).start();
+             }
+        });
+
+        setts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i= new Intent(Main.this,Settings.class);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -137,14 +174,14 @@ public class Main extends AppCompatActivity implements LocationListener {
         updatedField.setTypeface(tf);
         detailsField.setTypeface(tf);
         currentTemperatureField.setTypeface(tf);
-        humidity_field.setTypeface(tf);
-        pressure_field.setTypeface(tf);
+        //humidity_field.setTypeface(tf);
+        //pressure_field.setTypeface(tf);
         windspeed.setTypeface(tf);
         winddeg.setTypeface(tf);
-        latt.setTypeface(tf);
+        //latt.setTypeface(tf);
         cloud.setTypeface(tf);
-        sun.setTypeface(tf);
-        set.setTypeface(tf);
+        //sun.setTypeface(tf);
+        //set.setTypeface(tf);
         //rain.setTypeface(tf);
         cloud.setTypeface(tf);
 
@@ -168,7 +205,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 //mint.setText(mit+" /"+mat);
                 //rain.setText(rn);
                 cloud.setText(cloudss);
-                latt.setText("Lat: "+s+" Long: "+q);
+                latt.setText("Lat: "+s+"   Long: "+q);
                 weatherIcon.setText(Html.fromHtml(weather_iconText));
 
 

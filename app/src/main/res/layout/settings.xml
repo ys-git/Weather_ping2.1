@@ -14,9 +14,9 @@
         android:layout_marginLeft="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="64dp"
-        android:text="Settings:"
+        android:text="Tweaks:"
         android:textColor="#ffffff"
-        android:textSize="30sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView11"
@@ -28,7 +28,7 @@
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
         android:layout_marginTop="39dp"
-        android:text="Temperature"
+        android:text="C to F"
         android:textColor="#ffffff" />
 
     <TextView
@@ -50,7 +50,7 @@
         android:layout_alignStart="@+id/textView12"
         android:layout_below="@+id/textView12"
         android:layout_marginTop="35dp"
-        android:text="NotificationTheme"
+        android:text="Dark Notification"
         android:textColor="#ffffff" />
 
     <TextView
@@ -90,4 +90,16 @@
         android:layout_alignLeft="@+id/switch3"
         android:layout_alignStart="@+id/switch3"
         android:layout_alignTop="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView8"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginTop="23dp"
+        android:text="Hello User!!!"
+        android:textColor="#2F4F4F"
+        android:textSize="24sp" />
 </RelativeLayout>

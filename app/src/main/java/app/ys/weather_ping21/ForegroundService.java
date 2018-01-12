@@ -1,8 +1,6 @@
 package app.ys.weather_ping21;
 
-/**
- * Created by YS on 21-12-2017.
- */
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;

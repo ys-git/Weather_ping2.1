@@ -42,9 +42,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by YS on 10-12-2017.
- */
+
 
 public class Intro extends AppCompatActivity implements LocationListener {
 

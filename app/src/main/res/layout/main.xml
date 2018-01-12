@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/e1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +32,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="9dp"
-                android:text="TextView"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 
@@ -42,21 +42,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="22dp"
-                android:text="TextView"
+                android:text="Fetching..."
                 android:textAlignment="center"
                 android:textColor="#2F4F4F"
                 android:textSize="60dp" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textView6"
-                android:layout_toEndOf="@+id/textView6"
-                android:layout_toRightOf="@+id/textView6"
-                android:text="TextView"
-                android:textColor="#ffffff"
-                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -86,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView2"
                 android:layout_centerHorizontal="true"
-                android:text="TextView"
+                android:text="Fetching..."
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
@@ -103,7 +92,7 @@
                 android:maxWidth="200dp"/>
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/sett"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -112,6 +101,18 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 app:srcCompat="@drawable/settingsss" />
+
+            <ImageView
+                android:id="@+id/rld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/sett"
+                android:layout_alignRight="@+id/sett"
+                android:layout_alignTop="@+id/textView6"
+                android:adjustViewBounds="true"
+                android:maxHeight="50dp"
+                android:maxWidth="50dp"
+                app:srcCompat="@drawable/swq" />
 
         </RelativeLayout>
 
@@ -213,7 +214,6 @@
                 android:layout_marginBottom="13dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="#ffffff" />
 
@@ -227,7 +227,6 @@
                 android:layout_alignRight="@+id/imageView6"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:text="TextView"
                 android:textColor="#ffffff" />
 
             <ImageView
@@ -267,7 +266,6 @@
                 android:layout_alignLeft="@+id/imageView9"
                 android:layout_alignStart="@+id/imageView9"
                 android:layout_below="@+id/imageView8"
-                android:text="Text"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -277,7 +275,6 @@
                 android:layout_alignBottom="@+id/textView26"
                 android:layout_alignLeft="@+id/imageView10"
                 android:layout_alignStart="@+id/imageView10"
-                android:text="Text"
                 android:textColor="#ffffff" />
 
             <ImageView
@@ -310,7 +307,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="28dp"
                 android:layout_marginStart="28dp"
-                android:text="TextView"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -320,7 +316,6 @@
                 android:layout_alignBottom="@+id/textView29"
                 android:layout_alignEnd="@+id/imageView11"
                 android:layout_alignRight="@+id/imageView11"
-                android:text="TextView"
                 android:textColor="#ffffff" />
 
             <ImageView
@@ -351,38 +346,15 @@
                 android:layout_alignStart="@+id/textView29"
                 android:layout_alignTop="@+id/imageView13"
                 android:layout_marginTop="10dp"
-                android:text="TextView"
-                android:textColor="#ffffff" />
-
-            <TextView
-                android:id="@+id/textView35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/imageView13"
-                android:layout_alignStart="@+id/imageView13"
-                android:layout_below="@+id/imageView14"
-                android:layout_marginTop="13dp"
-                android:text="TextView"
-                android:textColor="#ffffff" />
-
-            <TextView
-                android:id="@+id/textView36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView35"
-                android:layout_alignStart="@+id/textView35"
-                android:layout_below="@+id/textView35"
-                android:layout_marginTop="14dp"
-                android:text="TextView"
                 android:textColor="#ffffff" />
 
             <TextView
                 android:id="@+id/textView37"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView36"
+                android:layout_below="@+id/imageView14"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="23dp"
                 android:text="TextView"
                 android:textColor="#ffffff" />
 
@@ -413,8 +385,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/textView38"
-                android:layout_alignLeft="@+id/textView36"
-                android:layout_alignStart="@+id/textView36"
                 android:text="*Weather data updates in 2hrs"
                 android:textColor="#ffffff"
                 android:textSize="7dp" />

@@ -27,6 +27,12 @@
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">
         </activity>
+        <activity
+            android:name=".Settings"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:launchMode="singleInstance">
+        </activity>
 
         <activity
             android:name=".Intro"

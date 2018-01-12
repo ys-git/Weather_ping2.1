@@ -22,13 +22,14 @@
         </activity>
 
         <activity
-            android:name=".Intro"
+            android:name=".Main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">
         </activity>
+
         <activity
-            android:name=".Main"
+            android:name=".Intro"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">

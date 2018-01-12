@@ -11,15 +11,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Time;
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+
 
 public class Fetch {
+
 
 
     private static final String OPEN_WEATHER_MAP_URL =
@@ -60,7 +59,7 @@ public class Fetch {
 
     public interface AsyncResponse {
 
-        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13,String output14,String output15,String output16);
+        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12);
     }
 
 
@@ -99,7 +98,6 @@ public class Fetch {
                     JSONObject main = json.getJSONObject("main");
                     JSONObject wind = json.getJSONObject("wind");
                     JSONObject clouds=json.getJSONObject("clouds");
-                    //JSONObject rain=json.getJSONObject("rain");
                     DateFormat df = DateFormat.getDateTimeInstance();
 
 
@@ -109,40 +107,30 @@ public class Fetch {
                     String temperature = String.format("%.2f", main.getDouble("temp"))+ "°C";
                     String humidity = main.getString("humidity") + "%";
                     String pressure = main.getString("pressure") + " hPa";
-                    String min = String.format("%.2f", main.getDouble("temp_min"))+ "°C";
-                    String max = String.format("%.2f", main.getDouble("temp_max"))+ "°C";
-                    String slvl = main.getString("sea_level") + " hPa";
-                    String glvl = main.getString("grnd_level") + " hPa";
                     String wsp = wind.getString("speed") + " m/s";
                     String wdeg = wind.getString("deg") + "°";
+                    String clo = clouds.getString("all") + "%";
                     String updatedOn = df.format(new Date(json.getLong("dt")*1000));
                     String iconText = setWeatherIcon(details.getInt("id"),
                             json.getJSONObject("sys").getLong("sunrise") * 1000,
                             json.getJSONObject("sys").getLong("sunset") * 1000);
                     s1=json.getJSONObject("sys").getLong("sunrise")*1000;
                     s2=json.getJSONObject("sys").getLong("sunset")*1000;
-                    String clo = clouds.getString("all") + "%";
-                    //String rains = rain.getString("3h") + "mm";
 
 
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
                     k=String.valueOf(simpleDateFormat.format(s1));
                     l=String.valueOf(simpleDateFormat.format(s2));
 
-
-                    delegate.processFinish(city, description, temperature, humidity, pressure,min,max,slvl,glvl,wsp,wdeg,updatedOn, iconText,k,l,clo);//,clo,rains);
-                            //""+ (json.getJSONObject("sys").getLong("sunrise") * 1000),""+ (json.getJSONObject("sys").getLong("sunset") * 1000));
+                    delegate.processFinish(city, description, temperature, humidity, pressure,wsp,wdeg,updatedOn, iconText,k,l,clo);
 
                 }
             } catch (JSONException e) {
                 //Log.e(LOG_TAG, "Cannot process JSON results", e);
             }
 
-
-
         }
     }
-
 
     public static JSONObject getWeatherJSON(String lat, String lon){
         try {
@@ -174,4 +162,8 @@ public class Fetch {
             return null;
         }
     }
+
+
+
+
 }

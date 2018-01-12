@@ -1,5 +1,6 @@
 package app.ys.weather_ping21;
 
+
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -36,7 +37,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         setContentView(R.layout.main);
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
-       // locationText = (TextView)findViewById(R.id.locationText);
+        // locationText = (TextView)findViewById(R.id.locationText);
 
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -46,12 +47,9 @@ public class Main extends AppCompatActivity implements LocationListener {
         }
 
 
-        getLocationBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
                 getLocation();
-            }
-        });
+
     }
 
     void getLocation() {
@@ -66,13 +64,13 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        locationText.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
+        //locationText.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
         lat=location.getLatitude();
         lon=location.getLongitude();
         s=String.valueOf(lat);
         q=String.valueOf(lon);
 
-        try {
+        /*try {
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             locationText.setText(locationText.getText() + "\n"+addresses.get(0).getAddressLine(0)+", "+
@@ -80,7 +78,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         }catch(Exception e)
         {
 
-        }
+        }*/
         ex();
 
     }
@@ -104,15 +102,15 @@ public class Main extends AppCompatActivity implements LocationListener {
     {
         //weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
-        cityField = (TextView)findViewById(R.id.ct);
-        currentTemperatureField = (TextView)findViewById(R.id.temp);
+        cityField = (TextView)findViewById(R.id.textView20);
+        currentTemperatureField = (TextView)findViewById(R.id.textView6);
 
 
 
 
 
         Fetch.placeIdTask asyncTask =new Fetch.placeIdTask(new Fetch.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set,String cloudss) {
 
                 cityField.setText(weather_city);
                 currentTemperatureField.setText(weather_temperature);
@@ -125,5 +123,6 @@ public class Main extends AppCompatActivity implements LocationListener {
         asyncTask.execute(s,q); //  asyncTask.execute("Latitude", "Longitude")
     }
 }
+
 
 

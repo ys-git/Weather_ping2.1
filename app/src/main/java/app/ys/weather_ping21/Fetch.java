@@ -1,8 +1,6 @@
 package app.ys.weather_ping21;
 
-/**
- * Created by SHAJIB on 7/4/2017.
- */
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -130,12 +128,6 @@ public class Fetch {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
                     k=String.valueOf(simpleDateFormat.format(s1));
                     l=String.valueOf(simpleDateFormat.format(s2));
-
-
-
-
-
-
 
 
                     delegate.processFinish(city, description, temperature, humidity, pressure,min,max,slvl,glvl,wsp,wdeg,updatedOn, iconText,k,l,clo);//,clo,rains);

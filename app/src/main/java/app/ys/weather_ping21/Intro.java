@@ -1,6 +1,7 @@
 package app.ys.weather_ping21;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +27,20 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.app.ActionBar;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by YS on 10-12-2017.
@@ -42,11 +58,14 @@ public class Intro extends AppCompatActivity implements LocationListener {
     TextView t1,t2,t3,t4;
     RadioButton rb1,rb2;
     Integer k;
-
+    RadioButton he,she;
+    String gender;
+    private ProgressDialog pDialog;
 
 
 
     LocationManager locationManager;
+    String DataParseUrl = "https://ysgeek1x.000webhostapp.com/insert_data.php";
 
     SharedPreferences sdata;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -64,7 +83,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 "fonts/YanoneKaffeesatz-Thin.ttf");
 
 
-sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
+        sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
 
         next = (Button)findViewById(R.id.button);
         e1=(EditText)findViewById(R.id.editText);
@@ -74,6 +93,8 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
         t3=(TextView) findViewById(R.id.textView5);
         rb1=(RadioButton)findViewById(R.id.radioButton3);
         rb2=(RadioButton)findViewById(R.id.radioButton4);
+        he = (RadioButton) findViewById(R.id.radioButton3);
+        she = (RadioButton) findViewById(R.id.radioButton4);
 
         next.setTypeface(tf);
         t1.setTypeface(tf);
@@ -91,10 +112,10 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
                 // find which radio button is selected
                 if(checkedId == R.id.radioButton3) {
                     //Toast.makeText(getApplicationContext(), "choice: A",
-                      //      Toast.LENGTH_SHORT).show();
+                    //      Toast.LENGTH_SHORT).show();
                 } else if(checkedId == R.id.radioButton4) {
                     //Toast.makeText(getApplicationContext(), "choice: B",
-                      //      Toast.LENGTH_SHORT).show();
+                    //      Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -103,7 +124,7 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
 
         //if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-           // ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+        // ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
 
         //}
         checkLocationPermission();
@@ -133,18 +154,22 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
                 }
                 else
                 {
+                    if (he.isChecked()) {
+                        gender="Male";
+                    } else if (she.isChecked()) {
+                        gender="Female";
+                    }
                     name =  e1.getText().toString();
                     email =  e2.getText().toString();
+
+                    SendDataToServer(name, email, gender);
                     SharedPreferences.Editor editor = sdata.edit();
                     //editor.clear();
                     editor.putString("Name",name);
                     editor.putString("Email", email);
                     editor.apply();
 
-                    Intent i= new Intent(Intro.this,Main.class);
-                    i.putExtra("lat",lat);
-                    i.putExtra("lon",lon);
-                    startActivity(i);
+
 
                 }
             }
@@ -159,21 +184,23 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-    new AlertDialog.Builder(this)
-            .setTitle("WeatherPing")
-            .setMessage("Please allow the app to access Device Location")
-            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    //Prompt the user once explanation has been shown
-                    ActivityCompat.requestPermissions(Intro.this,
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            MY_PERMISSIONS_REQUEST_LOCATION);
-                    checkLocationPermission();
-                }
-            })
-            .create()
-            .show();
+            new AlertDialog.Builder(this)
+                    .setTitle("WeatherPing")
+                    .setMessage("Please allow the app to access Device Location")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //Prompt the user once explanation has been shown
+                            ActivityCompat.requestPermissions(Intro.this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    MY_PERMISSIONS_REQUEST_LOCATION);
+                            checkLocationPermission();
+
+                        }
+                    })
+                    .create()
+                    .show();
+
 
 
 
@@ -238,6 +265,69 @@ sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
         shake.setDuration(500);
         shake.setInterpolator(new CycleInterpolator(7));
         return shake;
+    }
+    public void SendDataToServer(final String name, final String email, final String gender){
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                pDialog = new ProgressDialog(Intro.this);
+                pDialog.setMessage("Patience is bitter....");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(true);
+                pDialog.show();
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String QuickName = name ;
+                String QuickEmail = email ;
+                String QuickGender = gender;
+
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+                nameValuePairs.add(new BasicNameValuePair("name", QuickName));
+                nameValuePairs.add(new BasicNameValuePair("email", QuickEmail));
+                nameValuePairs.add(new BasicNameValuePair("gender", QuickGender));
+
+                try {
+                    HttpClient httpClient = new DefaultHttpClient();
+
+                    HttpPost httpPost = new HttpPost(DataParseUrl);
+
+                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                    HttpResponse response = httpClient.execute(httpPost);
+
+                    HttpEntity entity = response.getEntity();
+
+
+                } catch (ClientProtocolException e) {
+
+                } catch (IOException e) {
+
+                }
+                return "Data Submit Successfully";
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                pDialog.dismiss();
+
+                Intent i= new Intent(Intro.this,Main.class);
+                i.putExtra("lat",lat);
+                i.putExtra("lon",lon);
+                startActivity(i);
+
+                Toast.makeText(Intro.this, "Hello "+name+"!", Toast.LENGTH_LONG).show();
+
+            }
+        }
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+        sendPostReqAsyncTask.execute(name, email, gender);
     }
 }
 

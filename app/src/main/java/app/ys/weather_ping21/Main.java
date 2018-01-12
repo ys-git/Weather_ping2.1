@@ -2,7 +2,9 @@ package app.ys.weather_ping21;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,9 +27,10 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     Button getLocationBtn;
     TextView locationText;
-    TextView l,k, cityField, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField;
+    TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
     LocationManager locationManager;
+    Typeface weatherFont;
     double lat,lon;
     String s,q;
 
@@ -100,10 +104,49 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     void ex()
     {
-        //weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/YanoneKaffeesatz-Thin.ttf");
+
+        weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
+
+        Intent startIntent = new Intent(Main.this, ForegroundService.class);
+        startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+        startService(startIntent);
 
         cityField = (TextView)findViewById(R.id.textView20);
+        updatedField = (TextView)findViewById(R.id.textView2);
+        detailsField = (TextView)findViewById(R.id.textView9);
         currentTemperatureField = (TextView)findViewById(R.id.textView6);
+        humidity_field = (TextView)findViewById(R.id.textView3);
+        pressure_field = (TextView)findViewById(R.id.textView10);
+        windspeed = (TextView)findViewById(R.id.textView29);
+        winddeg = (TextView)findViewById(R.id.textView30);
+        sun = (TextView)findViewById(R.id.textView26);
+        set = (TextView)findViewById(R.id.textView27);
+        pressure_field = (TextView)findViewById(R.id.textView10);
+        weatherIcon = (TextView)findViewById(R.id.textView19);
+        //mint = (TextView)findViewById(R.id.textView7);
+        cloud = (TextView)findViewById(R.id.textView34);
+        latt = (TextView)findViewById(R.id.textView37);
+        //rain = (TextView)findViewById(R.id.textView22);
+        weatherIcon.setTypeface(weatherFont);
+
+
+        cityField.setTypeface(tf);
+        // mint.setTypeface(tf);
+        updatedField.setTypeface(tf);
+        detailsField.setTypeface(tf);
+        currentTemperatureField.setTypeface(tf);
+        humidity_field.setTypeface(tf);
+        pressure_field.setTypeface(tf);
+        windspeed.setTypeface(tf);
+        winddeg.setTypeface(tf);
+        latt.setTypeface(tf);
+        cloud.setTypeface(tf);
+        sun.setTypeface(tf);
+        set.setTypeface(tf);
+        //rain.setTypeface(tf);
+        cloud.setTypeface(tf);
 
 
 
@@ -113,8 +156,20 @@ public class Main extends AppCompatActivity implements LocationListener {
             public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set,String cloudss) {
 
                 cityField.setText(weather_city);
+                updatedField.setText("Updated on: "+weather_updatedOn);
+                detailsField.setText(weather_description);
                 currentTemperatureField.setText(weather_temperature);
-
+                humidity_field.setText("         "+weather_humidity);
+                pressure_field.setText(weather_pressure);
+                sun.setText(sun_rise);
+                set.setText(sun_set);
+                windspeed.setText("Speed "+wind_sp);
+                winddeg.setText("Direction "+wind_deg);
+                //mint.setText(mit+" /"+mat);
+                //rain.setText(rn);
+                cloud.setText(cloudss);
+                latt.setText("Lat: "+s+" Long: "+q);
+                weatherIcon.setText(Html.fromHtml(weather_iconText));
 
 
 

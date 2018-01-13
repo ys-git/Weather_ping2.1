@@ -4,6 +4,7 @@ package app.ys.weather_ping21;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Address;
@@ -37,6 +38,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     Typeface weatherFont;
     double lat,lon;
     String s,q;
+    SharedPreferences switches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,28 +60,28 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
 
-                getLocation();
+        getLocation();
 
         img.setOnClickListener(new View.OnClickListener() {
-             @Override
-              public void onClick(View v) {
-                 pDialog = new ProgressDialog(Main.this);
-                 pDialog.setMessage("Refreshing..."); // Setting Message
-                 pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-                 pDialog.show(); // Display Progress Dialog
-                 pDialog.setCancelable(false);
-                 new Thread(new Runnable() {
-                     public void run() {
-                         try {
-                             ex();
-                             Thread.sleep(500);
-                         } catch (Exception e) {
-                             e.printStackTrace();
-                         }
-                         pDialog.dismiss();
-                     }
-                 }).start();
-             }
+            @Override
+            public void onClick(View v) {
+                pDialog = new ProgressDialog(Main.this);
+                pDialog.setMessage("Refreshing..."); // Setting Message
+                pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+                pDialog.show(); // Display Progress Dialog
+                pDialog.setCancelable(false);
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            ex();
+                            Thread.sleep(500);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        pDialog.dismiss();
+                    }
+                }).start();
+            }
         });
 
         setts.setOnClickListener(new View.OnClickListener() {

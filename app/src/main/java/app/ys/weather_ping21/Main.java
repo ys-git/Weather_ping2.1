@@ -89,7 +89,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 Intent i= new Intent(Main.this,Settings.class);
                 startActivity(i);
             }
+
         });
+
 
     }
 
@@ -176,14 +178,14 @@ public class Main extends AppCompatActivity implements LocationListener {
         currentTemperatureField.setTypeface(tf);
         //humidity_field.setTypeface(tf);
         //pressure_field.setTypeface(tf);
-        windspeed.setTypeface(tf);
-        winddeg.setTypeface(tf);
+        //windspeed.setTypeface(tf);
+        //winddeg.setTypeface(tf);
         //latt.setTypeface(tf);
-        cloud.setTypeface(tf);
+        //cloud.setTypeface(tf);
         //sun.setTypeface(tf);
         //set.setTypeface(tf);
         //rain.setTypeface(tf);
-        cloud.setTypeface(tf);
+        //cloud.setTypeface(tf);
 
 
 

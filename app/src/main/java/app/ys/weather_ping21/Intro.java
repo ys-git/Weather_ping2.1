@@ -320,7 +320,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 i.putExtra("lon",lon);
                 startActivity(i);
 
-                Toast.makeText(Intro.this, "Hello "+name+"!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(Intro.this, "Hello "+name+"!", Toast.LENGTH_LONG).show();
 
             }
         }

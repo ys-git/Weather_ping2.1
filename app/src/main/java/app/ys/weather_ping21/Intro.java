@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -151,8 +152,10 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 if (radioGroup.getCheckedRadioButtonId() == -1)
                 {
                     // no radio buttons are checked
-                    Toast.makeText(getApplicationContext(),"Please select Gender",
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Please select Gender",
+                           // Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), "Please Select Gender", Snackbar.LENGTH_LONG)
+                            .show();
 
                 }
                 else
@@ -278,7 +281,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 pDialog = new ProgressDialog(Intro.this);
                 pDialog.setMessage("Patience is bitter....");
                 pDialog.setIndeterminate(false);
-                pDialog.setCancelable(true);
+                pDialog.setCancelable(false);
                 pDialog.show();
             }
 
@@ -324,6 +327,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 i.putExtra("lat",lat);
                 i.putExtra("lon",lon);
                 startActivity(i);
+                finish();
 
                 //Toast.makeText(Intro.this, "Hello "+name+"!", Toast.LENGTH_LONG).show();
 

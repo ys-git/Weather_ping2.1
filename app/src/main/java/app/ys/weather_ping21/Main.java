@@ -37,8 +37,11 @@ public class Main extends AppCompatActivity implements LocationListener {
     LocationManager locationManager;
     Typeface weatherFont;
     double lat,lon;
-    String s,q;
+    String s,q,celss,cel_t;
+    String tempp;
     SharedPreferences switches;
+    Double far;
+    Double cel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         setContentView(R.layout.main);
         img=(ImageView)findViewById(R.id.rld);
         setts=(ImageView)findViewById(R.id.sett);
+        currentTemperatureField = (TextView)findViewById(R.id.textView6);
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
         // locationText = (TextView)findViewById(R.id.locationText);
@@ -73,7 +77,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 new Thread(new Runnable() {
                     public void run() {
                         try {
-                            ex();
+                            getLocation();
                             Thread.sleep(500);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -81,6 +85,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                         pDialog.dismiss();
                     }
                 }).start();
+                ey();
             }
         });
 
@@ -96,12 +101,36 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     }
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
+        if ((switches.getString("Toggle1", null)) == "On") {
+            try{
+                //cel = Integer.parseInt(tempp);
+                String temp_1=tempp;
+                cel = Double.parseDouble(temp_1);
+                far = (cel*1.8)+32;
+                Double de = new Double(far);
+                int i = de.intValue();
+                celss = Integer.toString(i);
+                cel_t = String.valueOf(celss);
+                currentTemperatureField.setText(cel_t+" °F");
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+            }
 
+        }
+
+        if ((switches.getString("Toggle1", null)) == "Off") {
+            {
+                currentTemperatureField.setText(tempp+" °C");
+            }
+        }
 
     }
+
+
+
 
 
 
@@ -165,7 +194,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         cityField = (TextView)findViewById(R.id.textView20);
         updatedField = (TextView)findViewById(R.id.textView2);
         detailsField = (TextView)findViewById(R.id.textView9);
-        currentTemperatureField = (TextView)findViewById(R.id.textView6);
+
         humidity_field = (TextView)findViewById(R.id.textView3);
         pressure_field = (TextView)findViewById(R.id.textView10);
         windspeed = (TextView)findViewById(R.id.textView29);
@@ -204,10 +233,11 @@ public class Main extends AppCompatActivity implements LocationListener {
         Fetch.placeIdTask asyncTask =new Fetch.placeIdTask(new Fetch.AsyncResponse() {
             public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String wind_sp, String wind_deg,String weather_updatedOn, String weather_iconText, String sun_rise,String sun_set,String cloudss) {
 
+                tempp=weather_temperature;
                 cityField.setText(weather_city);
                 updatedField.setText("Updated on: "+weather_updatedOn);
                 detailsField.setText(weather_description);
-                currentTemperatureField.setText(weather_temperature);
+                currentTemperatureField.setText(weather_temperature+" °C");
                 humidity_field.setText("         "+weather_humidity);
                 pressure_field.setText(weather_pressure);
                 sun.setText(sun_rise);
@@ -225,6 +255,32 @@ public class Main extends AppCompatActivity implements LocationListener {
             }
         });
         asyncTask.execute(s,q); //  asyncTask.execute("Latitude", "Longitude")
+    }
+
+    void ey()
+    {
+        switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
+        if ((switches.getString("Toggle1", null)) == "On") {
+            try{
+                //cel = Integer.parseInt(tempp);
+                cel = Double.parseDouble(tempp);
+                far = (cel*1.8)+32;
+                Double de = new Double(far);
+                int i = de.intValue();
+                celss = Integer.toString(i);
+                cel_t = String.valueOf(celss);
+                currentTemperatureField.setText(cel_t+" °F");
+            } catch (NumberFormatException nfe) {
+                nfe.printStackTrace();
+            }
+
+        }
+
+        if ((switches.getString("Toggle1", null)) == "Off") {
+            {
+                currentTemperatureField.setText(tempp+" °C");
+            }
+        }
     }
 }
 

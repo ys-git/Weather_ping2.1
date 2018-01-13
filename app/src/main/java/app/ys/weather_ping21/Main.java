@@ -94,8 +94,16 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         });
 
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
+
 
     }
+
+
 
     void getLocation() {
         try {

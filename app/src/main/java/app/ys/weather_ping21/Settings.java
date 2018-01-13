@@ -1,6 +1,7 @@
 package app.ys.weather_ping21;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.util.Set;
 
 public class Settings extends AppCompatActivity {
 
@@ -129,6 +133,9 @@ public class Settings extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Notification On", Snackbar.LENGTH_LONG)
                             .show();
                     sw2.setEnabled(true);
+                    Intent startIntent = new Intent(Settings.this, ForegroundService.class);
+                    startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                    startService(startIntent);
 
                 }
 
@@ -140,6 +147,7 @@ public class Settings extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Notification Off", Snackbar.LENGTH_LONG)
                             .show();
                     sw2.setEnabled(false);
+                    stopService(new Intent(Settings.this, ForegroundService.class));
                 }
 
             }

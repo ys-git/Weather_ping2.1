@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
@@ -17,12 +18,15 @@ import android.widget.Toast;
 
 public class ForegroundService extends Service {
     private static final String LOG_TAG = "ForegroundService";
+    SharedPreferences switches;
 
 
 
     @Override
-    public void onCreate() {
+    public void onCreate()
+    {
         super.onCreate();
+        switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
     }
 
 
@@ -40,27 +44,52 @@ public class ForegroundService extends Service {
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                     notificationIntent, 0);
 
-            RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification);
+            if((switches.getString("Toggle3", null))=="On")
+            {
+            RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.mipmap.ic_launcher);
+
+                Notification notification = new NotificationCompat.Builder(this)
+                        .setContentTitle("WeatherPing")
+                        .setTicker("ping ping")
+                        .setContentText("wohoooo")
+                        .setSmallIcon(R.drawable.logoq)
+                        .setLargeIcon(
+                                Bitmap.createScaledBitmap(R.drawable.logoq, 128, 128, true))
+                        .setContent(notificationView)
+                        .setOngoing(true).build();
 
 
 
-            Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                    R.mipmap.ic_launcher);
+                startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
+                        notification);
+            }
+            else
+            {
+                RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification);
+                Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                        R.mipmap.ic_launcher);
 
-            Notification notification = new NotificationCompat.Builder(this)
-                    .setContentTitle("WeatherPing")
-                    .setTicker("ping ping")
-                    .setContentText("wohoooo")
-                    .setSmallIcon(R.drawable.logoq)
-                    .setLargeIcon(
-                            Bitmap.createScaledBitmap(icon, 128, 128, false))
-                    .setContent(notificationView)
-                    .setOngoing(true).build();
+                Notification notification = new NotificationCompat.Builder(this)
+                        .setContentTitle("WeatherPing")
+                        .setTicker("ping ping")
+                        .setContentText("wohoooo")
+                        .setSmallIcon(R.drawable.logoq)
+                        .setLargeIcon(
+                                Bitmap.createScaledBitmap(icon, 128, 128, false))
+                        .setContent(notificationView)
+                        .setOngoing(true).build();
 
 
 
-            startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
-                    notification);
+                startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
+                        notification);
+            }
+
+
+
+
         }
 
 

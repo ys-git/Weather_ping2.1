@@ -146,7 +146,11 @@ public class Settings extends AppCompatActivity {
 
                     Snackbar.make(findViewById(android.R.id.content), "Notification Off", Snackbar.LENGTH_LONG)
                             .show();
+                    sw2.setChecked(false);
                     sw2.setEnabled(false);
+                    ed.putString("Toggle3","Off");
+                    ed.apply();
+
                     stopService(new Intent(Settings.this, ForegroundService.class));
                 }
 
@@ -155,7 +159,9 @@ public class Settings extends AppCompatActivity {
 
 
         sw2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
-        {SharedPreferences.Editor ed = switches.edit();
+        {
+            SharedPreferences.Editor ed = switches.edit();
+
             @Override
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {

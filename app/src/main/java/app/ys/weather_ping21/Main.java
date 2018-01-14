@@ -47,7 +47,9 @@ public class Main extends AppCompatActivity implements LocationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
+        switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
+
         img=(ImageView)findViewById(R.id.rld);
         setts=(ImageView)findViewById(R.id.sett);
         currentTemperatureField = (TextView)findViewById(R.id.textView6);
@@ -103,7 +105,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     @Override
     public void onResume() {
         super.onResume();
-        switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
+
         if ((switches.getString("Toggle1", null)) == "On") {
             try{
                 //cel = Integer.parseInt(tempp);
@@ -125,6 +127,14 @@ public class Main extends AppCompatActivity implements LocationListener {
             {
                 currentTemperatureField.setText(tempp+" °C");
             }
+        }
+
+        if((switches.getString("Toggle3", null))=="On")
+        {
+            Intent startIntent = new Intent(Main.this, ForegroundService.class);
+            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            startService(startIntent);
+
         }
 
     }
@@ -152,7 +162,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         s=String.valueOf(lat);
         q=String.valueOf(lon);
 
-        /*try {
+        /*try {+
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             locationText.setText(locationText.getText() + "\n"+addresses.get(0).getAddressLine(0)+", "+
@@ -187,9 +197,12 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
-        Intent startIntent = new Intent(Main.this, ForegroundService.class);
-        startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-        startService(startIntent);
+        if((switches.getString("Toggle2", null))=="On")
+        {
+            Intent startIntent = new Intent(Main.this, ForegroundService.class);
+            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            startService(startIntent);
+        }
 
         cityField = (TextView)findViewById(R.id.textView20);
         updatedField = (TextView)findViewById(R.id.textView2);

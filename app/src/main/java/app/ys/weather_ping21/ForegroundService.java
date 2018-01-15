@@ -67,9 +67,9 @@ public class ForegroundService extends Service {
             }
             else
             {
-                RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification);
+                //RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
                 Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                        R.mipmap.ic_launcher);
+                        R.drawable.logoq);
 
                 Notification notification = new NotificationCompat.Builder(this)
                         .setContentTitle("WeatherPing")
@@ -77,7 +77,7 @@ public class ForegroundService extends Service {
                         .setContentText("wohoooo")
                         .setSmallIcon(R.drawable.logoq)
                         .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
-                        .setContent(notificationView)
+                        //.setContent(notificationView)
                         .setOngoing(true).build();
 
 

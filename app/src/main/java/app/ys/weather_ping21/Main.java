@@ -137,6 +137,14 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         }
 
+        if((switches.getString("Toggle3", null))=="Off")
+        {
+            Intent startIntent = new Intent(Main.this, ForegroundService.class);
+            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            startService(startIntent);
+
+        }
+
     }
 
 

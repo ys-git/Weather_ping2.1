@@ -21,10 +21,10 @@
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/logoq"
                 android:adjustViewBounds="true"
                 android:maxHeight="25dp"
-                android:maxWidth="25dp"/>
+                android:maxWidth="25dp"
+                app:srcCompat="@drawable/logoq" />
 
             <TextView
                 android:id="@+id/textView17"

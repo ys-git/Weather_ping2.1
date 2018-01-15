@@ -52,7 +52,7 @@ public class ForegroundService extends Service {
 
                 Notification notification = new NotificationCompat.Builder(this)
                         .setContentTitle("WeatherPing")
-                        .setTicker("ping ping")
+                        //.setTicker("ping ping")
                         .setContentText("wohoooo")
                         .setSmallIcon(R.drawable.logoq)
                         .setLargeIcon(

@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -28,17 +29,23 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.android.gms.internal.zzip.runOnUiThread;
 
-public class ForegroundService extends Service {
+public class ForegroundService extends Service implements LocationListener {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     ScheduledFuture beeperHandle;
     private static final String LOG_TAG = "ForegroundService";
     LocationManager locationManager;
+    double lat,lon;
+    SharedPreferences switches;
+    String s,q;
+    String cty,des,tmp;
 
 
     @Override
     public void onCreate()
     {
+        switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         super.onCreate();
+
 
     }
 
@@ -79,12 +86,14 @@ public class ForegroundService extends Service {
 
     public void takePicsPeriodically(long period) {
         beeperHandle = scheduler.scheduleAtFixedRate(beeper,period, period,TimeUnit.SECONDS);
-
+        Log.i("MyTestService", "Service at pics");
     }
 
     final Runnable beeper = new Runnable() {
         public void run() {
             try {
+
+
                 sendNotification();
 
                 Log.i("MyTestService", "Service running");
@@ -99,22 +108,76 @@ public class ForegroundService extends Service {
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logoq);
+        getLocation();
 
         //RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
 
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle("WeatherPing")
-                .setTicker("ping ping")
-                .setContentText("")
+                .setTicker("WeatherPing")
+                .setContentText(tmp+" C"+" in "+cty)
                 .setSmallIcon(R.drawable.logoq)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 //.setContent(notificationView)
                 .setOngoing(true).build();
         notification.contentIntent=  PendingIntent.getActivity(this, 0,
-                new Intent(this, Main.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(this, Splashload.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
                 notification);
+    }
+
+
+
+    void getLocation() {
+        try {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
+        }
+        catch(SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        lat=location.getLatitude();
+        lon=location.getLongitude();
+        s=String.valueOf(lat);
+        q=String.valueOf(lon);
+
+        ex();
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        //Toast.makeText(this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    void ex()
+    {
+        Fetches.placeIdTask asyncTask =new Fetches.placeIdTask(new Fetches.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature) {
+
+                cty=weather_city;
+                des=weather_description;
+                tmp=weather_temperature;
+
+            }
+        });
+        asyncTask.execute(s,q);
     }
 
 

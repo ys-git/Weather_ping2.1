@@ -190,25 +190,27 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
+
+
+
+
             new AlertDialog.Builder(this)
                     .setTitle("WeatherPing")
+                    .setCancelable(false)
                     .setMessage("Please allow the app to access Device Location")
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            //Prompt the user once explanation has been shown
                             ActivityCompat.requestPermissions(Intro.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_LOCATION);
                             checkLocationPermission();
 
                         }
+
                     })
                     .create()
                     .show();
-
-
-
 
 
         } else {

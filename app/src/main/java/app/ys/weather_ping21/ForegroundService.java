@@ -1,5 +1,6 @@
 package app.ys.weather_ping21;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -7,21 +8,38 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -29,54 +47,69 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.android.gms.internal.zzip.runOnUiThread;
 
-public class ForegroundService extends Service implements LocationListener {
+public class ForegroundService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     ScheduledFuture beeperHandle;
     private static final String LOG_TAG = "ForegroundService";
-    LocationManager locationManager;
-    double lat,lon;
+    //LocationManager locationManager;
+    private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
+    private static final String APP_ID = "80e4eede56844462ef3cdc721208c31f";
+    double lat, lon;
+    Location loc;
+    private GoogleApiClient googleApiClient;
     SharedPreferences switches;
-    String s,q;
-    String cty,des,tmp;
+    String weather = "0.00";
+    String s, q;
+    String city,des;
 
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         super.onCreate();
 
+        //googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
+        //googleApiClient.connect();
 
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Log.i(LOG_TAG, "Received Start Foreground Intent ");
 
-            }
-
-        else
-        if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
-            Toast.makeText(this,"Stop Service",Toast.LENGTH_SHORT).show();
+        } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
+            Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
             Log.i(LOG_TAG, "Received Stop Foreground Intent");
             stopForeground(true);
             stopSelf();
             /*beeperHandle.cancel(true);
             scheduler.shutdown();*/
         }
-        takePicsPeriodically(5);
+        takePicsPeriodically(3);
         return START_STICKY;
 
     }
 
+
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        Log.i(LOG_TAG, "In onDestroy");
-        beeperHandle.cancel(true);
-        scheduler.shutdown();
+        if ((switches.getString("Toggle2", null)) == "On") {
+            super.onDestroy();
+            Log.i(LOG_TAG, "In onDestroy");
+            beeperHandle.cancel(true);
+            scheduler.shutdown();
+            googleApiClient.disconnect();
+        }
+
+        if ((switches.getString("Toggle2", null)) == "Off") {
+            super.onDestroy();
+            Log.i(LOG_TAG, "In onDestroy");
+            //googleApiClient.disconnect();
+        }
     }
+
     @Override
     public IBinder onBind(Intent intent) {
 
@@ -84,21 +117,49 @@ public class ForegroundService extends Service implements LocationListener {
 
     }
 
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i(ForegroundService.class.getSimpleName(), "Connected to Google Play Services!");
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+            double lat = lastLocation.getLatitude(),
+                    lon = lastLocation.getLongitude();
+            String units = "metric";
+            String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+                    lat, lon, units, APP_ID);
+            new GetWeatherTask().execute(url);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(ForegroundService.class.getSimpleName(), "Can't connect to Google Play Services!");
+    }
+
     public void takePicsPeriodically(long period) {
-        beeperHandle = scheduler.scheduleAtFixedRate(beeper,period, period,TimeUnit.SECONDS);
+        beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, period, TimeUnit.MINUTES);
         Log.i("MyTestService", "Service at pics");
+
     }
 
     final Runnable beeper = new Runnable() {
         public void run() {
             try {
 
-
                 sendNotification();
 
                 Log.i("MyTestService", "Service running");
-            }catch (Exception e) {
-                Log.e("TAG","error in executing: It will no longer be run!: "+e.getMessage());
+            } catch (Exception e) {
+                Log.e("TAG", "error in executing: It will no longer be run!: " + e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -106,21 +167,24 @@ public class ForegroundService extends Service implements LocationListener {
 
     public void sendNotification() {
 
+        googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
+        googleApiClient.connect();
+
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logoq);
-        getLocation();
+
 
         //RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
 
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("WeatherPing")
+                .setContentTitle(weather + " °C" + " in "+city)
                 .setTicker("WeatherPing")
-                .setContentText(tmp+" C"+" in "+cty)
+                .setContentText(des)
                 .setSmallIcon(R.drawable.logoq)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 //.setContent(notificationView)
                 .setOngoing(true).build();
-        notification.contentIntent=  PendingIntent.getActivity(this, 0,
+        notification.contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, Splashload.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
@@ -128,59 +192,51 @@ public class ForegroundService extends Service implements LocationListener {
     }
 
 
+    private class GetWeatherTask extends AsyncTask<String, Void, String> {
+        private TextView textView;
 
-    void getLocation() {
-        try {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
+        public GetWeatherTask() {
+
         }
-        catch(SecurityException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public void onLocationChanged(Location location) {
+        @Override
+        protected String doInBackground(String... strings) {
 
-        lat=location.getLatitude();
-        lon=location.getLongitude();
-        s=String.valueOf(lat);
-        q=String.valueOf(lon);
+            try {
+                URL url = new URL(strings[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-        ex();
+                InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder builder = new StringBuilder();
 
-    }
+                String inputString;
+                while ((inputString = bufferedReader.readLine()) != null) {
+                    builder.append(inputString);
+                }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-        //Toast.makeText(this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
-    }
+                JSONObject topLevel = new JSONObject(builder.toString());
+                JSONObject main = topLevel.getJSONObject("main");
+                JSONObject details = topLevel.getJSONArray("weather").getJSONObject(0);
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+                des = details.getString("description");
+                city = topLevel.getString("name");
+                //city = name.getString("name");
+                weather = String.valueOf(main.getDouble("temp"));
 
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    void ex()
-    {
-        Fetches.placeIdTask asyncTask =new Fetches.placeIdTask(new Fetches.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature) {
-
-                cty=weather_city;
-                des=weather_description;
-                tmp=weather_temperature;
-
+                urlConnection.disconnect();
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
             }
-        });
-        asyncTask.execute(s,q);
+            return weather;
+        }
+
+        @Override
+        protected void onPostExecute(String temp) {
+
+            //textView.setText("Current Weather: " + temp);
+        }
     }
-
-
 }
 
 

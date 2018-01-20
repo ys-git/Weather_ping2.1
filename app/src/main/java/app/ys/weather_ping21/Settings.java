@@ -51,7 +51,7 @@ public class Settings extends AppCompatActivity {
 
         sw=(Switch) findViewById(R.id.switch4);
         sw1=(Switch) findViewById(R.id.switch3);
-        sw2=(Switch) findViewById(R.id.switch1);
+        //sw2=(Switch) findViewById(R.id.switch1);
         //sw3=(Switch) findViewById(R.id.switch4);
 
         if((switches.getString("Toggle1", null))=="On")
@@ -76,7 +76,7 @@ public class Settings extends AppCompatActivity {
             sw2.setEnabled(false);
         }
 
-        if((switches.getString("Toggle3", null))=="On")
+        /*if((switches.getString("Toggle3", null))=="On")
         {
             sw2.setChecked(true);
 
@@ -84,7 +84,7 @@ public class Settings extends AppCompatActivity {
         else
         {
             sw2.setChecked(false);
-        }
+        }*/
 
 
 
@@ -132,7 +132,6 @@ public class Settings extends AppCompatActivity {
                     ed.apply();
                     Snackbar.make(findViewById(android.R.id.content), "Notification On", Snackbar.LENGTH_LONG)
                             .show();
-                    sw2.setEnabled(true);
                     Intent startIntent = new Intent(Settings.this, ForegroundService.class);
                     startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
                     startService(startIntent);
@@ -146,11 +145,8 @@ public class Settings extends AppCompatActivity {
 
                     Snackbar.make(findViewById(android.R.id.content), "Notification Off", Snackbar.LENGTH_LONG)
                             .show();
-                    sw2.setChecked(false);
-                    sw2.setEnabled(false);
                     ed.putString("Toggle3","Off");
                     ed.apply();
-
                     stopService(new Intent(Settings.this, ForegroundService.class));
                 }
 
@@ -158,7 +154,7 @@ public class Settings extends AppCompatActivity {
         });
 
 
-        sw2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
+        /*sw2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
         {
             SharedPreferences.Editor ed = switches.edit();
 
@@ -182,7 +178,7 @@ public class Settings extends AppCompatActivity {
                 }
 
             }
-        });
+        });*/
 
 
 

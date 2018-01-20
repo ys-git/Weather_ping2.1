@@ -22,7 +22,7 @@
         <RelativeLayout
             android:id="@+id/e3"
             android:layout_width="match_parent"
-            android:layout_height="285dp">
+            android:layout_height="320dp">
 
             <TextView
                 android:id="@+id/textView2"
@@ -39,9 +39,9 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_above="@+id/textView9"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="22dp"
+                android:layout_marginBottom="14dp"
                 android:text="Fetching..."
                 android:textAlignment="center"
                 android:textColor="#2F4F4F"
@@ -51,11 +51,12 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
+                android:layout_above="@+id/imageView7"
                 android:layout_centerHorizontal="true"
-                android:text="TextView"
+                android:layout_marginBottom="11dp"
+                android:text="_"
                 android:textAlignment="center"
-                android:textColor="#ffffff"
+                android:textColor="#2F4F4F"
                 android:textSize="20dp" />
 
             <TextView
@@ -86,10 +87,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                app:srcCompat="@drawable/and"
                 android:adjustViewBounds="true"
                 android:maxHeight="5dp"
-                android:maxWidth="200dp"/>
+                android:maxWidth="200dp"
+                app:srcCompat="@drawable/and" />
 
             <ImageView
                 android:id="@+id/sett"

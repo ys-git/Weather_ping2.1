@@ -1,8 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
+
+    <ImageView
+        android:id="@+id/imageView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="5dp"
+        android:maxWidth="200dp"
+        app:srcCompat="@drawable/and" />
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/switch3"
+        android:layout_marginTop="30dp"
+        android:layout_toEndOf="@+id/textView11"
+        android:layout_toRightOf="@+id/textView11"
+        android:adjustViewBounds="true"
+        android:maxHeight="5dp"
+        android:maxWidth="200dp"
+        app:srcCompat="@drawable/and" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/switch4"
+        android:layout_alignLeft="@+id/imageView17"
+        android:layout_alignStart="@+id/imageView17"
+        android:layout_marginBottom="25dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="5dp"
+        android:maxWidth="200dp"
+        app:srcCompat="@drawable/and" />
 
     <TextView
         android:id="@+id/textView8"
@@ -15,8 +57,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
         android:text="Tweaks:"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textColor="#ffcc0000"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/textView11"
@@ -25,11 +67,12 @@
         android:layout_alignLeft="@+id/textView8"
         android:layout_alignStart="@+id/textView8"
         android:layout_below="@+id/textView8"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="64dp"
         android:text="C to F"
-        android:textColor="#ffffff" />
+        android:textColor="#ffcc0000"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView12"
@@ -40,38 +83,20 @@
         android:layout_below="@+id/textView11"
         android:layout_marginTop="31dp"
         android:text="Notification"
-        android:textColor="#ffffff" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView12"
-        android:layout_alignStart="@+id/textView12"
-        android:layout_below="@+id/textView12"
-        android:layout_marginTop="35dp"
-        android:text="Dark Notification"
-        android:textColor="#ffffff" />
+        android:textColor="#ffcc0000"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView13"
-        android:layout_alignStart="@+id/textView13"
-        android:layout_below="@+id/textView13"
-        android:layout_marginTop="40dp"
+        android:layout_alignLeft="@+id/textView12"
+        android:layout_alignStart="@+id/textView12"
+        android:layout_below="@+id/switch3"
+        android:layout_marginTop="66dp"
         android:text="About"
-        android:textColor="#ffffff" />
-
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/switch3"
-        android:layout_alignStart="@+id/switch3"
-        android:layout_alignTop="@+id/textView13"
-        android:switchTextAppearance="@style/TextAppearance.AppCompat" />
+        android:textColor="#2F4F4F"
+        android:textSize="18sp" />
 
     <Switch
         android:id="@+id/switch3"

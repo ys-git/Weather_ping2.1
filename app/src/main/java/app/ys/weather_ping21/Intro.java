@@ -143,10 +143,13 @@ public class Intro extends AppCompatActivity implements LocationListener {
 
                 if (e1.getText().toString().trim().length() == 0) {
                     e1.startAnimation(shakeError());
+                    e1.setError("Enter Name");
                 }
                 else
                 if (e2.getText().toString().trim().length() == 0) {
                     e2.startAnimation(shakeError());
+                    e2.setError("Enter Email");
+
                 }
                 else
                 if (radioGroup.getCheckedRadioButtonId() == -1)

@@ -73,7 +73,7 @@ public class Settings extends AppCompatActivity {
         else
         {
             sw1.setChecked(false);
-            sw2.setEnabled(false);
+            //sw2.setEnabled(false);
         }
 
         /*if((switches.getString("Toggle3", null))=="On")

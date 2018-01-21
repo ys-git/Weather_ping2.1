@@ -80,14 +80,14 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
             Log.i(LOG_TAG, "Received Start Foreground Intent ");
 
         } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
-            Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
             Log.i(LOG_TAG, "Received Stop Foreground Intent");
             stopForeground(true);
             stopSelf();
             /*beeperHandle.cancel(true);
             scheduler.shutdown();*/
         }
-        takePicsPeriodically(3);
+        tx(3);
         return START_STICKY;
 
     }
@@ -145,9 +145,9 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
         Log.i(ForegroundService.class.getSimpleName(), "Can't connect to Google Play Services!");
     }
 
-    public void takePicsPeriodically(long period) {
+    public void tx(long period) {
         beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, period, TimeUnit.MINUTES);
-        Log.i("MyTestService", "Service at pics");
+        //Log.i("MyTestService", "Service at tx");
 
     }
 

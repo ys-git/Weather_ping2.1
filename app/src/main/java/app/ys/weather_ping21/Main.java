@@ -188,6 +188,12 @@ public class Main extends AppCompatActivity implements LocationListener {
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/YanoneKaffeesatz-Thin.ttf");
 
+        Typeface tf2 = Typeface.createFromAsset(getAssets(),
+                "fonts/Rooney-Regular.ttf");
+
+        Typeface tf3 = Typeface.createFromAsset(getAssets(),
+                "fonts/DINMedium.ttf");
+
         weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
         if((switches.getString("Toggle2", null))=="On")
@@ -219,18 +225,18 @@ public class Main extends AppCompatActivity implements LocationListener {
         cityField.setTypeface(tf);
         // mint.setTypeface(tf);
         updatedField.setTypeface(tf);
-        detailsField.setTypeface(tf);
-        currentTemperatureField.setTypeface(tf);
-        //humidity_field.setTypeface(tf);
-        //pressure_field.setTypeface(tf);
-        //windspeed.setTypeface(tf);
-        //winddeg.setTypeface(tf);
-        //latt.setTypeface(tf);
-        //cloud.setTypeface(tf);
-        //sun.setTypeface(tf);
-        //set.setTypeface(tf);
+        detailsField.setTypeface(tf3);
+        currentTemperatureField.setTypeface(tf3);
+        humidity_field.setTypeface(tf3);
+        pressure_field.setTypeface(tf3);
+        windspeed.setTypeface(tf3);
+        winddeg.setTypeface(tf3);
+        latt.setTypeface(tf3);
+        cloud.setTypeface(tf3);
+        sun.setTypeface(tf3);
+        set.setTypeface(tf3);
         //rain.setTypeface(tf);
-        //cloud.setTypeface(tf);
+
 
 
 

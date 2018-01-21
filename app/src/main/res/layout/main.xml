@@ -126,10 +126,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignEnd="@+id/textView30"
-                android:layout_alignRight="@+id/textView30"
+                android:layout_alignLeft="@+id/imageView14"
+                android:layout_alignStart="@+id/imageView14"
                 android:layout_below="@+id/textView37"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="17dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="5dp"
                 android:maxWidth="200dp"
@@ -140,10 +140,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignEnd="@+id/textView30"
-                android:layout_alignRight="@+id/textView30"
+                android:layout_alignLeft="@+id/imageView11"
+                android:layout_alignStart="@+id/imageView11"
                 android:layout_below="@+id/textView33"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="12dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="5dp"
                 android:maxWidth="200dp"
@@ -314,9 +314,10 @@
                 android:id="@+id/textView30"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView29"
                 android:layout_alignBottom="@+id/textView29"
-                android:layout_alignEnd="@+id/imageView11"
-                android:layout_alignRight="@+id/imageView11"
+                android:layout_toEndOf="@+id/textView38"
+                android:layout_toRightOf="@+id/textView38"
                 android:textColor="#ffffff" />
 
             <ImageView
@@ -356,7 +357,6 @@
                 android:layout_below="@+id/imageView14"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="23dp"
-                android:text="TextView"
                 android:textColor="#ffffff" />
 
             <TextView

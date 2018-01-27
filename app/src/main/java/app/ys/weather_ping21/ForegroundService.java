@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
@@ -45,20 +46,20 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import static com.google.android.gms.internal.zzip.runOnUiThread;
+//import static com.google.android.gms.internal.zzip.runOnUiThread;
 
-public class ForegroundService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class ForegroundService extends Service{ //implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     ScheduledFuture beeperHandle;
     private static final String LOG_TAG = "ForegroundService";
-    //LocationManager locationManager;
+    LocationManager locationManager;
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
     private static final String APP_ID = "80e4eede56844462ef3cdc721208c31f";
     double lat, lon;
     Location loc;
     private GoogleApiClient googleApiClient;
     SharedPreferences switches;
-    String weather = "0.00";
+    String weather = "0.0";
     String s, q;
     String city,des;
 
@@ -79,15 +80,19 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
         if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
             Log.i(LOG_TAG, "Received Start Foreground Intent ");
 
+
+
+
         } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
-            //Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
             Log.i(LOG_TAG, "Received Stop Foreground Intent");
             stopForeground(true);
             stopSelf();
             /*beeperHandle.cancel(true);
             scheduler.shutdown();*/
         }
-        tx(3);
+        //tx(3);
+
         return START_STICKY;
 
     }
@@ -100,13 +105,13 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
             Log.i(LOG_TAG, "In onDestroy");
             beeperHandle.cancel(true);
             scheduler.shutdown();
-            googleApiClient.disconnect();
+
         }
 
         if ((switches.getString("Toggle2", null)) == "Off") {
             super.onDestroy();
             Log.i(LOG_TAG, "In onDestroy");
-            //googleApiClient.disconnect();
+
         }
     }
 
@@ -118,32 +123,7 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
     }
 
 
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i(ForegroundService.class.getSimpleName(), "Connected to Google Play Services!");
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
-            double lat = lastLocation.getLatitude(),
-                    lon = lastLocation.getLongitude();
-            String units = "metric";
-            String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
-                    lat, lon, units, APP_ID);
-            new GetWeatherTask().execute(url);
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(ForegroundService.class.getSimpleName(), "Can't connect to Google Play Services!");
-    }
 
     public void tx(long period) {
         beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, period, TimeUnit.MINUTES);
@@ -152,8 +132,10 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
     }
 
     final Runnable beeper = new Runnable() {
+
         public void run() {
             try {
+
 
                 sendNotification();
 
@@ -163,12 +145,11 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
                 e.printStackTrace();
             }
         }
+
     };
 
-    public void sendNotification() {
 
-        googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
-        googleApiClient.connect();
+    public void sendNotification() {
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logoq);
@@ -193,7 +174,7 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
 
 
     private class GetWeatherTask extends AsyncTask<String, Void, String> {
-        private TextView textView;
+        //private TextView textView;
 
         public GetWeatherTask() {
 
@@ -237,6 +218,7 @@ public class ForegroundService extends Service implements GoogleApiClient.Connec
             //textView.setText("Current Weather: " + temp);
         }
     }
+
 }
 
 

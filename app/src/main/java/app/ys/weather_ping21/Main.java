@@ -12,6 +12,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
 
 import java.util.List;
@@ -32,6 +35,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     public ProgressDialog pDialog;
     TextView locationText;
     ImageView img,setts;
+    private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
     LocationManager locationManager;
@@ -52,6 +56,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         img=(ImageView)findViewById(R.id.rld);
         setts=(ImageView)findViewById(R.id.sett);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_to_refresh_layout);
         currentTemperatureField = (TextView)findViewById(R.id.textView6);
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
@@ -101,7 +106,28 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         });
 
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getLocation();
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 700);
+
+            }
+
+        });
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, R.color.colorAccent, R.color.colorPrimaryDark);
+
+
     }
+
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -140,7 +166,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
         }
         catch(SecurityException e) {
             e.printStackTrace();
@@ -170,7 +196,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(Main.this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Main.this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
+        Snackbar.make(findViewById(android.R.id.content), "Please Enable Location", Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override

@@ -288,7 +288,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 updatedField.setText("Updated on: "+weather_updatedOn);
                 detailsField.setText(weather_description);
                 currentTemperatureField.setText(weather_temperature+" °C");
-                humidity_field.setText("         "+weather_humidity);
+                humidity_field.setText("     "+weather_humidity);
                 pressure_field.setText(weather_pressure);
                 sun.setText(sun_rise);
                 set.setText(sun_set);

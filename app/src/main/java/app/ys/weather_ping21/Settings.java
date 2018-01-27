@@ -24,7 +24,7 @@ public class Settings extends AppCompatActivity {
 
     SharedPreferences sdata,switches;
     String user;
-    TextView t,t2,t3,t4,t5,t6;
+    TextView t,t2,t3,t4,t5,t6,t7,t8;
     Switch sw,sw1,sw2;
 
 
@@ -45,7 +45,10 @@ public class Settings extends AppCompatActivity {
         t3=(TextView)findViewById(R.id.textView11);
         t4=(TextView)findViewById(R.id.textView12);
         t5=(TextView)findViewById(R.id.textView14);
-        //t6=(TextView)findViewById(R.id.textView8);
+        t6=(TextView)findViewById(R.id.textView16);
+        t7=(TextView)findViewById(R.id.textView18);
+        t8=(TextView)findViewById(R.id.textView13);
+
 
         t.setText("Hey "+user+"!!");
         t.setTypeface(tf);
@@ -53,7 +56,9 @@ public class Settings extends AppCompatActivity {
         t3.setTypeface(tf);
         t4.setTypeface(tf);
         t5.setTypeface(tf);
-        //t2.setTypeface(tf);
+        t6.setTypeface(tf);
+        t7.setTypeface(tf);
+        t8.setTypeface(tf);
 
 
 

@@ -96,7 +96,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
             scheduler.shutdown();*/
         }
 
-        tx(3);
+        tx(5);
 
         return START_STICKY;
 

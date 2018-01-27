@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/swipe_to_refresh_layout"
     android:layout_height="match_parent"
@@ -223,7 +224,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:textAlignment="center"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                tools:text="fbs" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -293,7 +295,7 @@
                 android:layout_alignStart="@+id/textView26"
                 android:layout_below="@+id/imageView11"
                 android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/asz" />
+                app:srcCompat="@drawable/winds" />
 
             <TextView
                 android:id="@+id/textView28"
@@ -335,7 +337,7 @@
                 android:layout_alignStart="@+id/textView28"
                 android:layout_below="@+id/textView28"
                 android:layout_marginTop="19dp"
-                app:srcCompat="@drawable/clo" />
+                app:srcCompat="@drawable/clouds" />
 
             <TextView
                 android:id="@+id/textView33"

@@ -133,8 +133,7 @@ public class Fetch {
     public static JSONObject getWeatherJSON(String lat, String lon){
         try {
             URL url = new URL(String.format(OPEN_WEATHER_MAP_URL, lat, lon));
-            HttpURLConnection connection =
-                    (HttpURLConnection)url.openConnection();
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
             connection.addRequestProperty("x-api-key", OPEN_WEATHER_MAP_API);
 

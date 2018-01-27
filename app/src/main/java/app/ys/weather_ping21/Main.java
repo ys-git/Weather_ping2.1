@@ -231,11 +231,11 @@ public class Main extends AppCompatActivity implements LocationListener {
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/YanoneKaffeesatz-Thin.ttf");
 
-        Typeface tf2 = Typeface.createFromAsset(getAssets(),
-                "fonts/Rooney-Regular.ttf");
-
         Typeface tf3 = Typeface.createFromAsset(getAssets(),
                 "fonts/DINMedium.ttf");
+
+        Typeface tf4 = Typeface.createFromAsset(getAssets(),
+                "fonts/calibril.ttf");
 
         weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
@@ -264,7 +264,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         // mint.setTypeface(tf);
         updatedField.setTypeface(tf);
         detailsField.setTypeface(tf3);
-        currentTemperatureField.setTypeface(tf3);
+        currentTemperatureField.setTypeface(tf4);
         humidity_field.setTypeface(tf3);
         pressure_field.setTypeface(tf3);
         windspeed.setTypeface(tf3);

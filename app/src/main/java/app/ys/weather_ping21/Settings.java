@@ -24,7 +24,7 @@ public class Settings extends AppCompatActivity {
 
     SharedPreferences sdata,switches;
     String user;
-    TextView t,t2;
+    TextView t,t2,t3,t4,t5,t6;
     Switch sw,sw1,sw2;
 
 
@@ -35,16 +35,25 @@ public class Settings extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.settings);
         Typeface tf = Typeface.createFromAsset(getAssets(),
-                "fonts/YanoneKaffeesatz-Thin.ttf");
+                "fonts/calibril.ttf");
         sdata = getSharedPreferences("my", Context.MODE_PRIVATE);
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
 
         user = sdata.getString("Name", "There!");
         t=(TextView)findViewById(R.id.textView7);
         t2=(TextView)findViewById(R.id.textView8);
+        t3=(TextView)findViewById(R.id.textView11);
+        t4=(TextView)findViewById(R.id.textView12);
+        t5=(TextView)findViewById(R.id.textView14);
+        //t6=(TextView)findViewById(R.id.textView8);
+
         t.setText("Hey "+user+"!!");
         t.setTypeface(tf);
         t2.setTypeface(tf);
+        t3.setTypeface(tf);
+        t4.setTypeface(tf);
+        t5.setTypeface(tf);
+        //t2.setTypeface(tf);
 
 
 

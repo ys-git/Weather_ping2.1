@@ -199,7 +199,6 @@ public class ForegroundService extends Service implements LocationListener{ //im
             try {
 
                 getLocation();
-                sendNotification();
 
                 Log.i("MyTestService", "Inside Service");
             } catch (Exception e) {
@@ -214,7 +213,14 @@ public class ForegroundService extends Service implements LocationListener{ //im
     public void sendNotification() {
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.logoq);
+                R.drawable.logonotif);
+
+
+
+
+
+
+
         Log.i("MyTestService", "Sending notification");
 
 
@@ -223,8 +229,8 @@ public class ForegroundService extends Service implements LocationListener{ //im
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle(weather + " °C" + " in "+city)
                 .setTicker("WeatherPing")
-                .setContentText(lat+"  "+lon)
-                .setSmallIcon(R.drawable.logoq)
+                .setContentText(des)
+                .setSmallIcon(R.drawable.logonotif1)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 //.setContent(notificationView)
                 .setOngoing(true).build();
@@ -269,6 +275,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
                 city = topLevel.getString("name");
                 //city = name.getString("name");
                 weather = String.valueOf(main.getDouble("temp"));
+                sendNotification();
 
                 urlConnection.disconnect();
             } catch (IOException | JSONException e) {

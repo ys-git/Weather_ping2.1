@@ -109,7 +109,7 @@
                 android:layout_marginRight="16dp"
                 app:srcCompat="@drawable/settingsss" />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/rld"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="50dp"
                 android:maxWidth="50dp"
-                app:srcCompat="@drawable/swq" />
+                app:srcCompat="@drawable/swq" />-->
 
         </RelativeLayout>
 

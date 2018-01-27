@@ -54,7 +54,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
 
-        img=(ImageView)findViewById(R.id.rld);
+        //img=(ImageView)findViewById(R.id.rld);
         setts=(ImageView)findViewById(R.id.sett);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_to_refresh_layout);
         currentTemperatureField = (TextView)findViewById(R.id.textView6);
@@ -73,7 +73,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         getLocation();
 
-        img.setOnClickListener(new View.OnClickListener() {
+        /*img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pDialog = new ProgressDialog(Main.this);
@@ -94,7 +94,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 }).start();
                 ey();
             }
-        });
+        });*/
 
         setts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,17 +111,28 @@ public class Main extends AppCompatActivity implements LocationListener {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Snackbar.make(findViewById(android.R.id.content), "Refreshing...", Snackbar.LENGTH_LONG)
+                        .show();
                 getLocation();
+                if((switches.getString("Toggle2", null))=="On")
+                {
+                    stopService(new Intent(Main.this, ForegroundService.class));
+                    Intent startIntent = new Intent(Main.this, ForegroundService.class);
+                    startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                    startService(startIntent);
+                }
                 new Handler().postDelayed(new Runnable() {
                     @Override public void run() {
                         swipeRefreshLayout.setRefreshing(false);
+                        Snackbar.make(findViewById(android.R.id.content), "Refreshed", Snackbar.LENGTH_LONG)
+                                .show();
                     }
                 }, 700);
 
             }
 
         });
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, R.color.colorAccent, R.color.colorPrimaryDark);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccent, android.R.color.holo_blue_light);
 
 
     }
@@ -159,10 +170,6 @@ public class Main extends AppCompatActivity implements LocationListener {
     }
 
 
-
-
-
-
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -170,6 +177,14 @@ public class Main extends AppCompatActivity implements LocationListener {
         }
         catch(SecurityException e) {
             e.printStackTrace();
+
+        }
+        if((switches.getString("Toggle2", null))=="On")
+        {
+            stopService(new Intent(Main.this, ForegroundService.class));
+            Intent startIntent = new Intent(Main.this, ForegroundService.class);
+            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            startService(startIntent);
         }
     }
 
@@ -224,12 +239,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
-        if((switches.getString("Toggle2", null))=="On")
-        {
-            Intent startIntent = new Intent(Main.this, ForegroundService.class);
-            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-            startService(startIntent);
-        }
+
 
         cityField = (TextView)findViewById(R.id.textView20);
         updatedField = (TextView)findViewById(R.id.textView2);

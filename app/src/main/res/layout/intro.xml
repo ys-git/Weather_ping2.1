@@ -30,6 +30,7 @@
                 android:width="250dp"
                 android:backgroundTint="@android:color/holo_red_light"
                 android:ems="10"
+                android:maxLength="20"
                 android:inputType="textPersonName"
                 android:textColor="#2F4F4F" />
 
@@ -41,7 +42,7 @@
                 android:layout_above="@+id/button"
                 android:layout_alignLeft="@+id/textView4"
                 android:layout_alignStart="@+id/textView4"
-
+                android:maxLength="40"
                 android:layout_marginBottom="44dp"
                 android:width="250dp"
                 android:backgroundTint="@android:color/holo_red_light"

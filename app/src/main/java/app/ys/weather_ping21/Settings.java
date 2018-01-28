@@ -12,6 +12,8 @@ import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.view.View;
@@ -22,10 +24,12 @@ import java.util.Set;
 
 public class Settings extends AppCompatActivity {
 
-    SharedPreferences sdata,switches;
+    SharedPreferences sdata,switches,updateint;
     String user;
     TextView t,t2,t3,t4,t5,t6,t7,t8;
     Switch sw,sw1,sw2;
+    RadioButton rba,rbb,rbc;
+    RadioGroup rg;
 
 
 
@@ -38,6 +42,7 @@ public class Settings extends AppCompatActivity {
                 "fonts/calibril.ttf");
         sdata = getSharedPreferences("my", Context.MODE_PRIVATE);
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
+        updateint = getSharedPreferences("update", Context.MODE_PRIVATE);
 
         user = sdata.getString("Name", "There!");
         t=(TextView)findViewById(R.id.textView7);
@@ -48,6 +53,10 @@ public class Settings extends AppCompatActivity {
         t6=(TextView)findViewById(R.id.textView16);
         t7=(TextView)findViewById(R.id.textView18);
         t8=(TextView)findViewById(R.id.textView13);
+        rba = (RadioButton) findViewById(R.id.radioButton);
+        rbb = (RadioButton) findViewById(R.id.radioButton2);
+        rbc = (RadioButton) findViewById(R.id.radioButton5);
+        rg = (RadioGroup)findViewById(R.id.radioGroup2);
 
 
         t.setText("Hey "+user+"!!");
@@ -101,6 +110,82 @@ public class Settings extends AppCompatActivity {
         }*/
 
 
+        if((updateint.getString("Interval", null))=="10")
+        {
+            rba.setChecked(true);
+            rbb.setChecked(false);
+            rbc.setChecked(false);
+
+        }
+        else
+        if((updateint.getString("Interval", null))=="30")
+        {
+            rbb.setChecked(true);
+            rba.setChecked(false);
+            rbc.setChecked(false);
+            //sw2.setEnabled(false);
+        }
+        else
+        if((updateint.getString("Interval", null))=="30")
+        {
+            rbc.setChecked(true);
+            rba.setChecked(false);
+            rbb.setChecked(false);
+        }
+
+
+
+        rba.setOnClickListener(new View.OnClickListener() {
+            SharedPreferences.Editor nd = updateint.edit();
+
+            @Override
+            public void onClick(View v) {
+                nd.putString("Interval","10");
+                nd.apply();
+                stopService(new Intent(Settings.this, ForegroundService.class));
+                Intent startIntent = new Intent(Settings.this, ForegroundService.class);
+                startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                startService(startIntent);
+                Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 10 mins", Snackbar.LENGTH_LONG)
+                        .show();
+
+            }
+        });
+
+        rbb.setOnClickListener(new View.OnClickListener() {
+            SharedPreferences.Editor nd = updateint.edit();
+
+            @Override
+            public void onClick(View v) {
+                nd.putString("Interval","30");
+                nd.apply();
+                stopService(new Intent(Settings.this, ForegroundService.class));
+                Intent startIntent = new Intent(Settings.this, ForegroundService.class);
+                startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                startService(startIntent);
+                Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 30 mins", Snackbar.LENGTH_LONG)
+                        .show();
+
+            }
+        });
+
+        rbc.setOnClickListener(new View.OnClickListener() {
+            SharedPreferences.Editor nd = updateint.edit();
+
+            @Override
+            public void onClick(View v) {
+                nd.putString("Interval","180");
+                nd.apply();
+                stopService(new Intent(Settings.this, ForegroundService.class));
+                Intent startIntent = new Intent(Settings.this, ForegroundService.class);
+                startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                startService(startIntent);
+                Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 3 hrs", Snackbar.LENGTH_LONG)
+                        .show();
+
+            }
+        });
+
 
 
         sw.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
@@ -135,7 +220,6 @@ public class Settings extends AppCompatActivity {
         });
 
 
-
         sw1.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -144,6 +228,9 @@ public class Settings extends AppCompatActivity {
                 if(isChecked) {
                     ed.putString("Toggle2", "On");
                     ed.apply();
+                    rba.setEnabled(true);
+                    rbb.setEnabled(true);
+                    rbc.setEnabled(true);
                     Snackbar.make(findViewById(android.R.id.content), "Notification On", Snackbar.LENGTH_LONG)
                             .show();
                     Intent startIntent = new Intent(Settings.this, ForegroundService.class);
@@ -156,6 +243,9 @@ public class Settings extends AppCompatActivity {
                 {
                     ed.putString("Toggle2","Off");
                     ed.apply();
+                    rba.setEnabled(false);
+                    rbb.setEnabled(false);
+                    rbc.setEnabled(false);
 
                     Snackbar.make(findViewById(android.R.id.content), "Notification Off", Snackbar.LENGTH_LONG)
                             .show();

@@ -61,8 +61,9 @@ public class ForegroundService extends Service implements LocationListener{ //im
     private static final String APP_ID = "80e4eede56844462ef3cdc721208c31f";
     double lat, lon;
     Location loc;
+    long period;
     private GoogleApiClient googleApiClient;
-    SharedPreferences switches;
+    SharedPreferences switches,updateint;
     String weather = "0.0";
     String s, q;
     String city="City",des="Loading...",cap;
@@ -71,6 +72,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
     @Override
     public void onCreate() {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
+        updateint = getSharedPreferences("Interval", Context.MODE_PRIVATE);
         super.onCreate();
 
         //googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
@@ -81,24 +83,39 @@ public class ForegroundService extends Service implements LocationListener{ //im
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
-            Log.i(LOG_TAG, "Received Start Foreground Intent ");
+        try {
+            if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
+                Log.i(LOG_TAG, "Received Start Foreground Intent ");
+                if ((updateint.getString("Interval", null)) == "10") {
+                    period = 10;
+                }
+                if ((updateint.getString("Interval", null)) == "30") {
+                    period = 30;
+                }
+                if ((updateint.getString("Interval", null)) == "180") {
+                    period = 180;
+                }
 
-            getLocation();
+                getLocation();
 
 
-        } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
-            Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
-            Log.i(LOG_TAG, "Received Stop Foreground Intent");
-            stopForeground(true);
-            stopSelf();
+            } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
+                Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
+                Log.i(LOG_TAG, "Received Stop Foreground Intent");
+                stopForeground(true);
+                stopSelf();
             /*beeperHandle.cancel(true);
             scheduler.shutdown();*/
+            }
+
+            tx(period);
+
+
+        }catch (RuntimeException e) {
+            e.printStackTrace();
         }
-
-        tx(5);
-
         return START_STICKY;
+
 
     }
 
@@ -187,8 +204,8 @@ public class ForegroundService extends Service implements LocationListener{ //im
 
 
 
-    public void tx(long period) {
-        beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, period, TimeUnit.MINUTES);
+    public void tx(long periods) {
+        beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, periods, TimeUnit.MINUTES);
         //Log.i("MyTestService", "Service at tx");
 
     }
@@ -231,6 +248,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
                 .setTicker("WeatherPing")
                 .setContentText(des)
                 .setSmallIcon(R.drawable.logonotif1)
+                .setColor(this.getResources().getColor(R.color.colorPrimary))
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 //.setContent(notificationView)
                 .setOngoing(true).build();

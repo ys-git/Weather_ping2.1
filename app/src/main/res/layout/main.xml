@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/swipe_to_refresh_layout"
@@ -127,7 +128,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="550dp">
+            android:layout_height="900dp">
 
             <ImageView
                 android:id="@+id/imageView15"
@@ -399,26 +400,14 @@
                 android:textColor="#ffffff"
                 android:textSize="7dp" />
 
-            <TextView
-                android:id="@+id/textView15"
+            <ImageView
+                android:id="@+id/imageView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/imageView15"
-                android:layout_alignStart="@+id/imageView15"
-                android:layout_below="@+id/imageView15"
-                android:layout_marginTop="22dp"
-                android:text="Quality"
-                android:textColor="#ffffff" />
-
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textView15"
-                android:layout_toEndOf="@+id/textView37"
-                android:layout_toRightOf="@+id/textView37"
-                android:text="City"
-                android:textColor="#ffffff" />
+                android:layout_above="@+id/textView38"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="21dp"
+                app:srcCompat="@drawable/range20" />
 
         </RelativeLayout>
 

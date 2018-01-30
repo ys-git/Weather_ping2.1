@@ -399,6 +399,27 @@
                 android:textColor="#ffffff"
                 android:textSize="7dp" />
 
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageView15"
+                android:layout_alignStart="@+id/imageView15"
+                android:layout_below="@+id/imageView15"
+                android:layout_marginTop="22dp"
+                android:text="Quality"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView15"
+                android:layout_toEndOf="@+id/textView37"
+                android:layout_toRightOf="@+id/textView37"
+                android:text="City"
+                android:textColor="#ffffff" />
+
         </RelativeLayout>
 
     </LinearLayout>

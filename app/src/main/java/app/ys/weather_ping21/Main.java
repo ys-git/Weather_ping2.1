@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -19,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +28,16 @@ import android.widget.TextView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,19 +45,23 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     Button getLocationBtn;
     public ProgressDialog pDialog;
-    TextView locationText;
+    TextView locationText,tt1,tt2;
     ImageView img,setts;
+    String airquality,cityname;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
     LocationManager locationManager;
+    String token="7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+
     Typeface weatherFont;
-    double lat,lon;
+    double lat,lon,lng;
     String s,q,celss,cel_t;
     String tempp;
     SharedPreferences switches;
     Double far;
     Double cel;
+    String air="0.0",url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +74,8 @@ public class Main extends AppCompatActivity implements LocationListener {
         setts=(ImageView)findViewById(R.id.sett);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_to_refresh_layout);
         currentTemperatureField = (TextView)findViewById(R.id.textView6);
+        //tt1=(TextView)findViewById(R.id.textView15);
+        tt2=(TextView)findViewById(R.id.textView23);
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
         // locationText = (TextView)findViewById(R.id.locationText);
@@ -194,7 +212,17 @@ public class Main extends AppCompatActivity implements LocationListener {
         lat=location.getLatitude();
         lon=location.getLongitude();
         s=String.valueOf(lat);
-        q=String.valueOf(lon);
+        lon=lng;
+
+
+
+
+        //url = ("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
+
+        url =new String("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
+
+
+
 
         /*try {+
             Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -206,6 +234,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         }*/
         ex();
+        new GetAirQuality();
 
     }
 
@@ -288,7 +317,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 updatedField.setText("Updated on: "+weather_updatedOn);
                 detailsField.setText(weather_description);
                 currentTemperatureField.setText(weather_temperature+" °C");
-                humidity_field.setText("     "+weather_humidity);
+                humidity_field.setText("      "+weather_humidity);
                 pressure_field.setText(weather_pressure);
                 sun.setText(sun_rise);
                 set.setText(sun_set);
@@ -330,6 +359,66 @@ public class Main extends AppCompatActivity implements LocationListener {
             {
                 currentTemperatureField.setText(tempp+" °C");
             }
+        }
+    }
+
+
+    private class GetAirQuality extends AsyncTask<String, Void, String> {
+
+
+        public GetAirQuality() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try {
+                Log.i("Air", "Inside AirQuality");
+                URL url = new URL(strings[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder builder = new StringBuilder();
+
+                String inputString;
+                while ((inputString = bufferedReader.readLine()) != null) {
+                    builder.append(inputString);
+                }
+
+                JSONObject airq = new JSONObject(builder.toString());
+                //JSONObject data = airq.getJSONObject("data");
+               /* JSONObject iaqi = airq.getJSONObject("iaqi");
+                JSONObject noo = airq.getJSONObject("iaqi");
+                JSONObject ooo = airq.getJSONObject("iaqi");
+                JSONObject pmten = airq.getJSONObject("iaqi");
+                JSONObject pmtwofive = airq.getJSONObject("iaqi");
+                JSONObject soo = airq.getJSONObject("iaqi");
+                JSONObject time = airq.getJSONObject("time");*/
+
+
+                //airquality = data.getString("aqi");
+                cityname = airq.getString("status");
+                //Carbonmono=iaqi.getString("")
+                //nitrogen=noo.getString("v");
+                //o3=ooo.getString("v");
+                //pm10=pmten.getString("v");
+                //pm25=pmtwofive.getString("v");
+               // so2=soo.getString("v");
+                //tt1.setText(airquality);
+                tt2.setText(cityname);
+
+                urlConnection.disconnect();
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            return air;
+        }
+
+        @Override
+        protected void onPostExecute(String temp) {
+
         }
     }
 }

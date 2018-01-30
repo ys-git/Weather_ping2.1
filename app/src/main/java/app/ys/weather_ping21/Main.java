@@ -219,7 +219,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         //url = ("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
 
-        url =new String("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
+        //url =new String("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
 
 
 
@@ -234,7 +234,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         }*/
         ex();
-        new GetAirQuality();
+        new GetAirQuality().execute();
 
     }
 
@@ -366,16 +366,19 @@ public class Main extends AppCompatActivity implements LocationListener {
     private class GetAirQuality extends AsyncTask<String, Void, String> {
 
 
-        public GetAirQuality() {
-
+        @Override
+        protected void onPreExecute() {
         }
+
 
         @Override
         protected String doInBackground(String... strings) {
 
+            String urls=new String("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
+
             try {
                 Log.i("Air", "Inside AirQuality");
-                URL url = new URL(strings[0]);
+                URL url = new URL(urls);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
                 InputStream stream = new BufferedInputStream(urlConnection.getInputStream());

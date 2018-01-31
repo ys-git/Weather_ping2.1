@@ -28,6 +28,11 @@ import android.widget.TextView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,6 +58,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     LocationManager locationManager;
     String token="7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+    private final String URL = "https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
     Typeface weatherFont;
     double lat,lon,lng;
@@ -212,7 +218,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         lat=location.getLatitude();
         lon=location.getLongitude();
         s=String.valueOf(lat);
-        lon=lng;
+        q=String.valueOf(lon);
 
 
 
@@ -234,7 +240,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         }*/
         ex();
-        new GetAirQuality().execute();
+        new FetchDataTask().execute(URL);
 
     }
 
@@ -363,67 +369,81 @@ public class Main extends AppCompatActivity implements LocationListener {
     }
 
 
-    private class GetAirQuality extends AsyncTask<String, Void, String> {
-
-
-        @Override
-        protected void onPreExecute() {
-        }
-
+    private class FetchDataTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected String doInBackground(String... params) {
 
-            String urls=new String("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
+            InputStream inputStream = null;
+            String result= null;
+            HttpClient client = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(params[0]);
 
             try {
-                Log.i("Air", "Inside AirQuality");
-                URL url = new URL(urls);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-                InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-                StringBuilder builder = new StringBuilder();
+                HttpResponse response = client.execute(httpGet);
+                inputStream = response.getEntity().getContent();
 
-                String inputString;
-                while ((inputString = bufferedReader.readLine()) != null) {
-                    builder.append(inputString);
+                // convert inputstream to string
+                if(inputStream != null){
+                    result = convertInputStreamToString(inputStream);
+                    Log.i("App", "Data received:" +result);
+
                 }
+                else
+                    result = "Failed to fetch data";
 
-                JSONObject airq = new JSONObject(builder.toString());
-                //JSONObject data = airq.getJSONObject("data");
-               /* JSONObject iaqi = airq.getJSONObject("iaqi");
-                JSONObject noo = airq.getJSONObject("iaqi");
-                JSONObject ooo = airq.getJSONObject("iaqi");
-                JSONObject pmten = airq.getJSONObject("iaqi");
-                JSONObject pmtwofive = airq.getJSONObject("iaqi");
-                JSONObject soo = airq.getJSONObject("iaqi");
-                JSONObject time = airq.getJSONObject("time");*/
+                return result;
 
-
-                //airquality = data.getString("aqi");
-                cityname = airq.getString("status");
-                //Carbonmono=iaqi.getString("")
-                //nitrogen=noo.getString("v");
-                //o3=ooo.getString("v");
-                //pm10=pmten.getString("v");
-                //pm25=pmtwofive.getString("v");
-               // so2=soo.getString("v");
-                //tt1.setText(airquality);
-                tt2.setText(cityname);
-
-                urlConnection.disconnect();
-            } catch (IOException | JSONException e) {
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            return air;
+
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String temp) {
+        protected void onPostExecute(String dataFetched) {
+            //parse the JSON data and then display
+            parseJSON(dataFetched);
+        }
+
+
+        private String convertInputStreamToString(InputStream inputStream) throws IOException{
+            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+            String line = "";
+            String result = "";
+            while((line = bufferedReader.readLine()) != null)
+                result += line;
+
+            inputStream.close();
+            return result;
 
         }
+
+        private void parseJSON(String data){
+
+            try{
+
+                JSONObject jsonObject = new JSONObject(data);
+                JSONObject main = jsonObject.getJSONObject("data");
+
+                cityname = jsonObject.getString("status");
+                des = main.getString("aqi");
+
+                tt2.setText(cityname);
+                tt1.setText(des);
+
+
+            }catch(Exception e){
+                Log.i("App", "Error parsing data" +e.getMessage());
+
+            }
+        }
     }
+
 }
 
 

@@ -557,7 +557,8 @@
                 android:layout_marginTop="26dp"
                 android:fontFamily="@font/yanone_kaffeesatz_light"
                 android:text="Major Pollutants:"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -643,8 +644,10 @@
                 android:layout_above="@+id/textView47"
                 android:layout_alignLeft="@+id/textView47"
                 android:layout_alignStart="@+id/textView47"
-                android:text="Dominant Pollutant"
-                android:textColor="#ffffff" />
+                android:fontFamily="@font/yanone_kaffeesatz_light"
+                android:text="Dominant Pollutant :"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 

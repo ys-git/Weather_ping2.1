@@ -61,7 +61,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
     LocationManager locationManager;
-    String token="7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+
 
 
     Typeface weatherFont;
@@ -79,6 +79,8 @@ public class Main extends AppCompatActivity implements LocationListener {
         getSupportActionBar().hide();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
+
+
 
         //img=(ImageView)findViewById(R.id.rld);
         setts=(ImageView)findViewById(R.id.sett);
@@ -294,6 +296,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     void ex()
     {
+
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/YanoneKaffeesatz-Thin.ttf");
 
@@ -302,6 +305,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         Typeface tf4 = Typeface.createFromAsset(getAssets(),
                 "fonts/calibril.ttf");
+
 
         weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
@@ -401,6 +405,15 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
     private class FetchDataTask extends AsyncTask<String, Void, String> {
+
+        Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/YanoneKaffeesatz-Thin.ttf");
+
+        Typeface tf3 = Typeface.createFromAsset(getAssets(),
+                "fonts/DINMedium.ttf");
+
+        Typeface tf4 = Typeface.createFromAsset(getAssets(),
+                "fonts/calibril.ttf");
 
         @Override
         protected String doInBackground(String... params) {
@@ -506,7 +519,8 @@ public class Main extends AppCompatActivity implements LocationListener {
                 tt6.setText("SO₂ :   "+sulphur);
                 tt7.setText("CO :   "+carbon);
                 tt10.setText(cityname);
-                tt11.setText("Air Index Last Update on: \n    "+time);
+                tt10.setTypeface(tf4);
+                tt11.setText("Air Index Last Update on: \n   "+time);
 
                 if(dominant=="pm25") {
                     tt9.setText("PM₂.₅ : "+pm_25);
@@ -536,15 +550,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 double d = Double.parseDouble(s);
                 Double de = new Double(d);
                 int con = de.intValue();
-                //String a = Integer.toString(i);
-                //String b = String.valueOf(a);
-                //te3.setText(b);
 
-
-
-
-                //String numberAsString = aqi;
-                //con= Double.parseDouble(numberAsString);
                 if(con>0&&con<=50)
                 {
                     img1.setVisibility(View.VISIBLE);

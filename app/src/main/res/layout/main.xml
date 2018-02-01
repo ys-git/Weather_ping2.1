@@ -657,7 +657,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:text="Loading City...."
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/imageView28"
@@ -685,6 +686,21 @@
                 android:text="_"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/imageView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_alignLeft="@+id/imageView28"
+                android:layout_alignStart="@+id/imageView28"
+                android:layout_below="@+id/textView50"
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="5dp"
+                android:maxWidth="200dp"
+                app:srcCompat="@drawable/and" />
 
         </RelativeLayout>
 

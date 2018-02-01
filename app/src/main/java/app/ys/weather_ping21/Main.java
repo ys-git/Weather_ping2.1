@@ -59,11 +59,11 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     LocationManager locationManager;
     String token="7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
-    private final String URL = "https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+
 
     Typeface weatherFont;
     double lat,lon,lng;
-    String s,q,celss,cel_t;
+    String s,q,celss,cel_t,pm10a;
     String tempp;
     SharedPreferences switches;
     Double far;
@@ -220,6 +220,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         lon=location.getLongitude();
         s=String.valueOf(lat);
         q=String.valueOf(lon);
+        final String URL = "https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
 
 

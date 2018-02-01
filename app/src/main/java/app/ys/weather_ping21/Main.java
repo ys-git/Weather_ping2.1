@@ -232,7 +232,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
         }
         catch(SecurityException e) {
             e.printStackTrace();
@@ -525,7 +525,8 @@ public class Main extends AppCompatActivity implements LocationListener {
                 tt7.setText("CO :   "+carbon);
                 tt10.setText(cityname);
                 tt10.setTypeface(tf4);
-                tt11.setText(board_name);
+                tt11.setText("Measured by: "+board_name);
+                tt11.setTypeface(tf4);
                 tt12.setText("Air Index Last Updated on: \n   "+time);
 
                 if(dominant.equals("pm25")) {
@@ -593,11 +594,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     te6.setText("  "+aqi);
 
                 }
-
-                //tt9.setText(number);
-
-
-
 
 
             }catch(Exception e){

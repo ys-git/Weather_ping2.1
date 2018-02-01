@@ -128,7 +128,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1200dp">
+            android:layout_height="1150dp">
 
             <ImageView
                 android:id="@+id/imageView15"
@@ -386,7 +386,7 @@
                 android:layout_alignBottom="@+id/textView38"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="*Data by OpenWeatherMap"
+                android:text="*Weather Data by OpenWeatherMap"
                 android:textColor="#ffffff"
                 android:textSize="7dp" />
 
@@ -681,8 +681,8 @@
                 android:layout_below="@+id/textView36"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/yanone_kaffeesatz_light"
-                android:text="cszgdzhbe"
+                android:fontFamily="sans-serif"
+                android:text="_"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 
@@ -708,7 +708,69 @@
                 android:layout_alignBottom="@+id/imageView29"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="7dp"
-                android:text="TextView" />
+                android:fontFamily="@font/yanone_kaffeesatz_light"
+                android:text="_"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/textView53"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textView39"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="*Air Quality Index provided by: AQICN"
+                android:textColor="#ffffff"
+                android:textSize="7dp" />
+
+            <ImageView
+                android:id="@+id/imageView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView25"
+                android:layout_toEndOf="@+id/textView48"
+                android:layout_toRightOf="@+id/textView48"
+                android:adjustViewBounds="true"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+            <ImageView
+                android:id="@+id/imageView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView49"
+                android:layout_toEndOf="@+id/textView49"
+                android:layout_toRightOf="@+id/textView49"
+                android:adjustViewBounds="true"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+            <ImageView
+                android:id="@+id/imageView33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView21"
+                android:layout_toEndOf="@+id/imageView21"
+                android:layout_toRightOf="@+id/imageView21"
+                android:adjustViewBounds="true"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+            <ImageView
+                android:id="@+id/imageView34"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView48"
+                android:layout_toEndOf="@+id/textView47"
+                android:layout_toRightOf="@+id/textView47"
+                android:adjustViewBounds="true"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                app:srcCompat="@android:drawable/ic_menu_info_details" />
 
         </RelativeLayout>
 

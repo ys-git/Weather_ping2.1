@@ -51,7 +51,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     Button getLocationBtn;
     public ProgressDialog pDialog;
-    TextView locationText,tt1,tt2;
+    TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10;
     ImageView img,setts;
     String airquality,cityname,aqi;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -83,6 +83,15 @@ public class Main extends AppCompatActivity implements LocationListener {
         currentTemperatureField = (TextView)findViewById(R.id.textView6);
         //tt1=(TextView)findViewById(R.id.textView15);
         tt2=(TextView)findViewById(R.id.textView23);
+        tt3=(TextView)findViewById(R.id.textView23);
+        tt4=(TextView)findViewById(R.id.textView23);
+        tt5=(TextView)findViewById(R.id.textView23);
+        tt6=(TextView)findViewById(R.id.textView23);
+        tt7=(TextView)findViewById(R.id.textView23);
+        tt8=(TextView)findViewById(R.id.textView23);
+        tt9=(TextView)findViewById(R.id.textView23);
+        tt10=(TextView)findViewById(R.id.textView23);
+
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
         // locationText = (TextView)findViewById(R.id.locationText);

@@ -53,7 +53,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     public ProgressDialog pDialog;
     TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10;
     ImageView img,setts;
-    String carbon,sulphur,ozone,pm_10,pm_25,nitrogen;
+    String carbon,sulphur,ozone,pm_10,pm_25,nitrogen,time;
     String airquality,cityname,aqi;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
@@ -85,13 +85,13 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt1=(TextView)findViewById(R.id.textView15);
         tt2=(TextView)findViewById(R.id.textView24);
         tt3=(TextView)findViewById(R.id.textView25);
-        tt4=(TextView)findViewById(R.id.textView23);
-        tt5=(TextView)findViewById(R.id.textView31);
-        tt6=(TextView)findViewById(R.id.textView32);
-        tt7=(TextView)findViewById(R.id.textView35);
-        tt8=(TextView)findViewById(R.id.textView36);
+        tt4=(TextView)findViewById(R.id.textView31);
+        tt5=(TextView)findViewById(R.id.textView32);
+        tt6=(TextView)findViewById(R.id.textView35);
+        tt7=(TextView)findViewById(R.id.textView36);
+        tt8=(TextView)findViewById(R.id.textView37);
         tt9=(TextView)findViewById(R.id.textView47);
-        //tt10=(TextView)findViewById(R.id.textView23);
+        tt10=(TextView)findViewById(R.id.textView29);
 
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
@@ -448,6 +448,8 @@ public class Main extends AppCompatActivity implements LocationListener {
                 JSONObject name = mains.getJSONObject("city");
 
                 JSONObject aqis = mains.getJSONObject("iaqi");
+                JSONObject tm = mains.getJSONObject("time");
+                JSONObject dom = mains.getJSONObject("dominentpol");
 
                 JSONObject co = aqis.getJSONObject("co");
                 JSONObject no2 = aqis.getJSONObject("no2");
@@ -465,6 +467,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 pm_10=pm10.getString("v");
                 pm_25=pm25.getString("v");
                 nitrogen=no2.getString("v");
+                time=tm.getString("s");
+                cityname = name.getString("name");
+
 
                 JSONArray jsonarray = main.getJSONArray("attributions");
                 jsonarray.getJSONObject(0);
@@ -479,8 +484,15 @@ public class Main extends AppCompatActivity implements LocationListener {
                 tt5.setText("NO₂ :   "+nitrogen);
                 tt6.setText("SO₂ :   "+sulphur);
                 tt7.setText("CO :   "+carbon);
-                //tt2.setText("SO₂ :   "+carbon);
-                //tt2.setText("SO₂ :   "+carbon);
+                tt10.setText(cityname);
+                tt9.setText(aqi);
+
+
+
+
+                //String numberAsString = aqi;
+                //long number = Long.valueOf(numberAsString);
+                //tt9.setText(number);
 
 
 

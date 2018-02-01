@@ -405,7 +405,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView23"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="48dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="219dp"
                 android:maxWidth="214dp"
@@ -648,6 +648,16 @@
                 android:text="Dominant Pollutant :"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView23"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"
+                android:text="Loading City...."
+                android:textColor="#ffffff" />
 
         </RelativeLayout>
 

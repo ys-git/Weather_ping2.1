@@ -51,16 +51,18 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     Button getLocationBtn;
     public ProgressDialog pDialog;
-    TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10,tt11;
+    TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10,tt11,tt12;
     TextView te1,te2,te3,te4,te5,te6;
     ImageView img,setts,img1,img2,img3,img4,img5,img6;
     Double con;
-    String carbon,sulphur,ozone,pm_10,pm_25,nitrogen,time;
+    String carbon,sulphur,ozone,pm_10,pm_25,nitrogen,time,board_name;
     String airquality,cityname,aqi,dominant;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
     LocationManager locationManager;
+
+    Integer k=0;
 
 
 
@@ -97,6 +99,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt9=(TextView)findViewById(R.id.textView47);
         tt10=(TextView)findViewById(R.id.textView49);
         tt11=(TextView)findViewById(R.id.textView50);
+        tt12=(TextView)findViewById(R.id.textView52);
 
 
         te1=(TextView)findViewById(R.id.textView40);
@@ -506,7 +509,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
                 JSONArray jsonarray = main.getJSONArray("attributions");
-                jsonarray.getJSONObject(0);
+                JSONObject elearray = jsonarray.getJSONObject(0);
+                board_name = elearray.getString("name");
+                //jsonarray.getJSONObject(0);
 
                     //JSONObject jsonobject = jsonarray.getJSONObject(i);
                     //String name = jsonobject.getString("name");
@@ -520,30 +525,31 @@ public class Main extends AppCompatActivity implements LocationListener {
                 tt7.setText("CO :   "+carbon);
                 tt10.setText(cityname);
                 tt10.setTypeface(tf4);
-                tt11.setText("Air Index Last Update on: \n   "+time);
+                tt11.setText(board_name);
+                tt12.setText("Air Index Last Updated on: \n   "+time);
 
-                if(dominant=="pm25") {
-                    tt9.setText("PM₂.₅ : "+pm_25);
+                if(dominant.equals("pm25")) {
+                    tt9.setText("PM₂.₅ :  "+pm_25);
                 }
-                else if(dominant=="pm10") {
-                    tt9.setText("PM₁₀ : "+pm_10);
+                else if(dominant.equals("pm10")) {
+                    tt9.setText("PM₁₀ :  "+pm_10);
 
-                }else if(dominant=="o3") {
-                    tt9.setText("O₃ : "+ozone);
+                }else if(dominant.equals("o3")) {
+                    tt9.setText("O₃ :  "+ozone);
 
-                }else if(dominant=="no2") {
-                    tt9.setText("NO₂ : "+nitrogen);
+                }else if(dominant.equals("no2")) {
+                    tt9.setText("NO₂ :  "+nitrogen);
 
-                }else if(dominant=="so2") {
-                    tt9.setText("SO₂ : "+sulphur);
+                }else if(dominant.equals("so2")) {
+                    tt9.setText("SO₂ :  "+sulphur);
 
-                }else if(dominant=="co") {
-                    tt9.setText("CO : "+carbon);
+                }else if(dominant.equals("co")) {
+                    tt9.setText("CO :  "+carbon);
 
                 }else
                 {
-                    tt9.setText(dominant);
 
+                    tt9.setText(dominant);
                 }
 
                 String s = aqi;

@@ -128,7 +128,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1100dp">
+            android:layout_height="1200dp">
 
             <ImageView
                 android:id="@+id/imageView15"
@@ -657,8 +657,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:text="Loading City...."
-                android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textColor="#ffffff" />
 
             <ImageView
                 android:id="@+id/imageView28"
@@ -681,9 +680,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView36"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/yanone_kaffeesatz_light"
-                android:text="_"
+                android:text="cszgdzhbe"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 
@@ -696,11 +695,20 @@
                 android:layout_alignLeft="@+id/imageView28"
                 android:layout_alignStart="@+id/imageView28"
                 android:layout_below="@+id/textView50"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="33dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="5dp"
                 android:maxWidth="200dp"
                 app:srcCompat="@drawable/and" />
+
+            <TextView
+                android:id="@+id/textView52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView29"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="7dp"
+                android:text="TextView" />
 
         </RelativeLayout>
 

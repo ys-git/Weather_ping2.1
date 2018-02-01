@@ -421,15 +421,15 @@
                 android:fontFamily="@font/anaheim"
                 android:text="Real-time Air Quality Index "
                 android:textColor="#2F4F4F"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
             <ImageView
                 android:id="@+id/imageView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/imageView21"
-                android:layout_toLeftOf="@+id/textView38"
-                android:layout_toStartOf="@+id/textView38"
+                android:layout_toEndOf="@+id/imageView23"
+                android:layout_toRightOf="@+id/imageView23"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/arrow11" />
 
@@ -658,6 +658,33 @@
                 android:layout_marginTop="25dp"
                 android:text="Loading City...."
                 android:textColor="#ffffff" />
+
+            <ImageView
+                android:id="@+id/imageView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_alignLeft="@+id/imageView15"
+                android:layout_alignStart="@+id/imageView15"
+                android:layout_below="@+id/textView15"
+                android:layout_marginTop="6dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="5dp"
+                android:maxWidth="200dp"
+                app:srcCompat="@drawable/and" />
+
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView36"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/yanone_kaffeesatz_light"
+                android:text="_"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 

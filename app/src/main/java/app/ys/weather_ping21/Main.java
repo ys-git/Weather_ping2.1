@@ -51,12 +51,12 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     Button getLocationBtn;
     public ProgressDialog pDialog;
-    TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10;
+    TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10,tt11;
     TextView te1,te2,te3,te4,te5,te6;
     ImageView img,setts,img1,img2,img3,img4,img5,img6;
     Double con;
     String carbon,sulphur,ozone,pm_10,pm_25,nitrogen,time;
-    String airquality,cityname,aqi;
+    String airquality,cityname,aqi,dominant;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
@@ -93,7 +93,8 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt7=(TextView)findViewById(R.id.textView36);
         tt8=(TextView)findViewById(R.id.textView37);
         tt9=(TextView)findViewById(R.id.textView47);
-        tt10=(TextView)findViewById(R.id.textView29);
+        tt10=(TextView)findViewById(R.id.textView49);
+        tt11=(TextView)findViewById(R.id.textView50);
 
 
         te1=(TextView)findViewById(R.id.textView40);
@@ -467,7 +468,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 JSONObject aqis = mains.getJSONObject("iaqi");
                 JSONObject tm = mains.getJSONObject("time");
-                JSONObject dom = mains.getJSONObject("dominentpol");
+
 
                 JSONObject co = aqis.getJSONObject("co");
                 JSONObject no2 = aqis.getJSONObject("no2");
@@ -478,8 +479,10 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
 
-                aqi = main.getString("aqi");
+
+                dominant = main.getString("dominentpol");
                 carbon=co.getString("v");
+                aqi = main.getString("aqi");
                 sulphur=so2.getString("v");
                 ozone=o3.getString("v");
                 pm_10=pm10.getString("v");
@@ -496,54 +499,86 @@ public class Main extends AppCompatActivity implements LocationListener {
                     //String name = jsonobject.getString("name");
                     //String url = jsonobject.getString("url");
 
-                tt2.setText("PM₂.₅:   "+pm_25);
+                tt2.setText("PM₂.₅ :   "+pm_25);
                 tt3.setText("PM₁₀ :   "+pm_10);
                 tt4.setText("O₃ :   "+ozone);
                 tt5.setText("NO₂ :   "+nitrogen);
                 tt6.setText("SO₂ :   "+sulphur);
                 tt7.setText("CO :   "+carbon);
                 tt10.setText(cityname);
-                tt9.setText(aqi);
+                tt11.setText("Air Index Last Update on: \n    "+time);
+
+                if(dominant=="pm25") {
+                    tt9.setText("PM₂.₅ : "+pm_25);
+                }
+                else if(dominant=="pm10") {
+                    tt9.setText("PM₁₀ : "+pm_10);
+
+                }else if(dominant=="o3") {
+                    tt9.setText("O₃ : "+ozone);
+
+                }else if(dominant=="no2") {
+                    tt9.setText("NO₂ : "+nitrogen);
+
+                }else if(dominant=="so2") {
+                    tt9.setText("SO₂ : "+sulphur);
+
+                }else if(dominant=="co") {
+                    tt9.setText("CO : "+carbon);
+
+                }else
+                {
+                    tt9.setText(dominant);
+
+                }
+
+                String s = aqi;
+                double d = Double.parseDouble(s);
+                Double de = new Double(d);
+                int con = de.intValue();
+                //String a = Integer.toString(i);
+                //String b = String.valueOf(a);
+                //te3.setText(b);
 
 
 
 
-                String numberAsString = aqi;
-                con= Double.parseDouble(numberAsString);
+                //String numberAsString = aqi;
+                //con= Double.parseDouble(numberAsString);
                 if(con>0&&con<=50)
                 {
                     img1.setVisibility(View.VISIBLE);
-                    te1.setText(aqi);
+                    te1.setText("  "+aqi);
 
                 }
                 else if(con>51&&con<=100)
                 {
                     img2.setVisibility(View.VISIBLE);
-                    te1.setText(aqi);
+                    te2.setText("  "+aqi);
 
                 }
                 else if(con>101&&con<=150)
                 {
                     img3.setVisibility(View.VISIBLE);
-                    te1.setText(aqi);
+                    te3.setText("  "+aqi);
 
                 }
-                else if(con>151&&con<=2000)
+                else if(con>151&&con<=200)
                 {
                     img4.setVisibility(View.VISIBLE);
-                    te1.setText(aqi);
+                    te4.setText("  "+aqi);
 
                 }
                 else if(con>201&&con<=300)
                 {
                     img5.setVisibility(View.VISIBLE);
-                    te1.setText(aqi);
+                    te5.setText("  "+aqi);
 
                 }
                 else if(con>300)
                 {
                     img6.setVisibility(View.VISIBLE);
-                    te1.setText(aqi);
+                    te6.setText("  "+aqi);
 
                 }
 

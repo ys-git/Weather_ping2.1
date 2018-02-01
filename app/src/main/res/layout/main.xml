@@ -636,6 +636,16 @@
                 android:text="Loading..."
                 android:textColor="#ffffff" />
 
+            <TextView
+                android:id="@+id/textView48"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textView47"
+                android:layout_alignLeft="@+id/textView47"
+                android:layout_alignStart="@+id/textView47"
+                android:text="Dominant Pollutant"
+                android:textColor="#ffffff" />
+
         </RelativeLayout>
 
     </LinearLayout>

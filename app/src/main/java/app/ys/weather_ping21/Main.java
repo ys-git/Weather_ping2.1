@@ -33,6 +33,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,7 +53,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     public ProgressDialog pDialog;
     TextView locationText,tt1,tt2;
     ImageView img,setts;
-    String airquality,cityname;
+    String airquality,cityname,aqi;
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
@@ -425,16 +426,35 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         private void parseJSON(String data){
 
-            try{
+            try {
 
                 JSONObject jsonObject = new JSONObject(data);
                 JSONObject main = jsonObject.getJSONObject("data");
+                JSONObject datas = main.getJSONObject("city");
+                JSONObject aqis = main.getJSONObject("iaqi");
+                JSONObject co = main.getJSONObject("co");
+                JSONObject no2 = main.getJSONObject("no2");
+                JSONObject o3 = main.getJSONObject("o3");
+                JSONObject pm10 = main.getJSONObject("pm10");
+                JSONObject pm25 = main.getJSONObject("pm25");
+                JSONObject so2 = main.getJSONObject("so2");
+
 
                 cityname = jsonObject.getString("status");
-                des = main.getString("aqi");
+                aqi = main.getString("aqi");
+                pm10a=pm10.getString("v");
 
-                tt2.setText(cityname);
-                tt1.setText(des);
+                JSONArray jsonarray = main.getJSONArray("attributions");
+                jsonarray.getJSONObject(0);
+
+                    //JSONObject jsonobject = jsonarray.getJSONObject(i);
+                    //String name = jsonobject.getString("name");
+                    //String url = jsonobject.getString("url");
+
+
+                    tt2.setText(cityname);
+                    tt1.setText(aqi);
+
 
 
             }catch(Exception e){

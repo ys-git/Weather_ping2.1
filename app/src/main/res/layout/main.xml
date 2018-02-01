@@ -128,7 +128,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="900dp">
+            android:layout_height="1000dp">
 
             <ImageView
                 android:id="@+id/imageView15"
@@ -405,7 +405,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView23"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="219dp"
                 android:maxWidth="214dp"
@@ -429,8 +429,8 @@
                 android:layout_below="@+id/imageView21"
                 android:layout_toLeftOf="@+id/textView38"
                 android:layout_toStartOf="@+id/textView38"
-                app:srcCompat="@drawable/arrow11"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                app:srcCompat="@drawable/arrow11" />
 
             <ImageView
                 android:id="@+id/imageView23"
@@ -439,9 +439,8 @@
                 android:layout_alignLeft="@+id/imageView21"
                 android:layout_alignStart="@+id/imageView21"
                 android:layout_below="@+id/imageView21"
-                app:srcCompat="@drawable/arrow11"
                 android:visibility="invisible"
-                />
+                app:srcCompat="@drawable/arrow11" />
 
             <ImageView
                 android:id="@+id/imageView24"
@@ -450,8 +449,8 @@
                 android:layout_below="@+id/imageView21"
                 android:layout_toEndOf="@+id/imageView22"
                 android:layout_toRightOf="@+id/imageView22"
-                app:srcCompat="@drawable/arrow11"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                app:srcCompat="@drawable/arrow11" />
 
             <ImageView
                 android:id="@+id/imageView25"
@@ -460,8 +459,8 @@
                 android:layout_below="@+id/imageView21"
                 android:layout_toLeftOf="@+id/imageView26"
                 android:layout_toStartOf="@+id/imageView26"
-                app:srcCompat="@drawable/arrow11"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                app:srcCompat="@drawable/arrow11" />
 
             <ImageView
                 android:id="@+id/imageView26"
@@ -470,8 +469,8 @@
                 android:layout_below="@+id/imageView21"
                 android:layout_toEndOf="@+id/textView38"
                 android:layout_toRightOf="@+id/textView38"
-                app:srcCompat="@drawable/arrow11"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                app:srcCompat="@drawable/arrow11" />
 
             <ImageView
                 android:id="@+id/imageView27"
@@ -480,19 +479,16 @@
                 android:layout_below="@+id/imageView21"
                 android:layout_toEndOf="@+id/imageView26"
                 android:layout_toRightOf="@+id/imageView26"
-                app:srcCompat="@drawable/arrow11"
-                android:visibility="invisible"/>
+                android:visibility="invisible"
+                app:srcCompat="@drawable/arrow11" />
 
             <TextView
                 android:id="@+id/textView40"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/imageView23"
                 android:layout_alignLeft="@+id/imageView23"
-                android:layout_alignRight="@+id/imageView23"
                 android:layout_alignStart="@+id/imageView23"
                 android:layout_below="@+id/imageView23"
-                android:layout_marginTop="12dp"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -551,11 +547,65 @@
                 android:layout_toRightOf="@+id/textView45"
                 android:textColor="#ffffff" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView42"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="26dp"
+                android:text="Major Pollutants:"
+                android:textColor="#ffffff" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageView8"
+                android:layout_alignStart="@+id/imageView8"
+                android:layout_below="@+id/textView15"
+                android:layout_marginTop="13dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView24"
+                android:layout_alignStart="@+id/textView24"
+                android:layout_below="@+id/textView24"
+                android:layout_marginTop="7dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView25"
+                android:layout_alignStart="@+id/textView25"
+                android:layout_below="@+id/textView25"
+                android:layout_marginTop="8dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView31"
+                android:layout_alignStart="@+id/textView31"
+                android:layout_below="@+id/textView31"
+                android:layout_marginTop="9dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView32"
+                android:layout_alignStart="@+id/textView32"
+                android:layout_below="@+id/textView32"
+                android:layout_marginTop="9dp"
+                android:text="TextView" />
 
         </RelativeLayout>
 

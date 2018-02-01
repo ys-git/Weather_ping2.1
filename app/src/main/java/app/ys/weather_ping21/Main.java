@@ -473,14 +473,14 @@ public class Main extends AppCompatActivity implements LocationListener {
                     //String name = jsonobject.getString("name");
                     //String url = jsonobject.getString("url");
 
-                tt2.setText(":   "+carbon);
-                tt2.setText("SO₂ :   "+carbon);
-                tt2.setText("SO₂ :   "+carbon);
-                tt2.setText("SO₂ :   "+carbon);
-                tt2.setText("SO₂ :   "+carbon);
-                tt2.setText("SO₂ :   "+carbon);
-                tt2.setText("SO₂ :   "+carbon);
-                tt2.setText("SO₂ :   "+carbon);
+                tt2.setText("PM₂.₅:   "+pm_25);
+                tt3.setText("PM₁₀ :   "+pm_10);
+                tt4.setText("O₃ :   "+ozone);
+                tt5.setText("NO₂ :   "+nitrogen);
+                tt6.setText("SO₂ :   "+sulphur);
+                tt7.setText("CO :   "+carbon);
+                //tt2.setText("SO₂ :   "+carbon);
+                //tt2.setText("SO₂ :   "+carbon);
 
 
 

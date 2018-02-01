@@ -128,7 +128,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1050dp">
+            android:layout_height="1100dp">
 
             <ImageView
                 android:id="@+id/imageView15"

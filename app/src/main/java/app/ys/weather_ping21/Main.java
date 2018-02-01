@@ -52,7 +52,9 @@ public class Main extends AppCompatActivity implements LocationListener {
     Button getLocationBtn;
     public ProgressDialog pDialog;
     TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10;
-    ImageView img,setts;
+    TextView te1,te2,te3,te4,te5,te6;
+    ImageView img,setts,img1,img2,img3,img4,img5,img6;
+    Double con;
     String carbon,sulphur,ozone,pm_10,pm_25,nitrogen,time;
     String airquality,cityname,aqi;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -92,6 +94,22 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt8=(TextView)findViewById(R.id.textView37);
         tt9=(TextView)findViewById(R.id.textView47);
         tt10=(TextView)findViewById(R.id.textView29);
+
+
+        te1=(TextView)findViewById(R.id.textView40);
+        te2=(TextView)findViewById(R.id.textView42);
+        te3=(TextView)findViewById(R.id.textView43);
+        te4=(TextView)findViewById(R.id.textView44);
+        te5=(TextView)findViewById(R.id.textView45);
+        te6=(TextView)findViewById(R.id.textView46);
+
+
+        img1=(ImageView)findViewById(R.id.imageView23);
+        img2=(ImageView)findViewById(R.id.imageView22);
+        img3=(ImageView)findViewById(R.id.imageView24);
+        img4=(ImageView)findViewById(R.id.imageView25);
+        img5=(ImageView)findViewById(R.id.imageView26);
+        img6=(ImageView)findViewById(R.id.imageView27);
 
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
@@ -490,8 +508,45 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
 
-                //String numberAsString = aqi;
-                //long number = Long.valueOf(numberAsString);
+                String numberAsString = aqi;
+                con= Double.parseDouble(numberAsString);
+                if(con>0&&con<=50)
+                {
+                    img1.setVisibility(View.VISIBLE);
+                    te1.setText(aqi);
+
+                }
+                else if(con>51&&con<=100)
+                {
+                    img2.setVisibility(View.VISIBLE);
+                    te1.setText(aqi);
+
+                }
+                else if(con>101&&con<=150)
+                {
+                    img3.setVisibility(View.VISIBLE);
+                    te1.setText(aqi);
+
+                }
+                else if(con>151&&con<=2000)
+                {
+                    img4.setVisibility(View.VISIBLE);
+                    te1.setText(aqi);
+
+                }
+                else if(con>201&&con<=300)
+                {
+                    img5.setVisibility(View.VISIBLE);
+                    te1.setText(aqi);
+
+                }
+                else if(con>300)
+                {
+                    img6.setVisibility(View.VISIBLE);
+                    te1.setText(aqi);
+
+                }
+
                 //tt9.setText(number);
 
 

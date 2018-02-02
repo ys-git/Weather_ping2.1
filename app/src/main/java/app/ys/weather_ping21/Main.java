@@ -180,7 +180,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 new AlertDialog.Builder(Main.this)
                         .setTitle("Info")
                         .setCancelable(true)
-                        .setMessage("Since it is not possible to measure pollutant concentrations in every part of the country,the app shows the air index of the most nearby location.\n" +
+                        .setMessage("Since it is not possible to measure pollutant concentrations in every part of the country, the app shows the air index of the most nearby location.\n" +
                                 "Sample concentrations are used to infer what pollutant concentrations \n" +
                                 "are around sampling site for variety of time periods.\n" +
                                 "\n" +
@@ -222,7 +222,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 new AlertDialog.Builder(Main.this)
                         .setTitle("Info")
                         .setCancelable(true)
-                        .setMessage("Pollutant which exceeds its presence with respect to other pollutants present in the atmosphere")
+                        .setMessage("Pollutant which exceeds its presence with respect to other pollutants present in the atmosphere.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -257,7 +257,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("Info")
                             .setCancelable(true)
-                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setMessage("Particulate matter (PM₁₀) pollution consists of very small liquid and solid particles floating in the air. Of greatest concern to public health are the particles small enough to be inhaled into the deepest parts of the lung. These particles are less than 10 microns in diameter - about 1/7th the thickness of the a human hair - and are known as PM₁₀. This includes fine particulate matter known as PM2.5.\n" +
+                                    "\n" +
+                                    "PM₁₀ is a major component of air pollution that threatens both our health and our environment.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -272,7 +274,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("Info")
                             .setCancelable(true)
-                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setMessage("Good Ozone: Ozone occurs naturally in the Earth's upper atmosphere - 6 to 30 miles above the Earth's surface - where it forms a protective layer that shields us from the sun's harmful ultraviolet rays. Manmade chemicals are known to destroy this beneficial ozone" +
+                                    "\n"+
+                                    "Bad Ozone: In the Earth's lower atmosphere, near ground level, ozone is formed when pollutants emitted by cars, power plants, industrial boilers, refineries, chemical plants, and other sources react chemically in the presence of sunlight. Ozone at ground level is a harmful air pollutant.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -287,7 +291,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("Info")
                             .setCancelable(true)
-                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setMessage("Nitrogen dioxide(NO₂) is a nasty-smelling gas. Some nitrogen dioxide is formed naturally in the atmosphere by lightning and some is produced by plants, soil and water. However, only about 1% of the total amount of nitrogen dioxide found in our cities' air is formed this way.\n" +
+                                    "\n" +
+                                    "Nitrogen dioxide is an important air pollutant because it contributes to the formation of photochemical smog, which can have significant impacts on human health.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -302,7 +308,8 @@ public class Main extends AppCompatActivity implements LocationListener {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("Info")
                             .setCancelable(true)
-                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setMessage("Sulfur dioxide is the chemical compound with the formula SO₂"+
+                                    "At standard atmosphere, it is a toxic gas with a pungent, irritating smell. It is released naturally by volcanic activity and is produced as a by-product of the burning of fossil fuels contaminated with sulfur compounds.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -317,7 +324,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("Info")
                             .setCancelable(true)
-                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setMessage("CO is a colorless, odorless gas that can be harmful when inhaled in large amounts. CO is released when something is burned. The greatest sources of CO to outdoor air are cars, trucks and other vehicles or machinery that burn fossil fuels.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -339,7 +346,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 new AlertDialog.Builder(Main.this)
                         .setTitle("Why air quality monitoring is essential?")
                         .setCancelable(true)
-                        .setMessage("he starting point of air quality monitoring is to first study if an area has an air pollution problem. Monitoring helps in assessing the level of pollution in relation to the ambient air quality standards. " +
+                        .setMessage("The starting point of air quality monitoring is to first study if an area has an air pollution problem. Monitoring helps in assessing the level of pollution in relation to the ambient air quality standards. " +
                                 "Standards are a regulatory measure to set the target for pollution reduction and achieve clean air \n"+
                         "Real time monitoring results will help in calculating air quality index to issue health advisories as well as for formulation of action plan to meet standards.")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {

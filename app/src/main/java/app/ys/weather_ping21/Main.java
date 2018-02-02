@@ -68,9 +68,6 @@ public class Main extends AppCompatActivity implements LocationListener {
     LocationManager locationManager;
 
     Integer k=0;
-
-
-
     Typeface weatherFont;
     double lat,lon,lng;
     String s,q,celss,cel_t,pm10a;
@@ -770,15 +767,10 @@ public class Main extends AppCompatActivity implements LocationListener {
         private void parseJSON(String data){
 
             try {
-
-
-
-
                 JSONObject jsonObject = new JSONObject(data);
                 JSONObject main = jsonObject.getJSONObject("data");
                 JSONObject mains = jsonObject.getJSONObject("data");
                 JSONObject name = mains.getJSONObject("city");
-
                 JSONObject aqis = mains.getJSONObject("iaqi");
                 JSONObject tm = mains.getJSONObject("time");
 
@@ -788,9 +780,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                 JSONObject pm10 = aqis.getJSONObject("pm10");
                 JSONObject pm25 = aqis.getJSONObject("pm25");
                 JSONObject so2 = aqis.getJSONObject("so2");
-
-
-
 
                 dominant = main.getString("dominentpol");
                 carbon=co.getString("v");
@@ -803,15 +792,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 time=tm.getString("s");
                 cityname = name.getString("name");
 
-
                 JSONArray jsonarray = main.getJSONArray("attributions");
                 JSONObject elearray = jsonarray.getJSONObject(0);
                 board_name = elearray.getString("name");
-                //jsonarray.getJSONObject(0);
-
-                    //JSONObject jsonobject = jsonarray.getJSONObject(i);
-                    //String name = jsonobject.getString("name");
-                    //String url = jsonobject.getString("url");
 
                 tt2.setText("PM₂.₅ :   "+pm_25);
                 tt3.setText("PM₁₀ :   "+pm_10);
@@ -840,9 +823,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                 te5.setVisibility(View.INVISIBLE);
                 te6.setVisibility(View.INVISIBLE);
 
-
-
-
                 if(dominant.equals("pm25")) {
                     tt9.setText("PM₂.₅ :  "+pm_25);
                 }
@@ -870,10 +850,6 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 tt2.setTypeface(tf3);
                 tt3.setTypeface(tf3);
-
-
-
-
                 tt4.setTypeface(tf3);
                 tt5.setTypeface(tf3);
                 tt6.setTypeface(tf3);
@@ -893,7 +869,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     tt14.setText(" Good");
                     tt13.setTextColor(Color.parseColor("#38d145"));
                     k=1;
-
                 }
                 else if(con>51&&con<=100)
                 {
@@ -904,7 +879,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     tt14.setText(" Moderate");
                     tt13.setTextColor(Color.parseColor("#c4ff0e"));
                     k=2;
-
                 }
                 else if(con>101&&con<=150)
                 {
@@ -915,7 +889,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     tt14.setText(" High");
                     tt13.setTextColor(Color.parseColor("#fff200"));
                     k=3;
-
                 }
                 else if(con>151&&con<=200)
                 {
@@ -926,7 +899,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     tt14.setText(" Unhealthy");
                     tt13.setTextColor(Color.parseColor("#ff7f27"));
                     k=4;
-
                 }
                 else if(con>201&&con<=300)
                 {
@@ -937,7 +909,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     tt14.setText(" Very\nUnhealthy");
                     tt13.setTextColor(Color.parseColor("#ec1c24"));
                     k=5;
-
                 }
                 else if(con>300)
                 {
@@ -948,7 +919,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     tt14.setText(" Hazardous");
                     tt13.setTextColor(Color.parseColor("#88001b"));
                     k=6;
-
                 }
 
 

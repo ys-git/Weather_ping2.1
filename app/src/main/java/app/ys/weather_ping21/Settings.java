@@ -153,7 +153,7 @@ public class Settings extends AppCompatActivity {
             //sw2.setEnabled(false);
         }
         else
-        if((updateint.getString("Interval", null))=="30")
+        if((updateint.getString("Interval", null))=="180")
         {
             rbc.setChecked(true);
             rba.setChecked(false);

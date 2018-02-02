@@ -331,11 +331,16 @@ public class Main extends AppCompatActivity implements LocationListener {
         info4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try{
 
-                if(dominant.equals("pm25")) {
+                if (dominant.equals("pm25")&& dominant != null) {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("PM₂.₅")
                             .setCancelable(true)
+
+
+
+
                             .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
@@ -346,8 +351,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                             .create()
                             .show();
 
-                }
-                else if(dominant.equals("pm10")) {
+                } else if (dominant.equals("pm10")&& dominant != null) {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("PM₁₀")
                             .setCancelable(true)
@@ -364,12 +368,12 @@ public class Main extends AppCompatActivity implements LocationListener {
                             .show();
 
 
-                }else if(dominant.equals("o3")) {
+                } else if (dominant.equals("o3")&& dominant != null) {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("O₃")
                             .setCancelable(true)
                             .setMessage("Good Ozone: Ozone occurs naturally in the Earth's upper atmosphere - 6 to 30 miles above the Earth's surface - where it forms a protective layer that shields us from the sun's harmful ultraviolet rays. Manmade chemicals are known to destroy this beneficial ozone" +
-                                    "\n"+
+                                    "\n" +
                                     "Bad Ozone: In the Earth's lower atmosphere, near ground level, ozone is formed when pollutants emitted by cars, power plants, industrial boilers, refineries, chemical plants, and other sources react chemically in the presence of sunlight. Ozone at ground level is a harmful air pollutant.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
@@ -381,7 +385,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                             .show();
 
 
-                }else if(dominant.equals("no2")) {
+                } else if (dominant.equals("no2")&& dominant != null) {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("NO₂")
                             .setCancelable(true)
@@ -398,11 +402,11 @@ public class Main extends AppCompatActivity implements LocationListener {
                             .show();
 
 
-                }else if(dominant.equals("so2")) {
+                } else if (dominant.equals("so2")&& dominant != null) {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("SO₂")
                             .setCancelable(true)
-                            .setMessage("Sulfur dioxide is the chemical compound with the formula SO₂"+
+                            .setMessage("Sulfur dioxide is the chemical compound with the formula SO₂" +
                                     "At standard atmosphere, it is a toxic gas with a pungent, irritating smell. It is released naturally by volcanic activity and is produced as a by-product of the burning of fossil fuels contaminated with sulfur compounds.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
@@ -414,7 +418,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                             .show();
 
 
-                }else if(dominant.equals("co")) {
+                } else if (dominant.equals("co")&& dominant != null) {
                     new AlertDialog.Builder(Main.this)
                             .setTitle("CO")
                             .setCancelable(true)
@@ -428,6 +432,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                             .create()
                             .show();
 
+
+                }
+            }catch(Exception e){
 
                 }
 
@@ -775,7 +782,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                 JSONObject aqis = mains.getJSONObject("iaqi");
                 JSONObject tm = mains.getJSONObject("time");
 
-
                 JSONObject co = aqis.getJSONObject("co");
                 JSONObject no2 = aqis.getJSONObject("no2");
                 JSONObject o3 = aqis.getJSONObject("o3");
@@ -820,6 +826,22 @@ public class Main extends AppCompatActivity implements LocationListener {
                 tt12.setText("Air Index Last Updated on: \n   "+time);
                 tt13.setText(aqi);
 
+                img1.setVisibility(View.INVISIBLE);
+                img2.setVisibility(View.INVISIBLE);
+                img3.setVisibility(View.INVISIBLE);
+                img4.setVisibility(View.INVISIBLE);
+                img5.setVisibility(View.INVISIBLE);
+                img6.setVisibility(View.INVISIBLE);
+
+                te1.setVisibility(View.INVISIBLE);
+                te2.setVisibility(View.INVISIBLE);
+                te3.setVisibility(View.INVISIBLE);
+                te4.setVisibility(View.INVISIBLE);
+                te5.setVisibility(View.INVISIBLE);
+                te6.setVisibility(View.INVISIBLE);
+
+
+
 
                 if(dominant.equals("pm25")) {
                     tt9.setText("PM₂.₅ :  "+pm_25);
@@ -848,6 +870,10 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 tt2.setTypeface(tf3);
                 tt3.setTypeface(tf3);
+
+
+
+
                 tt4.setTypeface(tf3);
                 tt5.setTypeface(tf3);
                 tt6.setTypeface(tf3);
@@ -861,6 +887,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 if(con>0&&con<=50)
                 {
                     img1.setVisibility(View.VISIBLE);
+                    te1.setVisibility(View.VISIBLE);
                     te1.setText("  "+aqi);
                     te1.setTypeface(tf3);
                     tt14.setText(" Good");
@@ -871,6 +898,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 else if(con>51&&con<=100)
                 {
                     img2.setVisibility(View.VISIBLE);
+                    te2.setVisibility(View.VISIBLE);
                     te2.setText("  "+aqi);
                     te2.setTypeface(tf3);
                     tt14.setText(" Moderate");
@@ -881,6 +909,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 else if(con>101&&con<=150)
                 {
                     img3.setVisibility(View.VISIBLE);
+                    te3.setVisibility(View.VISIBLE);
                     te3.setText("  "+aqi);
                     te3.setTypeface(tf3);
                     tt14.setText(" High");
@@ -891,6 +920,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 else if(con>151&&con<=200)
                 {
                     img4.setVisibility(View.VISIBLE);
+                    te4.setVisibility(View.VISIBLE);
                     te4.setText("  "+aqi);
                     te4.setTypeface(tf3);
                     tt14.setText(" Unhealthy");
@@ -901,9 +931,10 @@ public class Main extends AppCompatActivity implements LocationListener {
                 else if(con>201&&con<=300)
                 {
                     img5.setVisibility(View.VISIBLE);
+                    te5.setVisibility(View.VISIBLE);
                     te5.setText("  "+aqi);
                     te5.setTypeface(tf3);
-                    tt14.setText(" Very Unhealthy");
+                    tt14.setText(" Very\nUnhealthy");
                     tt13.setTextColor(Color.parseColor("#ec1c24"));
                     k=5;
 
@@ -911,6 +942,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 else if(con>300)
                 {
                     img6.setVisibility(View.VISIBLE);
+                    te6.setVisibility(View.VISIBLE);
                     te6.setText("  "+aqi);
                     te6.setTypeface(tf3);
                     tt14.setText(" Hazardous");

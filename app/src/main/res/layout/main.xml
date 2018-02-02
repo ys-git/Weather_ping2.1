@@ -810,8 +810,7 @@
                 android:layout_alignStart="@+id/textView47"
                 android:text="_"
                 android:textColor="#ffffff"
-                android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textSize="42sp" />
 
             <TextView
                 android:id="@+id/textView54"
@@ -821,7 +820,8 @@
                 android:layout_toEndOf="@+id/textView22"
                 android:layout_toRightOf="@+id/textView22"
                 android:text="_"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

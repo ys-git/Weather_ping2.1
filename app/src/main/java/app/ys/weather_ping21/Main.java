@@ -201,18 +201,109 @@ public class Main extends AppCompatActivity implements LocationListener {
         info2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(Main.this)
-                        .setTitle("Info")
-                        .setCancelable(true)
-                        .setMessage("Please allow the app to access Device Location")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                            }
-                        })
-                        .create()
-                        .show();
+                if(k==1)
+                {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Good")
+                            .setCancelable(true)
+                            .setMessage("Air quality is considered satisfactory, and air pollution poses little or no risk.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
+                if(k==2)
+                {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Moderate")
+                            .setCancelable(true)
+                            .setMessage("Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
+                if(k==3)
+                {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("High")
+                            .setCancelable(true)
+                            .setMessage("Members of sensitive groups may experience health effects. The general public is not likely to be affected.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
+                if(k==4)
+                {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Unhealthy")
+                            .setCancelable(true)
+                            .setMessage("Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
+                if(k==5)
+                {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Very Unhealthy")
+                            .setCancelable(true)
+                            .setMessage("Health warnings of emergency conditions. The entire population is more likely to be affected.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
+                if(k==6)
+                {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Hazardous")
+                            .setCancelable(true)
+                            .setMessage("Health alert: everyone may experience more serious health effects.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+
             }
 
         });
@@ -240,7 +331,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 if(dominant.equals("pm25")) {
                     new AlertDialog.Builder(Main.this)
-                            .setTitle("Info")
+                            .setTitle("PM₂.₅")
                             .setCancelable(true)
                             .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -255,7 +346,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 }
                 else if(dominant.equals("pm10")) {
                     new AlertDialog.Builder(Main.this)
-                            .setTitle("Info")
+                            .setTitle("PM₁₀")
                             .setCancelable(true)
                             .setMessage("Particulate matter (PM₁₀) pollution consists of very small liquid and solid particles floating in the air. Of greatest concern to public health are the particles small enough to be inhaled into the deepest parts of the lung. These particles are less than 10 microns in diameter - about 1/7th the thickness of the a human hair - and are known as PM₁₀. This includes fine particulate matter known as PM2.5.\n" +
                                     "\n" +
@@ -272,7 +363,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 }else if(dominant.equals("o3")) {
                     new AlertDialog.Builder(Main.this)
-                            .setTitle("Info")
+                            .setTitle("O₃")
                             .setCancelable(true)
                             .setMessage("Good Ozone: Ozone occurs naturally in the Earth's upper atmosphere - 6 to 30 miles above the Earth's surface - where it forms a protective layer that shields us from the sun's harmful ultraviolet rays. Manmade chemicals are known to destroy this beneficial ozone" +
                                     "\n"+
@@ -289,7 +380,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 }else if(dominant.equals("no2")) {
                     new AlertDialog.Builder(Main.this)
-                            .setTitle("Info")
+                            .setTitle("NO₂")
                             .setCancelable(true)
                             .setMessage("Nitrogen dioxide(NO₂) is a nasty-smelling gas. Some nitrogen dioxide is formed naturally in the atmosphere by lightning and some is produced by plants, soil and water. However, only about 1% of the total amount of nitrogen dioxide found in our cities' air is formed this way.\n" +
                                     "\n" +
@@ -306,7 +397,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 }else if(dominant.equals("so2")) {
                     new AlertDialog.Builder(Main.this)
-                            .setTitle("Info")
+                            .setTitle("SO₂")
                             .setCancelable(true)
                             .setMessage("Sulfur dioxide is the chemical compound with the formula SO₂"+
                                     "At standard atmosphere, it is a toxic gas with a pungent, irritating smell. It is released naturally by volcanic activity and is produced as a by-product of the burning of fossil fuels contaminated with sulfur compounds.")
@@ -322,7 +413,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 }else if(dominant.equals("co")) {
                     new AlertDialog.Builder(Main.this)
-                            .setTitle("Info")
+                            .setTitle("CO")
                             .setCancelable(true)
                             .setMessage("CO is a colorless, odorless gas that can be harmful when inhaled in large amounts. CO is released when something is burned. The greatest sources of CO to outdoor air are cars, trucks and other vehicles or machinery that burn fossil fuels.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -758,36 +849,42 @@ public class Main extends AppCompatActivity implements LocationListener {
                 {
                     img1.setVisibility(View.VISIBLE);
                     te1.setText("  "+aqi);
+                    k=1;
 
                 }
                 else if(con>51&&con<=100)
                 {
                     img2.setVisibility(View.VISIBLE);
                     te2.setText("  "+aqi);
+                    k=2;
 
                 }
                 else if(con>101&&con<=150)
                 {
                     img3.setVisibility(View.VISIBLE);
                     te3.setText("  "+aqi);
+                    k=3;
 
                 }
                 else if(con>151&&con<=200)
                 {
                     img4.setVisibility(View.VISIBLE);
                     te4.setText("  "+aqi);
+                    k=4;
 
                 }
                 else if(con>201&&con<=300)
                 {
                     img5.setVisibility(View.VISIBLE);
                     te5.setText("  "+aqi);
+                    k=5;
 
                 }
                 else if(con>300)
                 {
                     img6.setVisibility(View.VISIBLE);
                     te6.setText("  "+aqi);
+                    k=6;
 
                 }
 

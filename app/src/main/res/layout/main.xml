@@ -557,8 +557,9 @@
                 android:layout_marginTop="26dp"
                 android:fontFamily="@font/yanone_kaffeesatz_light"
                 android:text="Major Pollutants:"
-                android:textColor="#ffffff"
-                android:textSize="24sp" />
+                android:textColor="#2F4F4F"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView24"
@@ -568,7 +569,7 @@
                 android:layout_alignStart="@+id/imageView8"
                 android:layout_below="@+id/textView15"
                 android:layout_marginTop="13dp"
-                android:text="Loading..."
+                android:text="No Data"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -579,7 +580,7 @@
                 android:layout_alignStart="@+id/textView24"
                 android:layout_below="@+id/textView24"
                 android:layout_marginTop="7dp"
-                android:text="Loading..."
+                android:text="No Data"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -590,7 +591,7 @@
                 android:layout_alignStart="@+id/textView25"
                 android:layout_below="@+id/textView25"
                 android:layout_marginTop="8dp"
-                android:text="Loading..."
+                android:text="No Data"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -601,7 +602,7 @@
                 android:layout_alignStart="@+id/textView31"
                 android:layout_below="@+id/textView31"
                 android:layout_marginTop="9dp"
-                android:text="Loading..."
+                android:text="No Data"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -612,7 +613,7 @@
                 android:layout_alignStart="@+id/textView32"
                 android:layout_below="@+id/textView32"
                 android:layout_marginTop="9dp"
-                android:text="Loading..."
+                android:text="No Data"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -623,7 +624,7 @@
                 android:layout_alignStart="@+id/textView35"
                 android:layout_below="@+id/textView35"
                 android:layout_marginTop="7dp"
-                android:text="Loading..."
+                android:text="No Data"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -634,8 +635,9 @@
                 android:layout_alignStart="@+id/imageView6"
                 android:layout_alignTop="@+id/textView31"
                 android:layout_marginTop="7dp"
-                android:text="Loading..."
-                android:textColor="#ffffff" />
+                android:text="No Data"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView48"
@@ -646,8 +648,9 @@
                 android:layout_alignStart="@+id/textView47"
                 android:fontFamily="@font/yanone_kaffeesatz_light"
                 android:text="Dominant Pollutant :"
-                android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textColor="#2F4F4F"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView49"
@@ -656,7 +659,7 @@
                 android:layout_below="@+id/textView23"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
-                android:text="Loading City...."
+                android:text="City not available"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
 
@@ -785,6 +788,40 @@
                 android:maxHeight="25dp"
                 android:maxWidth="25dp"
                 app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+            <TextView
+                android:id="@+id/textView51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textView41"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="*Air index updates every 1hr"
+                android:textColor="#ffffff"
+                android:textSize="7dp" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView54"
+                android:layout_alignBottom="@+id/textView54"
+                android:layout_alignLeft="@+id/textView47"
+                android:layout_alignStart="@+id/textView47"
+                android:text="_"
+                android:textColor="#ffffff"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView54"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView35"
+                android:layout_toEndOf="@+id/textView22"
+                android:layout_toRightOf="@+id/textView22"
+                android:text="_"
+                android:textColor="#ffffff" />
 
         </RelativeLayout>
 

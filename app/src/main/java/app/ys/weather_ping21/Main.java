@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -54,7 +55,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     Button getLocationBtn;
     public ProgressDialog pDialog;
-    TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10,tt11,tt12;
+    TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10,tt11,tt12,tt13,tt14;
     TextView te1,te2,te3,te4,te5,te6;
     ImageView img,setts,img1,img2,img3,img4,img5,img6;
     ImageView info1,info2,info3,info4,info5;
@@ -104,6 +105,8 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt10=(TextView)findViewById(R.id.textView49);
         tt11=(TextView)findViewById(R.id.textView50);
         tt12=(TextView)findViewById(R.id.textView52);
+        tt13=(TextView)findViewById(R.id.textView22);
+        tt14=(TextView)findViewById(R.id.textView54);
 
 
         te1=(TextView)findViewById(R.id.textView40);
@@ -667,7 +670,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         asyncTask.execute(s,q); //  asyncTask.execute("Latitude", "Longitude")
     }
 
-    void ey()
+    /*void ey()
     {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         if ((switches.getString("Toggle1", null)) == "On") {
@@ -691,7 +694,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 currentTemperatureField.setText(tempp+" °C");
             }
         }
-    }
+    }*/
 
 
     private class FetchDataTask extends AsyncTask<String, Void, String> {
@@ -815,6 +818,8 @@ public class Main extends AppCompatActivity implements LocationListener {
                 tt11.setText("Measured by: "+board_name);
                 tt11.setTypeface(tf4);
                 tt12.setText("Air Index Last Updated on: \n   "+time);
+                tt13.setText(aqi);
+
 
                 if(dominant.equals("pm25")) {
                     tt9.setText("PM₂.₅ :  "+pm_25);
@@ -840,6 +845,14 @@ public class Main extends AppCompatActivity implements LocationListener {
                     tt9.setText(dominant);
                 }
 
+
+                tt2.setTypeface(tf3);
+                tt3.setTypeface(tf3);
+                tt4.setTypeface(tf3);
+                tt5.setTypeface(tf3);
+                tt6.setTypeface(tf3);
+                tt7.setTypeface(tf3);
+
                 String s = aqi;
                 double d = Double.parseDouble(s);
                 Double de = new Double(d);
@@ -849,6 +862,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 {
                     img1.setVisibility(View.VISIBLE);
                     te1.setText("  "+aqi);
+                    te1.setTypeface(tf3);
+                    tt14.setText(" Good");
+                    tt13.setTextColor(Color.parseColor("#38d145"));
                     k=1;
 
                 }
@@ -856,6 +872,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 {
                     img2.setVisibility(View.VISIBLE);
                     te2.setText("  "+aqi);
+                    te2.setTypeface(tf3);
+                    tt14.setText(" Moderate");
+                    tt13.setTextColor(Color.parseColor("#c4ff0e"));
                     k=2;
 
                 }
@@ -863,6 +882,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 {
                     img3.setVisibility(View.VISIBLE);
                     te3.setText("  "+aqi);
+                    te3.setTypeface(tf3);
+                    tt14.setText(" High");
+                    tt13.setTextColor(Color.parseColor("#fff200"));
                     k=3;
 
                 }
@@ -870,6 +892,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 {
                     img4.setVisibility(View.VISIBLE);
                     te4.setText("  "+aqi);
+                    te4.setTypeface(tf3);
+                    tt14.setText(" Unhealthy");
+                    tt13.setTextColor(Color.parseColor("#ff7f27"));
                     k=4;
 
                 }
@@ -877,6 +902,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 {
                     img5.setVisibility(View.VISIBLE);
                     te5.setText("  "+aqi);
+                    te5.setTypeface(tf3);
+                    tt14.setText(" Very Unhealthy");
+                    tt13.setTextColor(Color.parseColor("#ec1c24"));
                     k=5;
 
                 }
@@ -884,6 +912,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 {
                     img6.setVisibility(View.VISIBLE);
                     te6.setText("  "+aqi);
+                    te6.setTypeface(tf3);
+                    tt14.setText(" Hazardous");
+                    tt13.setTextColor(Color.parseColor("#88001b"));
                     k=6;
 
                 }

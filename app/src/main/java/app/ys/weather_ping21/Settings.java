@@ -1,16 +1,19 @@
 package app.ys.weather_ping21;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -30,6 +33,7 @@ public class Settings extends AppCompatActivity {
     Switch sw,sw1,sw2;
     RadioButton rba,rbb,rbc;
     RadioGroup rg;
+    Button rate;
 
 
 
@@ -43,6 +47,11 @@ public class Settings extends AppCompatActivity {
         sdata = getSharedPreferences("my", Context.MODE_PRIVATE);
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         updateint = getSharedPreferences("update", Context.MODE_PRIVATE);
+
+        rate= (Button)findViewById(R.id.button2);
+
+        Typeface tf3 = Typeface.createFromAsset(getAssets(),
+                "fonts/DINMedium.ttf");
 
         user = sdata.getString("Name", "There!");
         t=(TextView)findViewById(R.id.textView7);
@@ -68,6 +77,24 @@ public class Settings extends AppCompatActivity {
         t6.setTypeface(tf);
         t7.setTypeface(tf);
         t8.setTypeface(tf);
+
+
+        rate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Uri uri = Uri.parse("market://details?id=ys.weather_ping");
+                Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    startActivity(myAppLinkToMarket);
+                } catch (ActivityNotFoundException e) {
+                    //Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            });
+
 
 
 
@@ -227,6 +254,7 @@ public class Settings extends AppCompatActivity {
             {SharedPreferences.Editor ed = switches.edit();
                 if(isChecked) {
                     ed.putString("Toggle2", "On");
+                    ed.putString("Toggle2en", "On");
                     ed.apply();
                     rba.setEnabled(true);
                     rbb.setEnabled(true);

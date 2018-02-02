@@ -657,7 +657,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
                 android:text="Loading City...."
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/imageView28"
@@ -752,7 +753,8 @@
                 android:id="@+id/imageView33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/imageView21"
+                android:layout_above="@+id/imageView27"
+                android:layout_marginBottom="77dp"
                 android:layout_toEndOf="@+id/imageView21"
                 android:layout_toRightOf="@+id/imageView21"
                 android:adjustViewBounds="true"
@@ -767,6 +769,18 @@
                 android:layout_below="@+id/textView48"
                 android:layout_toEndOf="@+id/textView47"
                 android:layout_toRightOf="@+id/textView47"
+                android:adjustViewBounds="true"
+                android:maxHeight="25dp"
+                android:maxWidth="25dp"
+                app:srcCompat="@android:drawable/ic_menu_info_details" />
+
+            <ImageView
+                android:id="@+id/imageView35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textView23"
+                android:layout_alignRight="@+id/textView23"
+                android:layout_alignTop="@+id/imageView15"
                 android:adjustViewBounds="true"
                 android:maxHeight="25dp"
                 android:maxWidth="25dp"

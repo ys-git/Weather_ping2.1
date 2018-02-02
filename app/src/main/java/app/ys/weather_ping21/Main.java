@@ -1,8 +1,10 @@
 package app.ys.weather_ping21;
 
 
+import android.*;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,6 +19,7 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -54,6 +57,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10,tt11,tt12;
     TextView te1,te2,te3,te4,te5,te6;
     ImageView img,setts,img1,img2,img3,img4,img5,img6;
+    ImageView info1,info2,info3,info4,info5;
     Double con;
     String carbon,sulphur,ozone,pm_10,pm_25,nitrogen,time,board_name;
     String airquality,cityname,aqi,dominant;
@@ -117,6 +121,12 @@ public class Main extends AppCompatActivity implements LocationListener {
         img5=(ImageView)findViewById(R.id.imageView26);
         img6=(ImageView)findViewById(R.id.imageView27);
 
+        info1=(ImageView)findViewById(R.id.imageView32);
+        info2=(ImageView)findViewById(R.id.imageView33);
+        info3=(ImageView)findViewById(R.id.imageView31);
+        info4=(ImageView)findViewById(R.id.imageView34);
+        info5=(ImageView)findViewById(R.id.imageView35);
+
 
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
         // locationText = (TextView)findViewById(R.id.locationText);
@@ -161,6 +171,185 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 Intent i= new Intent(Main.this,Settings.class);
                 startActivity(i);
+            }
+
+        });
+        info1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(Main.this)
+                        .setTitle("Info")
+                        .setCancelable(true)
+                        .setMessage("Since it is not possible to measure pollutant concentrations in every part of the country,the app shows the air index of the most nearby location.\n" +
+                                "Sample concentrations are used to infer what pollutant concentrations \n" +
+                                "are around sampling site for variety of time periods.\n" +
+                                "\n" +
+                                "Moreover if the Current location is way too remote or isolated, Air Index may \n" +
+                                "not be available for such locations.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .create()
+                        .show();
+            }
+
+        });
+
+        info2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(Main.this)
+                        .setTitle("Info")
+                        .setCancelable(true)
+                        .setMessage("Please allow the app to access Device Location")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .create()
+                        .show();
+            }
+
+        });
+        info3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(Main.this)
+                        .setTitle("Info")
+                        .setCancelable(true)
+                        .setMessage("Pollutant which exceeds its presence with respect to other pollutants present in the atmosphere")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .create()
+                        .show();
+            }
+
+        });
+        info4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(dominant.equals("pm25")) {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Info")
+                            .setCancelable(true)
+                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+                }
+                else if(dominant.equals("pm10")) {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Info")
+                            .setCancelable(true)
+                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }else if(dominant.equals("o3")) {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Info")
+                            .setCancelable(true)
+                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }else if(dominant.equals("no2")) {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Info")
+                            .setCancelable(true)
+                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }else if(dominant.equals("so2")) {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Info")
+                            .setCancelable(true)
+                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }else if(dominant.equals("co")) {
+                    new AlertDialog.Builder(Main.this)
+                            .setTitle("Info")
+                            .setCancelable(true)
+                            .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create()
+                            .show();
+
+
+                }
+
+            }
+
+        });
+        info5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(Main.this)
+                        .setTitle("Why air quality monitoring is essential?")
+                        .setCancelable(true)
+                        .setMessage("he starting point of air quality monitoring is to first study if an area has an air pollution problem. Monitoring helps in assessing the level of pollution in relation to the ambient air quality standards. " +
+                                "Standards are a regulatory measure to set the target for pollution reduction and achieve clean air \n"+
+                        "Real time monitoring results will help in calculating air quality index to issue health advisories as well as for formulation of action plan to meet standards.")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .create()
+                        .show();
             }
 
         });

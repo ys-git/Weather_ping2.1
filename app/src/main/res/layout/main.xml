@@ -409,7 +409,7 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="219dp"
                 android:maxWidth="214dp"
-                app:srcCompat="@drawable/rangee" />
+                app:srcCompat="@drawable/rag" />
 
             <TextView
                 android:id="@+id/textView23"

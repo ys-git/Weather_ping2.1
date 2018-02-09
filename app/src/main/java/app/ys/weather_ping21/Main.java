@@ -841,72 +841,68 @@ public class Main extends AppCompatActivity implements LocationListener {
                 if(mains.has("city")){
                     JSONObject name = mains.getJSONObject("city");
                     cityname = name.getString("name");
+                    tt10.setText(cityname);
                 } else {
+                    tt10.setText(cityname);
 
                 }
 
                 if(mains.has("time")){
                     JSONObject tm = mains.getJSONObject("time");
                     time=tm.getString("s");
+                    tt12.setText("Air Index Last Updated on: \n   "+time);
                 } else {
-
+                    tt12.setText("Air Index Last Updated on: No data");
                 }
+
                 if(mains.has("iaqi")){
                     JSONObject aqis = mains.getJSONObject("iaqi");
                     if(aqis.has("co")){
                         JSONObject co = aqis.getJSONObject("co");
                         carbon=co.getString("v");
                         tt7.setText("CO :   "+carbon);
-
                     } else {
                         tt7.setText("CO : No data");
-
                     }
+
                     if(aqis.has("no2")){
                         JSONObject no2 = aqis.getJSONObject("no2");
                         nitrogen=no2.getString("v");
                         tt5.setText("NO₂ :   "+nitrogen);
-
                     } else {
                         tt5.setText("NO₂ : No data");
-
                     }
+
                     if(aqis.has("o3")){
                         JSONObject o3 = aqis.getJSONObject("o3");
                         ozone=o3.getString("v");
                         tt4.setText("O₃ :   "+ozone);
-
                     } else {
                         tt4.setText("O₃ : No data");
-
                     }
+
                     if(aqis.has("pm10")){
                         JSONObject pm10 = aqis.getJSONObject("pm10");
                         pm_10=pm10.getString("v");
                         tt3.setText("PM₁₀ :   "+pm_10);
-
-
                     } else {
                         tt3.setText("PM₁₀ : No data");
-
                     }
+
                     if(aqis.has("pm25")){
                         JSONObject pm25 = aqis.getJSONObject("pm25");
                         pm_25=pm25.getString("v");
                         tt2.setText("PM₂.₅ :   "+pm_25);
-
                     } else {
                         tt2.setText("PM₂.₅ : No data");
-
                     }
+
                     if(aqis.has("so2")){
                         JSONObject so2 = aqis.getJSONObject("so2");
                         sulphur=so2.getString("v");
                         tt6.setText("SO₂ :   "+sulphur);
-
                     } else {
                         tt6.setText("SO₂ : No data");
-
                     }
 
                 } else {
@@ -921,13 +917,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                     //JSONObject jsonobject = jsonarray.getJSONObject(i);
                     //String name = jsonobject.getString("name");
                     //String url = jsonobject.getString("url");
-
-
-                tt10.setText(cityname);
                 tt10.setTypeface(tf4);
                 tt11.setText("Measured by: "+board_name);
                 tt11.setTypeface(tf4);
-                tt12.setText("Air Index Last Updated on: \n   "+time);
                 tt13.setText(aqi);
 
                 img1.setVisibility(View.INVISIBLE);

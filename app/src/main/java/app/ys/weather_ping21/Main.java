@@ -711,33 +711,6 @@ public class Main extends AppCompatActivity implements LocationListener {
         asyncTask.execute(s, q); //  asyncTask.execute("Latitude", "Longitude")
     }
 
-    /*void ey()
-    {
-        switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
-        if ((switches.getString("Toggle1", null)) == "On") {
-            try{
-                //cel = Integer.parseInt(tempp);
-                cel = Double.parseDouble(tempp);
-                far = (cel*1.8)+32;
-                Double de = new Double(far);
-                int i = de.intValue();
-                celss = Integer.toString(i);
-                cel_t = String.valueOf(celss);
-                currentTemperatureField.setText(cel_t+" °F");
-            } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
-            }
-
-        }
-
-        if ((switches.getString("Toggle1", null)) == "Off") {
-            {
-                currentTemperatureField.setText(tempp+" °C");
-            }
-        }
-    }*/
-
-
     private class FetchDataTask extends AsyncTask<String, Void, String> {
 
         Typeface tf = Typeface.createFromAsset(getAssets(),

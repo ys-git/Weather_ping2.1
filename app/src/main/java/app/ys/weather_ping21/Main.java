@@ -828,39 +828,82 @@ public class Main extends AppCompatActivity implements LocationListener {
                 JSONObject jsonObject = new JSONObject(data);
 
 
+                //JSONObject main = jsonObject.getJSONObject("data");
                 JSONObject mains = jsonObject.getJSONObject("data");
+                dominant = mains.getString("dominentpol");
+                aqi = mains.getString("aqi");
 
-                JSONObject co = aqis.getJSONObject("co");
-                JSONObject no2 = aqis.getJSONObject("no2");
-                JSONObject o3 = aqis.getJSONObject("o3");
-                JSONObject aqis = mains.getJSONObject("iaqi");
-                JSONObject tm = mains.getJSONObject("time");
-                JSONObject pm10 = aqis.getJSONObject("pm10");
-                JSONObject pm25 = aqis.getJSONObject("pm25");
-                JSONObject so2 = aqis.getJSONObject("so2");
+
+
+
+
+
                 if(mains.has("city")){
-
                     JSONObject name = mains.getJSONObject("city");
-
-
+                    cityname = name.getString("name");
                 } else {
-                    // It doesn't exist, do nothing
+
                 }
 
+                if(mains.has("time")){
+                    JSONObject tm = mains.getJSONObject("time");
+                    time=tm.getString("s");
+                } else {
 
-                dominant = main.getString("dominentpol");
-                carbon=co.getString("v");
-                aqi = main.getString("aqi");
-                sulphur=so2.getString("v");
-                ozone=o3.getString("v");
-                pm_10=pm10.getString("v");
-                pm_25=pm25.getString("v");
-                nitrogen=no2.getString("v");
-                time=tm.getString("s");
-                cityname = name.getString("name");
+                }
+                if(mains.has("iaqi")){
+                    JSONObject aqis = mains.getJSONObject("iaqi");
+                    if(aqis.has("co")){
+                        JSONObject co = aqis.getJSONObject("co");
+                        carbon=co.getString("v");
+
+                    } else {
+
+                    }
+                    if(aqis.has("no2")){
+                        JSONObject no2 = aqis.getJSONObject("no2");
+                        nitrogen=no2.getString("v");
+
+                    } else {
+
+                    }
+                    if(aqis.has("o3")){
+                        JSONObject o3 = aqis.getJSONObject("o3");
+                        ozone=o3.getString("v");
+
+                    } else {
+
+                    }
+                    if(aqis.has("pm10")){
+                        JSONObject pm10 = aqis.getJSONObject("pm10");
+                        pm_10=pm10.getString("v");
+                        tt3.setText("PM₁₀ :   "+pm_10);
 
 
-                JSONArray jsonarray = main.getJSONArray("attributions");
+                    } else {
+                        tt3.setText("PM₁₀ : No data");
+
+                    }
+                    if(aqis.has("pm25")){
+                        JSONObject pm25 = aqis.getJSONObject("pm25");
+                        pm_25=pm25.getString("v");
+
+                    } else {
+
+                    }
+                    if(aqis.has("so2")){
+                        JSONObject so2 = aqis.getJSONObject("so2");
+                        sulphur=so2.getString("v");
+
+                    } else {
+
+                    }
+
+                } else {
+
+                }
+
+                JSONArray jsonarray = mains.getJSONArray("attributions");
                 JSONObject elearray = jsonarray.getJSONObject(0);
                 board_name = elearray.getString("name");
                 //jsonarray.getJSONObject(0);
@@ -870,7 +913,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                     //String url = jsonobject.getString("url");
 
                 tt2.setText("PM₂.₅ :   "+pm_25);
-                tt3.setText("PM₁₀ :   "+pm_10);
+
                 tt4.setText("O₃ :   "+ozone);
                 tt5.setText("NO₂ :   "+nitrogen);
                 tt6.setText("SO₂ :   "+sulphur);

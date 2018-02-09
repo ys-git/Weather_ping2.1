@@ -93,7 +93,8 @@
                 android:fontFamily="@font/yanone_kaffeesatz_light"
                 android:text="Tweaks:"
                 android:textColor="#ffcc0000"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -132,7 +133,8 @@
                 android:fontFamily="@font/yanone_kaffeesatz_light"
                 android:text="About:"
                 android:textColor="#ffcc0000"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Switch
                 android:id="@+id/switch3"
@@ -162,7 +164,8 @@
                 android:layout_marginTop="23dp"
                 android:text="Hello User!!!"
                 android:textColor="#2F4F4F"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -363,17 +366,6 @@
                     android:text=" in India!"
                     android:textColor="#ffffff"
                     android:textSize="14sp" />
-
-                <com.google.android.gms.ads.AdView
-                    android:id="@+id/ad_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView52"
-                    android:layout_marginTop="10dp"
-                    ads:adSize="BANNER"
-                    ads:adUnitId="@string/banner_ad_unit_id" />
 
             </RelativeLayout>
         </LinearLayout>

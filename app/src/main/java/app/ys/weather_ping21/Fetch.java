@@ -101,7 +101,7 @@ public class Fetch {
 
 
                     String city = json.getString("name") + ", " + json.getJSONObject("sys").getString("country");
-                    String description = details.getString("description").toUpperCase(Locale.US);
+                    String description = details.getString("description");
                     String temperature = String.format("%.2f", main.getDouble("temp"));
                     String humidity = main.getString("humidity") + "%";
                     String pressure = main.getString("pressure") + " hPa";

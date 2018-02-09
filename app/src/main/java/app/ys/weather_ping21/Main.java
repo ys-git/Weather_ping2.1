@@ -58,7 +58,7 @@ import java.util.Locale;
 public class Main extends AppCompatActivity implements LocationListener {
 
     public ProgressDialog pDialog;
-    TextView locationText, tt1, tt2, tt3, tt4, tt5, tt6, tt7, tt8, tt9, tt10, tt11, tt12, tt13, tt14;
+    TextView locationText, tt1, tt2, tt3, tt4, tt5, tt6, tt7, tt8, tt9, tt10, tt11, tt12, tt13, tt14,vis_field;
     TextView te1, te2, te3, te4, te5, te6;
     ImageView img, setts, img1, img2, img3, img4, img5, img6;
     ImageView info1, info2, info3, info4, info5;
@@ -70,6 +70,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     LocationManager locationManager;
     private AdView mAdView;
+    String vis;
+    private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
+    String units="metric";
 
     Integer k = 0;
 
@@ -120,6 +123,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt12 = (TextView) findViewById(R.id.textView52);
         tt13 = (TextView) findViewById(R.id.textView22);
         tt14 = (TextView) findViewById(R.id.textView54);
+        vis_field = (TextView) findViewById(R.id.textView58);
 
 
         te1 = (TextView) findViewById(R.id.textView40);
@@ -474,6 +478,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                         .show();
                 getLocation();
 
+
                 AdRequest adRequest = new AdRequest.Builder()
                         .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                         .addTestDevice("F6FD88C8AC1C935CB11EFA4E910FE1B0")
@@ -603,7 +608,12 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         }*/
         ex();
+        String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+                lat, lon, units, APP_ID);
+        new Main.GetWeatherTask().execute(url);
         new FetchDataTask().execute(URL);
+
+
 
     }
 
@@ -642,7 +652,6 @@ public class Main extends AppCompatActivity implements LocationListener {
         cityField = (TextView) findViewById(R.id.textView20);
         updatedField = (TextView) findViewById(R.id.textView2);
         detailsField = (TextView) findViewById(R.id.textView9);
-
         humidity_field = (TextView) findViewById(R.id.textView3);
         pressure_field = (TextView) findViewById(R.id.textView10);
         windspeed = (TextView) findViewById(R.id.textView29);
@@ -659,7 +668,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
         cityField.setTypeface(tf);
-        // mint.setTypeface(tf);
+        //vis_field.setTypeface(tf3);
         updatedField.setTypeface(tf);
         detailsField.setTypeface(tf3);
         currentTemperatureField.setTypeface(tf4);
@@ -682,6 +691,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 updatedField.setText("Updated on: " + weather_updatedOn);
                 capital(weather_description);
                 detailsField.setText(dea);
+                //vis_field.setText("Visibility: "+vis_f);
                 currentTemperatureField.setText(weather_temperature + " °C");
                 humidity_field.setText("      " + weather_humidity);
                 pressure_field.setText(weather_pressure);
@@ -796,9 +806,6 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
                 JSONObject jsonObject = new JSONObject(data);
-
-
-                //JSONObject main = jsonObject.getJSONObject("data");
                 JSONObject mains = jsonObject.getJSONObject("data");
                 dominant = mains.getString("dominentpol");
                 aqi = mains.getString("aqi");
@@ -1021,6 +1028,54 @@ public class Main extends AppCompatActivity implements LocationListener {
         }
 
         dea = cap;
+    }
+
+
+    private class GetWeatherTask extends AsyncTask<String, Void, String> {
+
+
+        public GetWeatherTask() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try {
+                Log.i("MyTestService", "Fetching Visibility");
+                URL url = new URL(strings[0]);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder builder = new StringBuilder();
+
+                String inputString;
+                while ((inputString = bufferedReader.readLine()) != null) {
+                    builder.append(inputString);
+                }
+
+                JSONObject data = new JSONObject(builder.toString());
+
+                if (data.has("visibility")) {
+                    vis_field.setVisibility(View.VISIBLE);
+                    vis=data.getString("visibility");
+                    vis_field.setText("Visibility: "+vis);
+                } else {
+
+                }
+
+                urlConnection.disconnect();
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String temp) {
+
+        }
     }
 }
 

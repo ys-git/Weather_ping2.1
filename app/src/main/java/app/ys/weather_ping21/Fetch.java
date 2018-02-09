@@ -92,11 +92,14 @@ public class Fetch {
             String k,l;
             try {
                 if(json != null){
+                    JSONObject data = new JSONObject(json.toString());
                     JSONObject details = json.getJSONArray("weather").getJSONObject(0);
                     JSONObject main = json.getJSONObject("main");
                     JSONObject wind = json.getJSONObject("wind");
                     JSONObject clouds=json.getJSONObject("clouds");
                     DateFormat df = DateFormat.getDateTimeInstance();
+
+
 
 
 

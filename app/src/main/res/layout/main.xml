@@ -181,9 +181,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_below="@+id/imageView3"
+                android:layout_below="@+id/textView3"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="32dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="5dp"
                 android:maxWidth="200dp"
@@ -838,6 +838,16 @@
                 android:layout_marginTop="10dp"
                 ads:adSize="BANNER"
                 ads:adUnitId="@string/banner_ad_unit_id" />
+
+            <TextView
+                android:id="@+id/textView58"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/imageView8"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="6dp"
+                android:textColor="#ffffff"
+                android:visibility="gone" />
 
 
         </RelativeLayout>

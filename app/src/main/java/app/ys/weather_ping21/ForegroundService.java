@@ -58,7 +58,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
     private static final String LOG_TAG = "ForegroundService";
     LocationManager locationManager;
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
-    private static final String APP_ID = "80e4eede56844462ef3cdc721208c31f";
+    private static final String APP_ID = "15160e4cc6c35852be653f728de32299";
     double lat, lon;
     Location loc;
     long period;

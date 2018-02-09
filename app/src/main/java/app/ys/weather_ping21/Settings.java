@@ -23,6 +23,10 @@ import android.view.View;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.Set;
 
 public class Settings extends AppCompatActivity {
@@ -34,7 +38,7 @@ public class Settings extends AppCompatActivity {
     RadioButton rba,rbb,rbc;
     RadioGroup rg;
     Button rate;
-
+    private AdView mAdView1;
 
 
     @Override
@@ -49,6 +53,26 @@ public class Settings extends AppCompatActivity {
         updateint = getSharedPreferences("update", Context.MODE_PRIVATE);
 
         rate= (Button)findViewById(R.id.button2);
+
+
+
+        MobileAds.initialize(this,"ca-app-pub-1967731466728317~5398191171");
+
+        // Gets the ad view defined in layout/ad_fragment.xml with ad unit ID set in
+        // values/strings.xml.
+        mAdView1 = findViewById(R.id.ad_view);
+
+
+        // Create an ad request. Check your logcat output for the hashed device ID to
+        // get test ads on a physical device. e.g.
+        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("F6FD88C8AC1C935CB11EFA4E910FE1B0")
+                .build();
+
+        // Start loading the ad in the background.
+        mAdView1.loadAd(adRequest);
 
         Typeface tf3 = Typeface.createFromAsset(getAssets(),
                 "fonts/DINMedium.ttf");
@@ -314,5 +338,32 @@ public class Settings extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView1 != null) {
+            mAdView1.pause();
+        }
+        super.onPause();
+    }
+
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView1 != null) {
+            mAdView1.destroy();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mAdView1 != null) {
+            mAdView1.resume();
+        }
     }
 }

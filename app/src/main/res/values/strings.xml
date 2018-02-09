@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherPing</string>
+
+    <string name="banner_ad_unit_id">ca-app-pub-1967731466728317/1814293091</string>
 </resources>

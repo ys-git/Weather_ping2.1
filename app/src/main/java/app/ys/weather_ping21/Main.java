@@ -32,6 +32,10 @@ import android.widget.TextView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -53,7 +57,6 @@ import java.util.Locale;
 
 public class Main extends AppCompatActivity implements LocationListener {
 
-    Button getLocationBtn;
     public ProgressDialog pDialog;
     TextView locationText,tt1,tt2,tt3,tt4,tt5,tt6,tt7,tt8,tt9,tt10,tt11,tt12,tt13,tt14;
     TextView te1,te2,te3,te4,te5,te6;
@@ -66,6 +69,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     TextView cityField,cloud,latt,detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField,windspeed,winddeg,sun,set;
 
     LocationManager locationManager;
+    private AdView mAdView;
 
     Integer k=0;
 
@@ -86,6 +90,29 @@ public class Main extends AppCompatActivity implements LocationListener {
         getSupportActionBar().hide();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
+
+
+
+
+
+        MobileAds.initialize(this,"ca-app-pub-1967731466728317~5398191171");
+
+        // Gets the ad view defined in layout/ad_fragment.xml with ad unit ID set in
+        // values/strings.xml.
+        mAdView = findViewById(R.id.ad_view);
+
+
+        // Create an ad request. Check your logcat output for the hashed device ID to
+        // get test ads on a physical device. e.g.
+        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("F6FD88C8AC1C935CB11EFA4E910FE1B0")
+                .build();
+
+        // Start loading the ad in the background.
+        mAdView.loadAd(adRequest);
+
 
 
 
@@ -496,8 +523,32 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
     @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
+
+
+    @Override
     public void onResume() {
         super.onResume();
+
+        if (mAdView != null) {
+            mAdView.resume();
+        }
 
         if ((switches.getString("Toggle1", null)) == "On") {
             try{
@@ -775,21 +826,26 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
                 JSONObject jsonObject = new JSONObject(data);
-                JSONObject main = jsonObject.getJSONObject("data");
-                JSONObject mains = jsonObject.getJSONObject("data");
-                JSONObject name = mains.getJSONObject("city");
 
-                JSONObject aqis = mains.getJSONObject("iaqi");
-                JSONObject tm = mains.getJSONObject("time");
+
+                JSONObject mains = jsonObject.getJSONObject("data");
 
                 JSONObject co = aqis.getJSONObject("co");
                 JSONObject no2 = aqis.getJSONObject("no2");
                 JSONObject o3 = aqis.getJSONObject("o3");
+                JSONObject aqis = mains.getJSONObject("iaqi");
+                JSONObject tm = mains.getJSONObject("time");
                 JSONObject pm10 = aqis.getJSONObject("pm10");
                 JSONObject pm25 = aqis.getJSONObject("pm25");
                 JSONObject so2 = aqis.getJSONObject("so2");
+                if(mains.has("city")){
+
+                    JSONObject name = mains.getJSONObject("city");
 
 
+                } else {
+                    // It doesn't exist, do nothing
+                }
 
 
                 dominant = main.getString("dominentpol");

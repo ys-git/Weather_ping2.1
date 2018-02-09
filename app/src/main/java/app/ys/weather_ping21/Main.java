@@ -923,11 +923,6 @@ public class Main extends AppCompatActivity implements LocationListener {
                     //String url = jsonobject.getString("url");
 
 
-
-
-
-
-
                 tt10.setText(cityname);
                 tt10.setTypeface(tf4);
                 tt11.setText("Measured by: "+board_name);

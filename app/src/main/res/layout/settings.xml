@@ -57,10 +57,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_alignLeft="@+id/radioGroup2"
-                android:layout_alignStart="@+id/radioGroup2"
                 android:layout_below="@+id/radioGroup2"
-                android:layout_marginTop="16dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="48dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="5dp"
                 android:maxWidth="200dp"
@@ -259,6 +258,27 @@
                     android:text="3 hrs"
                     android:textColor="#2F4F4F" />
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView58"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView12"
+                android:layout_alignStart="@+id/textView12"
+                android:layout_below="@+id/radioGroup2"
+                android:layout_marginTop="6dp"
+                android:text="Start on Boot"
+                android:textColor="#2F4F4F"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/switch3"
+                android:layout_alignStart="@+id/switch3"
+                android:layout_alignTop="@+id/textView58"
+                 />
 
         </RelativeLayout>
 

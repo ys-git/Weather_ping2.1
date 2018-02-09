@@ -71,8 +71,8 @@ public class Main extends AppCompatActivity implements LocationListener {
     LocationManager locationManager;
     private AdView mAdView;
     String vis;
-    private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
-    String units="metric";
+    //private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
+    //String units="metric";
 
     Integer k = 0;
 
@@ -123,7 +123,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt12 = (TextView) findViewById(R.id.textView52);
         tt13 = (TextView) findViewById(R.id.textView22);
         tt14 = (TextView) findViewById(R.id.textView54);
-        vis_field = (TextView) findViewById(R.id.textView58);
+        //vis_field = (TextView) findViewById(R.id.textView58);
 
 
         te1 = (TextView) findViewById(R.id.textView40);
@@ -590,27 +590,10 @@ public class Main extends AppCompatActivity implements LocationListener {
         q = String.valueOf(lon);
         final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
-
-        //url = ("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
-
-        //url =new String("https://api.waqi.info/feed/geo:"+lat+";"+lon+"/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4");
-
-
-
-
-        /*try {+
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            locationText.setText(locationText.getText() + "\n"+addresses.get(0).getAddressLine(0)+", "+
-                    addresses.get(0).getAddressLine(1)+", "+addresses.get(0).getAddressLine(2));
-        }catch(Exception e)
-        {
-
-        }*/
         ex();
-        String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
-                lat, lon, units, APP_ID);
-        new Main.GetWeatherTask().execute(url);
+        //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+        //        lat, lon, units, APP_ID);
+        //new Main.GetWeatherTask().execute(url);
         new FetchDataTask().execute(URL);
 
 
@@ -1004,7 +987,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     }
 
 
-    private class GetWeatherTask extends AsyncTask<String, Void, String> {
+    /*private class GetWeatherTask extends AsyncTask<String, Void, String> {
 
 
         public GetWeatherTask() {
@@ -1049,7 +1032,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         protected void onPostExecute(String temp) {
 
         }
-    }
+    }*/
 }
 
 

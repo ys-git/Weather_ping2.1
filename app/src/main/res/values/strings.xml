@@ -3,4 +3,10 @@
 
     <string name="banner_ad_unit_id">ca-app-pub-1967731466728317/1814293091</string>
     <string name="ad_unit_id">ca-app-pub-1967731466728317/2532478390</string>
+
+
+
+    <string name="Toggle1">WeatherPing</string>
+    <string name="Toggle2">WeatherPing</string>
+    <string name="Toggle3">WeatherPing</string>
 </resources>

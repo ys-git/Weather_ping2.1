@@ -15,6 +15,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -86,6 +88,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     Double far;
     Double cel;
     String air = "0.0", url;
+    boolean connected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,20 @@ public class Main extends AppCompatActivity implements LocationListener {
         getSupportActionBar().hide();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                        //we are connected to a network
+                                connected = true;
+                    } else
+                        connected = false;
+
+                        if (connected == false) {
+
+                            Snackbar.make(findViewById(android.R.id.content), "Please Enable Internet", Snackbar.LENGTH_LONG)
+                                    .show();
+                    }
 
 
         MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");

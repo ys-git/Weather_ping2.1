@@ -125,8 +125,11 @@ public class ForegroundService extends Service implements LocationListener{ //im
         if ((switches.getString("Toggle2", null)) == "On") {
             super.onDestroy();
             Log.i(LOG_TAG, "In onDestroy");
-            beeperHandle.cancel(true);
-            scheduler.shutdown();
+            try {
+                beeperHandle.cancel(true);
+                scheduler.shutdown();
+            }catch(NullPointerException e)
+            {}
 
         }
 

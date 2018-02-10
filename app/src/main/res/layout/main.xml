@@ -53,7 +53,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/ad_view"
-                android:text="asdfghj"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 
@@ -192,7 +191,7 @@
 
                 android:layout_below="@+id/textView3"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="37dp"
                 android:adjustViewBounds="true"
                 android:maxHeight="5dp"
                 android:maxWidth="200dp"
@@ -835,6 +834,17 @@
                 android:text="_"
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView55"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:text="__"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
 
 
         </RelativeLayout>

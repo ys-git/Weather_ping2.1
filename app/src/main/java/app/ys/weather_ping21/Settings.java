@@ -36,7 +36,7 @@ public class Settings extends AppCompatActivity {
 
     SharedPreferences sdata,switches,updateint;
     String user;
-    TextView t,t2,t3,t4,t5,t6,t7,t8;
+    TextView t,t2,t3,t4,t5,t6,t7,t8,te;
     Switch sw,sw1,sw2;
     RadioButton rba,rbb,rbc;
     RadioGroup rg;
@@ -50,6 +50,8 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.settings);
+
+        te = (TextView) findViewById(R.id.textView59);
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
 
@@ -153,7 +155,7 @@ public class Settings extends AppCompatActivity {
         //sw2=(Switch) findViewById(R.id.switch1);
         //sw3=(Switch) findViewById(R.id.switch4);
 
-        if((switches.getString("Toggle1", null))=="On")
+        if((switches.getString("Toggle1", "Off"))=="On")
         {
             sw.setChecked(true);
 
@@ -164,14 +166,17 @@ public class Settings extends AppCompatActivity {
         }
 
 
-        if((switches.getString("Toggle2", null))=="On")
+        te.setText((switches.getString("Toggle2", null)));
+
+
+        if((switches.getString("Toggle2", "Off"))=="On")
         {
             sw1.setChecked(true);
 
         }
         else
         {
-            sw1.setChecked(false);
+             sw1.setChecked(false);
             //sw2.setEnabled(false);
         }
 

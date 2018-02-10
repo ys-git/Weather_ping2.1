@@ -19,6 +19,7 @@ import java.util.Locale;
 
 public class Fetch {
 
+
     private static final String OPEN_WEATHER_MAP_URL =
             "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric";
 
@@ -57,7 +58,7 @@ public class Fetch {
 
     public interface AsyncResponse {
 
-        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12);
+        void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13);
     }
 
 
@@ -65,6 +66,7 @@ public class Fetch {
 
 
     public static class placeIdTask extends AsyncTask<String, Void, JSONObject> {
+        public String humidity,pressure,temperature,wsp,wdeg,clo,visibility;
 
         public AsyncResponse delegate = null;//Call back interface
 
@@ -81,8 +83,6 @@ public class Fetch {
             } catch (Exception e) {
                 Log.d("Error", "Cannot process JSON results", e);
             }
-
-
             return jsonWeather;
         }
 
@@ -92,25 +92,64 @@ public class Fetch {
             String k,l;
             try {
                 if(json != null){
+                    DateFormat df = DateFormat.getDateTimeInstance();
                     JSONObject data = new JSONObject(json.toString());
                     JSONObject details = json.getJSONArray("weather").getJSONObject(0);
-                    JSONObject main = json.getJSONObject("main");
-                    JSONObject wind = json.getJSONObject("wind");
-                    JSONObject clouds=json.getJSONObject("clouds");
-                    DateFormat df = DateFormat.getDateTimeInstance();
+
+                    if (data.has("main")) {
+                        JSONObject main = json.getJSONObject("main");
+                        if (main.has("humidity")) {
+                            humidity = main.getString("humidity") + "%";
+                        } else {}
+                        if (main.has("pressure")) {
+                            pressure = main.getString("pressure") + " hPa";
+                        } else {}
+                        if (main.has("temp")) {
+                            temperature = String.format("%.2f", main.getDouble("temp"));
+                        } else {}
+
+                    } else {}
+
+
+                    if (data.has("wind")) {
+                        JSONObject wind = json.getJSONObject("wind");
+
+                        if (wind.has("speed")) {
+                            wsp = wind.getString("speed") + " m/s";
+                        } else {}
+
+                        if (wind.has("deg")) {
+                            wdeg = wind.getString("deg") + "°";
+                        } else {}
+                    } else {}
+
+                    if (data.has("clouds")) {
+                        JSONObject clouds=json.getJSONObject("clouds");
+                        if (clouds.has("all")) {
+                            clo = clouds.getString("all") + "%";
+                        } else {}
+
+                    } else {}
+
+                    if (data.has("visibility")) {
+                        visibility = data.getString("visibility");
+                    } else {}
 
 
 
 
+                    //JSONObject main = json.getJSONObject("main");
+                    //JSONObject wind = json.getJSONObject("wind");
+                    //JSONObject clouds=json.getJSONObject("clouds");
 
                     String city = json.getString("name") + ", " + json.getJSONObject("sys").getString("country");
                     String description = details.getString("description");
-                    String temperature = String.format("%.2f", main.getDouble("temp"));
-                    String humidity = main.getString("humidity") + "%";
-                    String pressure = main.getString("pressure") + " hPa";
-                    String wsp = wind.getString("speed") + " m/s";
-                    String wdeg = wind.getString("deg") + "°";
-                    String clo = clouds.getString("all") + "%";
+                    //String temperature = String.format("%.2f", main.getDouble("temp"));
+                   // String humidity = main.getString("humidity") + "%";
+                   // String pressure = main.getString("pressure") + " hPa";
+                    //String wsp = wind.getString("speed") + " m/s";
+                    //String wdeg = wind.getString("deg") + "°";
+                    //String clo = clouds.getString("all") + "%";
                     String updatedOn = df.format(new Date(json.getLong("dt")*1000));
                     String iconText = setWeatherIcon(details.getInt("id"),
                             json.getJSONObject("sys").getLong("sunrise") * 1000,
@@ -123,7 +162,7 @@ public class Fetch {
                     k=String.valueOf(simpleDateFormat.format(s1));
                     l=String.valueOf(simpleDateFormat.format(s2));
 
-                    delegate.processFinish(city, description, temperature, humidity, pressure,wsp,wdeg,updatedOn, iconText,k,l,clo);
+                    delegate.processFinish(city, description, temperature, humidity, pressure,visibility,wsp,wdeg,updatedOn, iconText,k,l,clo);
 
                 }
             } catch (JSONException e) {

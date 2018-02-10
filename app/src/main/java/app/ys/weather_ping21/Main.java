@@ -69,6 +69,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     TextView cityField, cloud, latt, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField, windspeed, winddeg, sun, set;
 
     LocationManager locationManager;
+    Double vis_dou;
     private AdView mAdView;
     String vis;
     //private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
@@ -123,7 +124,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         tt12 = (TextView) findViewById(R.id.textView52);
         tt13 = (TextView) findViewById(R.id.textView22);
         tt14 = (TextView) findViewById(R.id.textView54);
-        //vis_field = (TextView) findViewById(R.id.textView58);
+        vis_field = (TextView) findViewById(R.id.textView55);
 
 
         te1 = (TextView) findViewById(R.id.textView40);
@@ -651,7 +652,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
         cityField.setTypeface(tf);
-        //vis_field.setTypeface(tf3);
+        vis_field.setTypeface(tf3);
         updatedField.setTypeface(tf);
         detailsField.setTypeface(tf3);
         currentTemperatureField.setTypeface(tf4);
@@ -667,14 +668,17 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
         Fetch.placeIdTask asyncTask = new Fetch.placeIdTask(new Fetch.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String wind_sp, String wind_deg, String weather_updatedOn, String weather_iconText, String sun_rise, String sun_set, String cloudss) {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String vis, String wind_sp, String wind_deg, String weather_updatedOn, String weather_iconText, String sun_rise, String sun_set, String cloudss) {
 
                 tempp = weather_temperature;
                 cityField.setText(weather_city);
                 updatedField.setText("Updated on: " + weather_updatedOn);
                 capital(weather_description);
                 detailsField.setText(dea);
-                //vis_field.setText("Visibility: "+vis_f);
+                vis_dou = Double.parseDouble(vis);
+                vis_dou=(vis_dou/1000);
+                String visible = String.valueOf(vis_dou);
+                vis_field.setText("Visibility: "+visible+"Km");
                 currentTemperatureField.setText(weather_temperature + " °C");
                 humidity_field.setText("      " + weather_humidity);
                 pressure_field.setText(weather_pressure);

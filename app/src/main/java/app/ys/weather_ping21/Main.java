@@ -52,6 +52,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -85,7 +87,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     String s, q, celss, cel_t, pm10a;
     String tempp=null;
     SharedPreferences switches;
-    Double far;
+    Double far,far_r;
     Double cel;
     String air = "0.0", url;
     boolean connected = false;
@@ -562,7 +564,8 @@ if(tempp!=null) {
             String temp_1 = tempp;
             cel = Double.parseDouble(temp_1);
             far = (cel * 1.8) + 32;
-            String temp_d = String.valueOf(far);
+            far_r=round(far, 1);
+            String temp_d = String.valueOf(far_r);
             currentTemperatureField.setText(far + " °F");
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
@@ -700,6 +703,7 @@ if(tempp!=null) {
                 cityField.setText(weather_city);
                 updatedField.setText("Updated on: " + weather_updatedOn);
                 capital(weather_description);
+                currentTemperatureField.setText(weather_temperature + " °C");
                 detailsField.setText(dea);
                 vis_dou = Double.parseDouble(vis);
                 vis_dou=(vis_dou/1000);
@@ -720,9 +724,11 @@ if(tempp!=null) {
 
                 if ((switches.getInt("Toggle1", -1)) == 1) {
                     try {
+
                         cel = Double.parseDouble(weather_temperature);
                         far = (cel * 1.8) + 32;
-                        String temp_d = String.valueOf(far);
+                        far_r=round(far, 1);
+                        String temp_d = String.valueOf(far_r);
                         currentTemperatureField.setText(temp_d + " °F");
                     } catch (NumberFormatException nfe) {
                         nfe.printStackTrace();
@@ -730,11 +736,6 @@ if(tempp!=null) {
 
                 }
 
-                if ((switches.getInt("Toggle1", -1)) == 0) {
-                    {
-                        currentTemperatureField.setText(weather_temperature + " °C");
-                    }
-                }
 
 
             }
@@ -1032,6 +1033,14 @@ if(tempp!=null) {
         }
 
         dea = cap;
+    }
+
+    public static double round(double value, int places) {
+
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }

@@ -350,7 +350,7 @@
                 android:layout_alignStart="@+id/textView28"
                 android:layout_below="@+id/textView28"
                 android:layout_marginTop="19dp"
-                app:srcCompat="@drawable/cloud2" />
+                app:srcCompat="@drawable/clouds" />
 
             <TextView
                 android:id="@+id/textView33"

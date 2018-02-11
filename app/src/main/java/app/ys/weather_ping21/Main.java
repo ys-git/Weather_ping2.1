@@ -71,7 +71,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     TextView cityField, cloud, latt, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField, windspeed, winddeg, sun, set;
 
     LocationManager locationManager;
-    Double vis_dou;
+    Double vis_dou,temp_dou;
     private AdView mAdView;
     String vis;
     //private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
@@ -83,7 +83,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     Typeface weatherFont;
     double lat, lon, lng;
     String s, q, celss, cel_t, pm10a;
-    String tempp;
+    String tempp=null;
     SharedPreferences switches;
     Double far;
     Double cel;
@@ -555,29 +555,27 @@ public class Main extends AppCompatActivity implements LocationListener {
         if (mAdView != null) {
             mAdView.resume();
         }
+if(tempp!=null) {
+    if ((switches.getInt("Toggle1", -1)) == 1) {
 
-        /*if ((switches.getInt("Toggle1", -1)) == 1) {
-            try {
-                //cel = Integer.parseInt(tempp);
-                String temp_1 = tempp;
-                cel = Double.parseDouble(temp_1);
-                far = (cel * 1.8) + 32;
-                Double de = new Double(far);
-                int i = de.intValue();
-                celss = Integer.toString(i);
-                cel_t = String.valueOf(celss);
-                currentTemperatureField.setText(cel_t + " °F");
-            } catch (NumberFormatException nfe) {
-                nfe.printStackTrace();
-            }
-
-        }*/
-
-        if ((switches.getInt("Toggle1", -1)) == 0) {
-            {
-                currentTemperatureField.setText(tempp + " °C");
-            }
+        try {
+            String temp_1 = tempp;
+            cel = Double.parseDouble(temp_1);
+            far = (cel * 1.8) + 32;
+            String temp_d = String.valueOf(far);
+            currentTemperatureField.setText(far + " °F");
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
         }
+
+    }
+
+    if ((switches.getInt("Toggle1", -1)) == 0) {
+        {
+            currentTemperatureField.setText(tempp + " °C");
+        }
+    }
+}
 
 
     }
@@ -696,7 +694,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 vis_dou=(vis_dou/1000);
                 String visible = String.valueOf(vis_dou);
                 vis_field.setText("Visibility: "+visible+"Km");
-                currentTemperatureField.setText(weather_temperature + " °C");
+
                 humidity_field.setText("      " + weather_humidity);
                 pressure_field.setText(weather_pressure);
                 sun.setText(sun_rise);
@@ -708,6 +706,24 @@ public class Main extends AppCompatActivity implements LocationListener {
                 cloud.setText(cloudss);
                 latt.setText("Lat: " + s + "   Long: " + q);
                 weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+                if ((switches.getInt("Toggle1", -1)) == 1) {
+                    try {
+                        cel = Double.parseDouble(weather_temperature);
+                        far = (cel * 1.8) + 32;
+                        String temp_d = String.valueOf(far);
+                        currentTemperatureField.setText(temp_d + " °F");
+                    } catch (NumberFormatException nfe) {
+                        nfe.printStackTrace();
+                    }
+
+                }
+
+                if ((switches.getInt("Toggle1", -1)) == 0) {
+                    {
+                        currentTemperatureField.setText(weather_temperature + " °C");
+                    }
+                }
 
 
             }
@@ -1007,53 +1023,6 @@ public class Main extends AppCompatActivity implements LocationListener {
         dea = cap;
     }
 
-
-    /*private class GetWeatherTask extends AsyncTask<String, Void, String> {
-
-
-        public GetWeatherTask() {
-
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            try {
-                Log.i("MyTestService", "Fetching Visibility");
-                URL url = new URL(strings[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                InputStream stream = new BufferedInputStream(urlConnection.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-                StringBuilder builder = new StringBuilder();
-
-                String inputString;
-                while ((inputString = bufferedReader.readLine()) != null) {
-                    builder.append(inputString);
-                }
-
-                JSONObject data = new JSONObject(builder.toString());
-
-                if (data.has("visibility")) {
-                    vis_field.setVisibility(View.VISIBLE);
-                    vis=data.getString("visibility");
-                    vis_field.setText("Visibility: "+vis);
-                } else {
-
-                }
-
-                urlConnection.disconnect();
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String temp) {
-
-        }
-    }*/
 }
 
 

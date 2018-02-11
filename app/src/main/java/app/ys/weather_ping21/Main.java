@@ -538,9 +538,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     }
 
 
-    /**
-     * Called before the activity is destroyed
-     */
+
     @Override
     public void onDestroy() {
         if (mAdView != null) {
@@ -673,10 +671,8 @@ if(tempp!=null) {
         set = (TextView) findViewById(R.id.textView27);
         pressure_field = (TextView) findViewById(R.id.textView10);
         weatherIcon = (TextView) findViewById(R.id.textView19);
-        //mint = (TextView)findViewById(R.id.textView7);
         cloud = (TextView) findViewById(R.id.textView34);
         latt = (TextView) findViewById(R.id.textView37);
-        //rain = (TextView)findViewById(R.id.textView22);
         weatherIcon.setTypeface(weatherFont);
 
 
@@ -693,7 +689,7 @@ if(tempp!=null) {
         cloud.setTypeface(tf3);
         sun.setTypeface(tf3);
         set.setTypeface(tf3);
-        //rain.setTypeface(tf);
+
 
 
         Fetch.placeIdTask asyncTask = new Fetch.placeIdTask(new Fetch.AsyncResponse() {
@@ -890,11 +886,7 @@ if(tempp!=null) {
                 JSONArray jsonarray = mains.getJSONArray("attributions");
                 JSONObject elearray = jsonarray.getJSONObject(0);
                 board_name = elearray.getString("name");
-                //jsonarray.getJSONObject(0);
 
-                //JSONObject jsonobject = jsonarray.getJSONObject(i);
-                //String name = jsonobject.getString("name");
-                //String url = jsonobject.getString("url");
                 tt10.setTypeface(tf4);
                 tt11.setText("Measured by: " + board_name);
                 tt11.setTypeface(tf4);

@@ -70,7 +70,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
     LocationManager locationManager;
     String DataParseUrl = "https://ysgeek1x.000webhostapp.com/insert_data.php";
 
-    SharedPreferences sdata,switches,updateint;
+    SharedPreferences sdata,switches;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
     private AdView mAdView;
@@ -100,16 +100,13 @@ public class Intro extends AppCompatActivity implements LocationListener {
 
         sdata= getSharedPreferences("my",Context.MODE_PRIVATE);
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
-        updateint = getSharedPreferences("Interval", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor ed = switches.edit();
         ed.putInt("Toggle2",1);
         ed.putInt("Toggle3",1);
+        ed.putInt("Interval",30);
         ed.apply();
 
-        SharedPreferences.Editor nd = updateint.edit();
-        nd.putInt("Interval",30);
-        nd.apply();
 
         next = (Button)findViewById(R.id.button);
         e1=(EditText)findViewById(R.id.editText);

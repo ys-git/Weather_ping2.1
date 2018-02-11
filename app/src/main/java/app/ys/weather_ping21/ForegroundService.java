@@ -63,7 +63,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
     Location loc;
     long period;
     private GoogleApiClient googleApiClient;
-    SharedPreferences switches,updateint;
+    SharedPreferences switches;
     String weather = "0.0";
     String s, q;
     String city="City",des="Loading...",cap;
@@ -72,7 +72,6 @@ public class ForegroundService extends Service implements LocationListener{ //im
     @Override
     public void onCreate() {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
-        updateint = getSharedPreferences("Interval", Context.MODE_PRIVATE);
         super.onCreate();
 
         //googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
@@ -86,14 +85,14 @@ public class ForegroundService extends Service implements LocationListener{ //im
         try {
             if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
                 Log.i(LOG_TAG, "Received Start Foreground Intent ");
-                if ((updateint.getInt("Interval", 10)) == 10) {
+                if ((switches.getInt("Interval", 10)) == 10) {
+                    period = 3;
+                }
+                if ((switches.getInt("Interval", 30)) == 30) {
                     period = 10;
                 }
-                if ((updateint.getInt("Interval", 30)) == 30) {
-                    period = 30;
-                }
-                if ((updateint.getInt("Interval", 180)) == 180) {
-                    period = 180;
+                if ((switches.getInt("Interval", 180)) == 180) {
+                    period = 11;
                 }
 
                 getLocation();

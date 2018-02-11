@@ -34,7 +34,7 @@ import java.util.Set;
 
 public class Settings extends AppCompatActivity {
 
-    SharedPreferences sdata,switches,updateint;
+    SharedPreferences sdata,switches;
     String user;
     TextView t,t2,t3,t4,t5,t6,t7,t8,te;
     Switch sw,sw1,sw2;
@@ -98,7 +98,6 @@ public class Settings extends AppCompatActivity {
                 "fonts/calibril.ttf");
         sdata = getSharedPreferences("my", Context.MODE_PRIVATE);
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
-        updateint = getSharedPreferences("update", Context.MODE_PRIVATE);
 
 
         rate= (Button)findViewById(R.id.button2);
@@ -194,7 +193,7 @@ public class Settings extends AppCompatActivity {
         }
 
 
-        if((updateint.getInt("Interval", 10))==10)
+        if((switches.getInt("Interval", 10))==10)
         {
             rba.setChecked(true);
             rbb.setChecked(false);
@@ -202,7 +201,7 @@ public class Settings extends AppCompatActivity {
 
         }
         else
-        if((updateint.getInt("Interval", 30))==30)
+        if((switches.getInt("Interval", 30))==30)
         {
             rbb.setChecked(true);
             rba.setChecked(false);
@@ -210,7 +209,7 @@ public class Settings extends AppCompatActivity {
             //sw2.setEnabled(false);
         }
         else
-        if((updateint.getInt("Interval", 180))==180)
+        if((switches.getInt("Interval", 180))==180)
         {
             rbc.setChecked(true);
             rba.setChecked(false);
@@ -220,12 +219,12 @@ public class Settings extends AppCompatActivity {
 
 
         rba.setOnClickListener(new View.OnClickListener() {
-            SharedPreferences.Editor nd = updateint.edit();
+            SharedPreferences.Editor ed = switches.edit();
 
             @Override
             public void onClick(View v) {
-                nd.putInt("Interval",10);
-                nd.apply();
+                ed.putInt("Interval",10);
+                ed.apply();
                 stopService(new Intent(Settings.this, ForegroundService.class));
                 Intent startIntent = new Intent(Settings.this, ForegroundService.class);
                 startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
@@ -237,12 +236,12 @@ public class Settings extends AppCompatActivity {
         });
 
         rbb.setOnClickListener(new View.OnClickListener() {
-            SharedPreferences.Editor nd = updateint.edit();
+            SharedPreferences.Editor ed = switches.edit();
 
             @Override
             public void onClick(View v) {
-                nd.putInt("Interval",30);
-                nd.apply();
+                ed.putInt("Interval",30);
+                ed.apply();
                 stopService(new Intent(Settings.this, ForegroundService.class));
                 Intent startIntent = new Intent(Settings.this, ForegroundService.class);
                 startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
@@ -254,12 +253,12 @@ public class Settings extends AppCompatActivity {
         });
 
         rbc.setOnClickListener(new View.OnClickListener() {
-            SharedPreferences.Editor nd = updateint.edit();
+            SharedPreferences.Editor ed = switches.edit();
 
             @Override
             public void onClick(View v) {
-                nd.putInt("Interval",180);
-                nd.apply();
+                ed.putInt("Interval",180);
+                ed.apply();
                 stopService(new Intent(Settings.this, ForegroundService.class));
                 Intent startIntent = new Intent(Settings.this, ForegroundService.class);
                 startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);

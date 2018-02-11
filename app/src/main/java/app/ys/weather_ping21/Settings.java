@@ -174,7 +174,7 @@ public class Settings extends AppCompatActivity {
         if((switches.getInt("Toggle2", -1))==1)
         {
             sw1.setChecked(true);
-            sw2.setEnabled(false);
+            sw2.setEnabled(true);
 
         }
         else

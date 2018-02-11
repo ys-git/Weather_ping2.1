@@ -556,7 +556,7 @@ public class Main extends AppCompatActivity implements LocationListener {
             mAdView.resume();
         }
 
-        if ((switches.getInt("Toggle1", -1)) == 1) {
+        /*if ((switches.getInt("Toggle1", -1)) == 1) {
             try {
                 //cel = Integer.parseInt(tempp);
                 String temp_1 = tempp;
@@ -571,7 +571,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 nfe.printStackTrace();
             }
 
-        }
+        }*/
 
         if ((switches.getInt("Toggle1", -1)) == 0) {
             {
@@ -591,7 +591,7 @@ public class Main extends AppCompatActivity implements LocationListener {
             e.printStackTrace();
 
         }
-        if ((switches.getInt("Toggle2",-1)) == -1) {
+        if ((switches.getInt("Toggle2",-1)) == 1) {
             stopService(new Intent(Main.this, ForegroundService.class));
             Intent startIntent = new Intent(Main.this, ForegroundService.class);
             startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);

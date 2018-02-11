@@ -107,7 +107,8 @@
                 android:layout_marginTop="64dp"
                 android:text="C to F"
                 android:textColor="#2F4F4F"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -119,7 +120,8 @@
                 android:layout_marginTop="31dp"
                 android:text="Notification"
                 android:textColor="#2F4F4F"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -269,7 +271,8 @@
                 android:layout_marginTop="6dp"
                 android:text="Start on Boot"
                 android:textColor="#2F4F4F"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <Switch
                 android:id="@+id/switch1"

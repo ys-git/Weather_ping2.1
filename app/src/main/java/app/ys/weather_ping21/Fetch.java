@@ -100,13 +100,13 @@ public class Fetch {
                         JSONObject main = json.getJSONObject("main");
                         if (main.has("humidity")) {
                             humidity = main.getString("humidity") + "%";
-                        } else {}
+                        } else {humidity= "No data";}
                         if (main.has("pressure")) {
                             pressure = main.getString("pressure") + " hPa";
-                        } else {}
+                        } else {pressure="No data";}
                         if (main.has("temp")) {
                             temperature = String.format("%.2f", main.getDouble("temp"));
-                        } else {}
+                        } else {temperature="No data";}
 
                     } else {}
 
@@ -116,24 +116,24 @@ public class Fetch {
 
                         if (wind.has("speed")) {
                             wsp = wind.getString("speed") + " m/s";
-                        } else {}
+                        } else {wsp="No data";}
 
                         if (wind.has("deg")) {
                             wdeg = wind.getString("deg") + "°";
-                        } else {}
+                        } else {wdeg="No data";}
                     } else {}
 
                     if (data.has("clouds")) {
                         JSONObject clouds=json.getJSONObject("clouds");
                         if (clouds.has("all")) {
                             clo = clouds.getString("all") + "%";
-                        } else {}
+                        } else {clo="No data";}
 
                     } else {}
 
                     if (data.has("visibility")) {
                         visibility = data.getString("visibility");
-                    } else {}
+                    } else {visibility="No data";}
 
 
 

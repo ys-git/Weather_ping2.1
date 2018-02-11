@@ -71,7 +71,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     TextView cityField, cloud, latt, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField, windspeed, winddeg, sun, set;
 
     LocationManager locationManager;
-    Double vis_dou,temp_dou;
+    Double vis_dou;
     private AdView mAdView;
     String vis;
     //private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
@@ -618,9 +618,20 @@ if(tempp!=null) {
 
     @Override
     public void onProviderDisabled(String provider) {
-        //Toast.makeText(Main.this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
-        Snackbar.make(findViewById(android.R.id.content), "Please Enable Location", Snackbar.LENGTH_LONG)
-                .show();
+        provider=null;
+
+
+        if (connected == false&&provider==null) {
+
+            Snackbar.make(findViewById(android.R.id.content), "Please Enable Location and Internet", Snackbar.LENGTH_LONG)
+                    .show();
+        }
+        else
+        {
+            Snackbar.make(findViewById(android.R.id.content), "Please Enable Location", Snackbar.LENGTH_LONG)
+                    .show();
+
+        }
     }
 
     @Override
@@ -693,7 +704,7 @@ if(tempp!=null) {
                 vis_dou = Double.parseDouble(vis);
                 vis_dou=(vis_dou/1000);
                 String visible = String.valueOf(vis_dou);
-                vis_field.setText("Visibility: "+visible+"Km");
+                vis_field.setText("Visibility: "+visible+" Km");
 
                 humidity_field.setText("      " + weather_humidity);
                 pressure_field.setText(weather_pressure);

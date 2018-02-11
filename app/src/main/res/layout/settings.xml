@@ -344,9 +344,26 @@
                     android:shadowDx="0"
                     android:shadowDy="0"
                     android:shadowRadius="5"
-                    android:text="Rate"
+                    android:text="Rate Us"
                     android:textColor="#FFFFFF"
-                    android:textSize="8sp" />
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="59dp"
+                    android:layout_height="19dp"
+
+                    android:layout_alignEnd="@+id/button2"
+                    android:layout_alignRight="@+id/button2"
+                    android:layout_below="@+id/imageView36"
+                    android:background="@drawable/buttonshape"
+                    android:shadowColor="#A8A8A8"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"
+                    android:text="Feedback"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/textView54"

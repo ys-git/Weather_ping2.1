@@ -36,11 +36,11 @@ public class Settings extends AppCompatActivity {
 
     SharedPreferences sdata,switches;
     String user;
-    TextView t,t2,t3,t4,t5,t6,t7,t8,te;
+    TextView t,t2,t3,t4,t5,t6,t7,t8,te,t9;
     Switch sw,sw1,sw2;
     RadioButton rba,rbb,rbc;
     RadioGroup rg;
-    Button rate;
+    Button rate,feedback;
 
 
     private InterstitialAd mInterstitialAd;
@@ -101,6 +101,7 @@ public class Settings extends AppCompatActivity {
 
 
         rate= (Button)findViewById(R.id.button2);
+        feedback= (Button)findViewById(R.id.button3);
 
         Typeface tf3 = Typeface.createFromAsset(getAssets(),
                 "fonts/DINMedium.ttf");
@@ -114,6 +115,7 @@ public class Settings extends AppCompatActivity {
         t6=(TextView)findViewById(R.id.textView16);
         t7=(TextView)findViewById(R.id.textView18);
         t8=(TextView)findViewById(R.id.textView13);
+        t9=(TextView)findViewById(R.id.textView58);
         rba = (RadioButton) findViewById(R.id.radioButton);
         rbb = (RadioButton) findViewById(R.id.radioButton2);
         rbc = (RadioButton) findViewById(R.id.radioButton5);
@@ -129,6 +131,7 @@ public class Settings extends AppCompatActivity {
         t6.setTypeface(tf);
         t7.setTypeface(tf);
         t8.setTypeface(tf);
+        t9.setTypeface(tf);
 
 
         rate.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +149,24 @@ public class Settings extends AppCompatActivity {
             }
 
             });
+
+        feedback.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "yogendrasingh890@gmail.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback@WeatherPing");
+
+                try {
+                    startActivity(Intent.createChooser(emailIntent, null));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(Settings.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
 
 
 

@@ -503,7 +503,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                         .build();
                 mAdView.loadAd(adRequest);
 
-                if ((switches.getString("Toggle2", null)) == "On") {
+                if ((switches.getInt("Toggle2", -1)) == 1) {
                     stopService(new Intent(Main.this, ForegroundService.class));
                     Intent startIntent = new Intent(Main.this, ForegroundService.class);
                     startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
@@ -556,7 +556,7 @@ public class Main extends AppCompatActivity implements LocationListener {
             mAdView.resume();
         }
 
-        if ((switches.getString("Toggle1", null)) == "On") {
+        if ((switches.getInt("Toggle1", -1)) == 1) {
             try {
                 //cel = Integer.parseInt(tempp);
                 String temp_1 = tempp;
@@ -573,7 +573,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
         }
 
-        if ((switches.getString("Toggle1", null)) == "Off") {
+        if ((switches.getInt("Toggle1", -1)) == 0) {
             {
                 currentTemperatureField.setText(tempp + " °C");
             }
@@ -591,7 +591,7 @@ public class Main extends AppCompatActivity implements LocationListener {
             e.printStackTrace();
 
         }
-        if ((switches.getString("Toggle2", null)) == "On") {
+        if ((switches.getInt("Toggle2",-1)) == -1) {
             stopService(new Intent(Main.this, ForegroundService.class));
             Intent startIntent = new Intent(Main.this, ForegroundService.class);
             startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);

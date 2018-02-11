@@ -51,7 +51,8 @@ public class Settings extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.settings);
 
-        te = (TextView) findViewById(R.id.textView59);
+        //
+        // te = (TextView) findViewById(R.id.textView59);
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
 
@@ -98,6 +99,7 @@ public class Settings extends AppCompatActivity {
         sdata = getSharedPreferences("my", Context.MODE_PRIVATE);
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         updateint = getSharedPreferences("update", Context.MODE_PRIVATE);
+
 
         rate= (Button)findViewById(R.id.button2);
 
@@ -152,10 +154,10 @@ public class Settings extends AppCompatActivity {
 
         sw=(Switch) findViewById(R.id.switch4);
         sw1=(Switch) findViewById(R.id.switch3);
-        //sw2=(Switch) findViewById(R.id.switch1);
+        sw2=(Switch) findViewById(R.id.switch1);
         //sw3=(Switch) findViewById(R.id.switch4);
 
-        if((switches.getString("Toggle1", "Off"))=="On")
+        if((switches.getInt("Toggle1", -1))==1)
         {
             sw.setChecked(true);
 
@@ -166,21 +168,22 @@ public class Settings extends AppCompatActivity {
         }
 
 
-        te.setText((switches.getString("Toggle2", null)));
+        //te.setText((switches.getInt("Toggle2", null)));
 
 
-        if((switches.getString("Toggle2", "Off"))=="On")
+        if((switches.getInt("Toggle2", -1))==1)
         {
             sw1.setChecked(true);
+            sw2.setEnabled(false);
 
         }
         else
         {
              sw1.setChecked(false);
-            //sw2.setEnabled(false);
+             sw2.setEnabled(false);
         }
 
-        /*if((switches.getString("Toggle3", null))=="On")
+        if((switches.getInt("Toggle3", -1))==1)
         {
             sw2.setChecked(true);
 
@@ -188,10 +191,10 @@ public class Settings extends AppCompatActivity {
         else
         {
             sw2.setChecked(false);
-        }*/
+        }
 
 
-        if((updateint.getString("Interval", null))=="10")
+        if((updateint.getInt("Interval", 10))==10)
         {
             rba.setChecked(true);
             rbb.setChecked(false);
@@ -199,7 +202,7 @@ public class Settings extends AppCompatActivity {
 
         }
         else
-        if((updateint.getString("Interval", null))=="30")
+        if((updateint.getInt("Interval", 30))==30)
         {
             rbb.setChecked(true);
             rba.setChecked(false);
@@ -207,7 +210,7 @@ public class Settings extends AppCompatActivity {
             //sw2.setEnabled(false);
         }
         else
-        if((updateint.getString("Interval", null))=="180")
+        if((updateint.getInt("Interval", 180))==180)
         {
             rbc.setChecked(true);
             rba.setChecked(false);
@@ -221,7 +224,7 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                nd.putString("Interval","10");
+                nd.putInt("Interval",10);
                 nd.apply();
                 stopService(new Intent(Settings.this, ForegroundService.class));
                 Intent startIntent = new Intent(Settings.this, ForegroundService.class);
@@ -238,7 +241,7 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                nd.putString("Interval","30");
+                nd.putInt("Interval",30);
                 nd.apply();
                 stopService(new Intent(Settings.this, ForegroundService.class));
                 Intent startIntent = new Intent(Settings.this, ForegroundService.class);
@@ -255,7 +258,7 @@ public class Settings extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                nd.putString("Interval","180");
+                nd.putInt("Interval",180);
                 nd.apply();
                 stopService(new Intent(Settings.this, ForegroundService.class));
                 Intent startIntent = new Intent(Settings.this, ForegroundService.class);
@@ -280,7 +283,7 @@ public class Settings extends AppCompatActivity {
 
                     //Toast.makeText(Settings.this, "Toggle button is on", Toast.LENGTH_SHORT).show();
 
-                    ed.putString("Toggle1","On");
+                    ed.putInt("Toggle1",1);
                     ed.apply();
                     Snackbar.make(findViewById(android.R.id.content), "Fahrenheit Selected", Snackbar.LENGTH_LONG)
                             .show();
@@ -291,7 +294,7 @@ public class Settings extends AppCompatActivity {
                 {
                     //Toast.makeText(Settings.this, "Toggle button is off", Toast.LENGTH_SHORT).show();
 
-                    ed.putString("Toggle1","Off");
+                    ed.putInt("Toggle1",0);
                     ed.apply();
                     Snackbar.make(findViewById(android.R.id.content), "Celsius Selected", Snackbar.LENGTH_LONG)
                             .show();
@@ -307,8 +310,7 @@ public class Settings extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton toggleButton, boolean isChecked)
             {SharedPreferences.Editor ed = switches.edit();
                 if(isChecked) {
-                    ed.putString("Toggle2", "On");
-                    ed.putString("Toggle2en", "On");
+                    ed.putInt("Toggle2", 1);
                     ed.apply();
                     rba.setEnabled(true);
                     rbb.setEnabled(true);
@@ -324,7 +326,7 @@ public class Settings extends AppCompatActivity {
 
                 else
                 {
-                    ed.putString("Toggle2","Off");
+                    ed.putInt("Toggle2",0);
                     ed.apply();
                     rba.setEnabled(false);
                     rbb.setEnabled(false);
@@ -332,8 +334,6 @@ public class Settings extends AppCompatActivity {
 
                     Snackbar.make(findViewById(android.R.id.content), "Notification Off", Snackbar.LENGTH_LONG)
                             .show();
-                    ed.putString("Toggle3","Off");
-                    ed.apply();
                     stopService(new Intent(Settings.this, ForegroundService.class));
                 }
 
@@ -341,7 +341,7 @@ public class Settings extends AppCompatActivity {
         });
 
 
-        /*sw2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
+        sw2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
         {
             SharedPreferences.Editor ed = switches.edit();
 
@@ -350,22 +350,22 @@ public class Settings extends AppCompatActivity {
             {
                 if(isChecked)
                 {
-                    ed.putString("Toggle3","On");
+                    ed.putInt("Toggle3",1);
                     ed.apply();
-                    Snackbar.make(findViewById(android.R.id.content), "Dark Notification", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(android.R.id.content), "Start on Boot selected", Snackbar.LENGTH_LONG)
                             .show();
                 }
 
                 else
                 {
-                    ed.putString("Toggle3","Off");
+                    ed.putInt("Toggle3",0);
                     ed.apply();
-                    Snackbar.make(findViewById(android.R.id.content), "Light Notification", Snackbar.LENGTH_LONG)
+                    Snackbar.make(findViewById(android.R.id.content), "Start on Boot denied", Snackbar.LENGTH_LONG)
                             .show();
                 }
 
             }
-        });*/
+        });
 
 
 

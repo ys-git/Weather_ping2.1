@@ -269,7 +269,7 @@
                 android:layout_marginTop="6dp"
                 android:text="Start on Boot"
                 android:textColor="#2F4F4F"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <Switch
                 android:id="@+id/switch1"
@@ -279,16 +279,6 @@
                 android:layout_alignStart="@+id/switch3"
                 android:layout_alignTop="@+id/textView58"
                  />
-
-            <TextView
-                android:id="@+id/textView59"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/textView7"
-                android:layout_alignRight="@+id/textView7"
-                android:layout_alignTop="@+id/textView8"
-                android:text="Shared"
-                android:textColor="#ffffff" />
 
         </RelativeLayout>
 

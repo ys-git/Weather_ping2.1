@@ -349,7 +349,7 @@
                 android:layout_alignStart="@+id/textView28"
                 android:layout_below="@+id/textView28"
                 android:layout_marginTop="19dp"
-                app:srcCompat="@drawable/clouds" />
+                app:srcCompat="@drawable/cloud2" />
 
             <TextView
                 android:id="@+id/textView33"
@@ -358,7 +358,6 @@
 
 
                 android:layout_below="@+id/imageView13"
-                android:text="Cloudiness"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -845,6 +844,16 @@
                 android:text="__"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageView13"
+                android:layout_alignStart="@+id/imageView13"
+                android:layout_below="@+id/imageView13"
+                android:text="Cloudiness"
+                android:textColor="#ffffff" />
 
 
         </RelativeLayout>

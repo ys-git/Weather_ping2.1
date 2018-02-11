@@ -86,13 +86,13 @@ public class ForegroundService extends Service implements LocationListener{ //im
         try {
             if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
                 Log.i(LOG_TAG, "Received Start Foreground Intent ");
-                if ((updateint.getString("Interval", null)) == "10") {
+                if ((updateint.getInt("Interval", 10)) == 10) {
                     period = 10;
                 }
-                if ((updateint.getString("Interval", null)) == "30") {
+                if ((updateint.getInt("Interval", 30)) == 30) {
                     period = 30;
                 }
-                if ((updateint.getString("Interval", null)) == "180") {
+                if ((updateint.getInt("Interval", 180)) == 180) {
                     period = 180;
                 }
 
@@ -122,7 +122,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
 
     @Override
     public void onDestroy() {
-        if ((switches.getString("Toggle2", null)) == "On") {
+        if ((switches.getInt("Toggle2", -1)) == 1) {
             super.onDestroy();
             Log.i(LOG_TAG, "In onDestroy");
             try {
@@ -133,7 +133,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
 
         }
 
-        if ((switches.getString("Toggle2", null)) == "Off") {
+        if ((switches.getInt("Toggle2", -1)) == 0) {
             super.onDestroy();
             Log.i(LOG_TAG, "In onDestroy");
 
@@ -250,9 +250,11 @@ public class ForegroundService extends Service implements LocationListener{ //im
                 .setContentTitle(weather + " °C" + " in "+city)
                 .setTicker("WeatherPing")
                 .setContentText(des)
-                .setSmallIcon(R.drawable.logonotif1)
+                .setSmallIcon(R.drawable.logonotif)
                 .setColor(this.getResources().getColor(R.color.colorPrimary))
-                .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
+                        R.drawable.weather))
+                //.setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 //.setContent(notificationView)
                 .setOngoing(true).build();
         notification.contentIntent = PendingIntent.getActivity(this, 0,

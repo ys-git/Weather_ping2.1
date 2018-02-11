@@ -103,11 +103,12 @@ public class Intro extends AppCompatActivity implements LocationListener {
         updateint = getSharedPreferences("Interval", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor ed = switches.edit();
-        ed.putString("Toggle2","On");
+        ed.putInt("Toggle2",1);
+        ed.putInt("Toggle3",1);
         ed.apply();
 
         SharedPreferences.Editor nd = updateint.edit();
-        nd.putString("Interval","30");
+        nd.putInt("Interval",30);
         nd.apply();
 
         next = (Button)findViewById(R.id.button);

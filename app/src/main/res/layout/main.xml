@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/ad_view"
+
                 android:textColor="#ffffff"
                 android:textSize="12sp"
                 android:textStyle="bold" />

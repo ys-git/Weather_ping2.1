@@ -30,7 +30,7 @@ import android.widget.Toast;
 import android.support.v7.app.ActionBar;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import org.apache.http.HttpEntity;
@@ -73,7 +73,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
     SharedPreferences sdata,switches;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 1;
-    private AdView mAdView;
+    //private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/YanoneKaffeesatz-Thin.ttf");
 
-        MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
+        /*MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
 
         mAdView = findViewById(R.id.ad_view);
 
@@ -94,7 +94,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("F6FD88C8AC1C935CB11EFA4E910FE1B0")
                 .build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
 
 

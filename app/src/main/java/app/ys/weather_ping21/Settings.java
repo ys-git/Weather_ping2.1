@@ -27,7 +27,7 @@ import android.widget.ToggleButton;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+//import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.Set;
@@ -43,7 +43,7 @@ public class Settings extends AppCompatActivity {
     Button rate,feedback;
 
 
-    private InterstitialAd mInterstitialAd;
+    //private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,10 @@ public class Settings extends AppCompatActivity {
         //
         // te = (TextView) findViewById(R.id.textView59);
         // Initialize the Mobile Ads SDK.
-        MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
+        //MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
 
         // Create the InterstitialAd and set the adUnitId.
-        mInterstitialAd = new InterstitialAd(this);
+        /*mInterstitialAd = new InterstitialAd(this);
         // Defined in res/values/strings.xml
         mInterstitialAd.setAdUnitId(getString(R.string.ad_unit_id));
         AdRequest adRequest = new AdRequest.Builder()
@@ -91,7 +91,7 @@ public class Settings extends AppCompatActivity {
             public void onAdOpened() {
                 //Toast.makeText(getApplicationContext(), "Ad is opened!", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
         Typeface tf = Typeface.createFromAsset(getAssets(),
@@ -410,11 +410,11 @@ public class Settings extends AppCompatActivity {
         super.onResume();
     }
 
-    private void showInterstitial() {
+    /*private void showInterstitial() {
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         }
-    }
+    }*/
 
 
 

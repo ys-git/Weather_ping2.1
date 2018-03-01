@@ -591,7 +591,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                     far = (cel * 1.8) + 32;
                     far_r=round(far, 1);
                     String temp_d = String.valueOf(far_r);
-                    currentTemperatureField.setText(far + " °F");
+                    currentTemperatureField.setText(temp_d + " °F");
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
                 }

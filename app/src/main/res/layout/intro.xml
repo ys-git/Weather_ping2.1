@@ -164,18 +164,6 @@
 
             </RadioGroup>
 
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/ad_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="6dp"
-                android:layout_marginStart="6dp"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad_unit_id" />
-
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

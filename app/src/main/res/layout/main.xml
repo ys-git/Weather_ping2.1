@@ -31,11 +31,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <RelativeLayout
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
+        <RelativeLayout xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:id="@+id/e3"
             android:layout_width="match_parent"
-            android:layout_height="350dp">
+            android:layout_height="309dp">
 
             <TextView
                 android:id="@+id/textView2"
@@ -45,7 +44,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/ad_view"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -88,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textView2"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
                 android:text="Fetching..."
                 android:textAlignment="center"
                 android:textColor="#ffffff"
@@ -690,7 +691,8 @@
                 android:fontFamily="sans-serif"
                 android:text="_"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageView29"
@@ -717,7 +719,8 @@
                 android:fontFamily="@font/yanone_kaffeesatz_light"
                 android:text="_"
                 android:textColor="#ffffff"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView53"

@@ -2,6 +2,7 @@ package app.ys.weather_ping21;
 
 
 import android.*;
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -74,7 +75,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     LocationManager locationManager;
     Double vis_dou;
-    private AdView mAdView;
+    //private AdView mAdView;
     String vis;
     //private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
     //String units="metric";
@@ -99,22 +100,42 @@ public class Main extends AppCompatActivity implements LocationListener {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
 
+        if((switches.getInt("tut", -1))==1)
+        {
+            new AlertDialog.Builder(Main.this)
+                    .setTitle("A bit of handy info....")
+                    .setCancelable(false)
+                    .setMessage(" ?    Information Popups"+"\n"+"\n"+" ?     Swipe down to refresh")
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .create()
+                    .show();
+            SharedPreferences.Editor ed = switches.edit();
+            ed.putInt("tut",0);
+            ed.apply();
+
+        }
+
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-                        //we are connected to a network
-                                connected = true;
-                    } else
-                        connected = false;
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            connected = true;
+        } else
+            connected = false;
 
-                        if (connected == false) {
+        if (connected == false) {
 
-                            Snackbar.make(findViewById(android.R.id.content), "Please Enable Internet", Snackbar.LENGTH_LONG)
-                                    .show();
-                    }
+            Snackbar.make(findViewById(android.R.id.content), "Please Enable Internet", Snackbar.LENGTH_LONG)
+                    .show();
+        }
 
 
-        MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
+        /*MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
 
         mAdView = findViewById(R.id.ad_view);
 
@@ -122,7 +143,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .addTestDevice("F6FD88C8AC1C935CB11EFA4E910FE1B0")
                 .build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(adRequest);*/
 
 
         //img=(ImageView)findViewById(R.id.rld);
@@ -365,11 +386,11 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     if (dominant.equals("pm25") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("PM₂.₅")
+                                .setTitle("PM2.5")
                                 .setCancelable(true)
 
 
-                                .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                                .setMessage("The term fine particles, or particulate matter 2.5 (PM2.5), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM2.5 size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -381,11 +402,11 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("pm10") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("PM₁₀")
+                                .setTitle("PM10")
                                 .setCancelable(true)
-                                .setMessage("Particulate matter (PM₁₀) pollution consists of very small liquid and solid particles floating in the air. Of greatest concern to public health are the particles small enough to be inhaled into the deepest parts of the lung. These particles are less than 10 microns in diameter - about 1/7th the thickness of the a human hair - and are known as PM₁₀. This includes fine particulate matter known as PM2.5.\n" +
+                                .setMessage("Particulate matter (PM10) pollution consists of very small liquid and solid particles floating in the air. Of greatest concern to public health are the particles small enough to be inhaled into the deepest parts of the lung. These particles are less than 10 microns in diameter - about 1/7th the thickness of the a human hair - and are known as PM10. This includes fine particulate matter known as PM2.5.\n" +
                                         "\n" +
-                                        "PM₁₀ is a major component of air pollution that threatens both our health and our environment.")
+                                        "PM10 is a major component of air pollution that threatens both our health and our environment.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -398,7 +419,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("o3") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("O₃")
+                                .setTitle("O3")
                                 .setCancelable(true)
                                 .setMessage("Good Ozone: Ozone occurs naturally in the Earth's upper atmosphere - 6 to 30 miles above the Earth's surface - where it forms a protective layer that shields us from the sun's harmful ultraviolet rays. Manmade chemicals are known to destroy this beneficial ozone" +
                                         "\n" +
@@ -415,9 +436,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("no2") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("NO₂")
+                                .setTitle("NO2")
                                 .setCancelable(true)
-                                .setMessage("Nitrogen dioxide(NO₂) is a nasty-smelling gas. Some nitrogen dioxide is formed naturally in the atmosphere by lightning and some is produced by plants, soil and water. However, only about 1% of the total amount of nitrogen dioxide found in our cities' air is formed this way.\n" +
+                                .setMessage("Nitrogen dioxide(NO2) is a nasty-smelling gas. Some nitrogen dioxide is formed naturally in the atmosphere by lightning and some is produced by plants, soil and water. However, only about 1% of the total amount of nitrogen dioxide found in our cities' air is formed this way.\n" +
                                         "\n" +
                                         "Nitrogen dioxide is an important air pollutant because it contributes to the formation of photochemical smog, which can have significant impacts on human health.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -432,9 +453,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("so2") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("SO₂")
+                                .setTitle("SO2")
                                 .setCancelable(true)
-                                .setMessage("Sulfur dioxide is the chemical compound with the formula SO₂" +
+                                .setMessage("Sulfur dioxide is the chemical compound with the formula SO2" +
                                         "At standard atmosphere, it is a toxic gas with a pungent, irritating smell. It is released naturally by volcanic activity and is produced as a by-product of the burning of fossil fuels contaminated with sulfur compounds.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -496,14 +517,21 @@ public class Main extends AppCompatActivity implements LocationListener {
             public void onRefresh() {
                 Snackbar.make(findViewById(android.R.id.content), "Refreshing...", Snackbar.LENGTH_LONG)
                         .show();
+
+                if (ContextCompat.checkSelfPermission(Main.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(Main.this, "Denied Location Permission", Toast.LENGTH_LONG).show();
+
+                }
                 getLocation();
 
 
-                AdRequest adRequest = new AdRequest.Builder()
+                /*AdRequest adRequest = new AdRequest.Builder()
                         .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                         .addTestDevice("F6FD88C8AC1C935CB11EFA4E910FE1B0")
                         .build();
-                mAdView.loadAd(adRequest);
+                mAdView.loadAd(adRequest);*/
 
                 if ((switches.getInt("Toggle2", -1)) == 1) {
                     stopService(new Intent(Main.this, ForegroundService.class));
@@ -531,9 +559,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onPause() {
-        if (mAdView != null) {
-            mAdView.pause();
-        }
+        //if (mAdView != null) {
+        //    mAdView.pause();
+        //}
         super.onPause();
     }
 
@@ -541,9 +569,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
+        // if (mAdView != null) {
+        //   mAdView.destroy();
+        //}
         super.onDestroy();
     }
 
@@ -551,32 +579,31 @@ public class Main extends AppCompatActivity implements LocationListener {
     @Override
     public void onResume() {
         super.onResume();
+        //if (mAdView != null) {
+        //  mAdView.resume();
+        //}
+        if(tempp!=null) {
+            if ((switches.getInt("Toggle1", -1)) == 1) {
 
-        if (mAdView != null) {
-            mAdView.resume();
+                try {
+                    String temp_1 = tempp;
+                    cel = Double.parseDouble(temp_1);
+                    far = (cel * 1.8) + 32;
+                    far_r=round(far, 1);
+                    String temp_d = String.valueOf(far_r);
+                    currentTemperatureField.setText(far + " °F");
+                } catch (NumberFormatException nfe) {
+                    nfe.printStackTrace();
+                }
+
+            }
+
+            if ((switches.getInt("Toggle1", -1)) == 0) {
+                {
+                    currentTemperatureField.setText(tempp + " °C");
+                }
+            }
         }
-if(tempp!=null) {
-    if ((switches.getInt("Toggle1", -1)) == 1) {
-
-        try {
-            String temp_1 = tempp;
-            cel = Double.parseDouble(temp_1);
-            far = (cel * 1.8) + 32;
-            far_r=round(far, 1);
-            String temp_d = String.valueOf(far_r);
-            currentTemperatureField.setText(far + " °F");
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-        }
-
-    }
-
-    if ((switches.getInt("Toggle1", -1)) == 0) {
-        {
-            currentTemperatureField.setText(tempp + " °C");
-        }
-    }
-}
 
 
     }
@@ -584,11 +611,30 @@ if(tempp!=null) {
 
     void getLocation() {
         try {
+            Location location;
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
-        } catch (SecurityException e) {
-            e.printStackTrace();
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, this);
+            if (locationManager != null) {
+                location = locationManager
+                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (location != null) {
+                    Log.d("activity", "LOC by Network");
+                    lat = location.getLatitude();
+                    lon = location.getLongitude();
+                }
+                s = String.valueOf(lat);
+                q = String.valueOf(lon);
+            }
+            final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
+            ex();
+            //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+            //        lat, lon, units, APP_ID);
+            //new Main.GetWeatherTask().execute(url);
+            new FetchDataTask().execute(URL);
+        }
+        catch(SecurityException e) {
+            e.printStackTrace();
         }
         if ((switches.getInt("Toggle2",-1)) == 1) {
             stopService(new Intent(Main.this, ForegroundService.class));
@@ -600,7 +646,7 @@ if(tempp!=null) {
 
     @Override
     public void onLocationChanged(Location location) {
-        //locationText.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
+        /*//locationText.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
         lat = location.getLatitude();
         lon = location.getLongitude();
         s = String.valueOf(lat);
@@ -611,7 +657,7 @@ if(tempp!=null) {
         //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
         //        lat, lon, units, APP_ID);
         //new Main.GetWeatherTask().execute(url);
-        new FetchDataTask().execute(URL);
+        new FetchDataTask().execute(URL);*/
 
 
 
@@ -701,10 +747,14 @@ if(tempp!=null) {
                 capital(weather_description);
                 currentTemperatureField.setText(weather_temperature + " °C");
                 detailsField.setText(dea);
-                vis_dou = Double.parseDouble(vis);
-                vis_dou=(vis_dou/1000);
-                String visible = String.valueOf(vis_dou);
-                vis_field.setText("Visibility: "+visible+" Km");
+                if(vis!="No data") {
+                    vis_dou = Double.parseDouble(vis);
+                    vis_dou = (vis_dou / 1000);
+                    String visible = String.valueOf(vis_dou);
+                    vis_field.setText("Visibility: "+visible+" Km");
+                }else{
+
+                vis_field.setText("Visibility: "+vis);}
 
                 humidity_field.setText("      " + weather_humidity);
                 pressure_field.setText(weather_pressure);
@@ -842,41 +892,41 @@ if(tempp!=null) {
                     if (aqis.has("no2")) {
                         JSONObject no2 = aqis.getJSONObject("no2");
                         nitrogen = no2.getString("v");
-                        tt5.setText("NO₂ :   " + nitrogen);
+                        tt5.setText("NO2 :   " + nitrogen);
                     } else {
-                        tt5.setText("NO₂ : No data");
+                        tt5.setText("NO2 : No data");
                     }
 
                     if (aqis.has("o3")) {
                         JSONObject o3 = aqis.getJSONObject("o3");
                         ozone = o3.getString("v");
-                        tt4.setText("O₃ :   " + ozone);
+                        tt4.setText("O3 :   " + ozone);
                     } else {
-                        tt4.setText("O₃ : No data");
+                        tt4.setText("O3 : No data");
                     }
 
                     if (aqis.has("pm10")) {
                         JSONObject pm10 = aqis.getJSONObject("pm10");
                         pm_10 = pm10.getString("v");
-                        tt3.setText("PM₁₀ :   " + pm_10);
+                        tt3.setText("PM10 :   " + pm_10);
                     } else {
-                        tt3.setText("PM₁₀ : No data");
+                        tt3.setText("PM10 : No data");
                     }
 
                     if (aqis.has("pm25")) {
                         JSONObject pm25 = aqis.getJSONObject("pm25");
                         pm_25 = pm25.getString("v");
-                        tt2.setText("PM₂.₅ :   " + pm_25);
+                        tt2.setText("PM2.5 :   " + pm_25);
                     } else {
-                        tt2.setText("PM₂.₅ : No data");
+                        tt2.setText("PM2.5 : No data");
                     }
 
                     if (aqis.has("so2")) {
                         JSONObject so2 = aqis.getJSONObject("so2");
                         sulphur = so2.getString("v");
-                        tt6.setText("SO₂ :   " + sulphur);
+                        tt6.setText("SO2 :   " + sulphur);
                     } else {
-                        tt6.setText("SO₂ : No data");
+                        tt6.setText("SO2 : No data");
                     }
 
                 } else {
@@ -887,7 +937,7 @@ if(tempp!=null) {
                 JSONObject elearray = jsonarray.getJSONObject(0);
                 board_name = elearray.getString("name");
 
-                tt10.setTypeface(tf4);
+                tt10.setTypeface(tf);
                 tt11.setText("Measured by: " + board_name);
                 tt11.setTypeface(tf4);
                 tt13.setText(aqi);
@@ -908,18 +958,18 @@ if(tempp!=null) {
 
 
                 if (dominant.equals("pm25")) {
-                    tt9.setText("PM₂.₅ :  " + pm_25);
+                    tt9.setText("PM2.5 :  " + pm_25);
                 } else if (dominant.equals("pm10")) {
-                    tt9.setText("PM₁₀ :  " + pm_10);
+                    tt9.setText("PM10 :  " + pm_10);
 
                 } else if (dominant.equals("o3")) {
-                    tt9.setText("O₃ :  " + ozone);
+                    tt9.setText("O3 :  " + ozone);
 
                 } else if (dominant.equals("no2")) {
-                    tt9.setText("NO₂ :  " + nitrogen);
+                    tt9.setText("NO2 :  " + nitrogen);
 
                 } else if (dominant.equals("so2")) {
-                    tt9.setText("SO₂ :  " + sulphur);
+                    tt9.setText("SO2 :  " + sulphur);
 
                 } else if (dominant.equals("co")) {
                     tt9.setText("CO :  " + carbon);

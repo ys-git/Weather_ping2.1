@@ -66,7 +66,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
     SharedPreferences switches;
     String weather = "0.0";
     String s, q;
-    String city="City",des="Loading...",cap;
+    String city="City",des="Loading...",cap,country=" ";
 
 
     @Override
@@ -246,7 +246,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
         //RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
 
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle(weather + " °C" + " in "+city)
+                .setContentTitle(weather + " °C" + " in "+city+", "+country)
                 .setTicker("WeatherPing")
                 .setContentText(des)
                 .setSmallIcon(R.drawable.logonotif)
@@ -295,6 +295,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
                 des = details.getString("description");
                 capital(des);
                 city = topLevel.getString("name");
+                country = topLevel.getJSONObject("sys").getString("country");
                 //city = name.getString("name");
                 weather = String.valueOf(main.getDouble("temp"));
                 sendNotification();

@@ -139,7 +139,7 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Uri uri = Uri.parse("market://details?id=ys.weather_ping");
+                Uri uri = Uri.parse("market://details?id=app.ys.weatherping21");
                 Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
                 try {
                     startActivity(myAppLinkToMarket);
@@ -380,6 +380,14 @@ public class Settings extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Start on Boot selected", Snackbar.LENGTH_LONG)
                             .show();
                 }
+
+
+
+
+
+
+
+
 
                 else
                 {

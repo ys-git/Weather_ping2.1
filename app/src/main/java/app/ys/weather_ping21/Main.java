@@ -386,11 +386,11 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     if (dominant.equals("pm25") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("PM2.5")
+                                .setTitle("PM₂.₅")
                                 .setCancelable(true)
 
 
-                                .setMessage("The term fine particles, or particulate matter 2.5 (PM2.5), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM2.5 size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
+                                .setMessage("The term fine particles, or particulate matter 2.5 (PM₂.₅), refers to tiny particles or droplets in the air that are two and one half microns or less in width. Like inches, meters and miles, a micron is a unit of measurement for distance. There are about 25,000 microns in an inch. The widths of the larger particles in the PM₂.₅ size range would be about thirty times smaller than that of a human hair. The smaller particles are so small that several thousand of them could fit on the period at the end of this sentence.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -402,11 +402,11 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("pm10") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("PM10")
+                                .setTitle("PM₁₀")
                                 .setCancelable(true)
-                                .setMessage("Particulate matter (PM10) pollution consists of very small liquid and solid particles floating in the air. Of greatest concern to public health are the particles small enough to be inhaled into the deepest parts of the lung. These particles are less than 10 microns in diameter - about 1/7th the thickness of the a human hair - and are known as PM10. This includes fine particulate matter known as PM2.5.\n" +
+                                .setMessage("Particulate matter (PM₁₀) pollution consists of very small liquid and solid particles floating in the air. Of greatest concern to public health are the particles small enough to be inhaled into the deepest parts of the lung. These particles are less than 10 microns in diameter - about 1/7th the thickness of the a human hair - and are known as PM₁₀. This includes fine particulate matter known as PM₂.₅.\n" +
                                         "\n" +
-                                        "PM10 is a major component of air pollution that threatens both our health and our environment.")
+                                        "PM₁₀ is a major component of air pollution that threatens both our health and our environment.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -419,7 +419,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("o3") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("O3")
+                                .setTitle("O₃")
                                 .setCancelable(true)
                                 .setMessage("Good Ozone: Ozone occurs naturally in the Earth's upper atmosphere - 6 to 30 miles above the Earth's surface - where it forms a protective layer that shields us from the sun's harmful ultraviolet rays. Manmade chemicals are known to destroy this beneficial ozone" +
                                         "\n" +
@@ -436,9 +436,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("no2") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("NO2")
+                                .setTitle("NO₂")
                                 .setCancelable(true)
-                                .setMessage("Nitrogen dioxide(NO2) is a nasty-smelling gas. Some nitrogen dioxide is formed naturally in the atmosphere by lightning and some is produced by plants, soil and water. However, only about 1% of the total amount of nitrogen dioxide found in our cities' air is formed this way.\n" +
+                                .setMessage("Nitrogen dioxide(NO₂) is a nasty-smelling gas. Some nitrogen dioxide is formed naturally in the atmosphere by lightning and some is produced by plants, soil and water. However, only about 1% of the total amount of nitrogen dioxide found in our cities' air is formed this way.\n" +
                                         "\n" +
                                         "Nitrogen dioxide is an important air pollutant because it contributes to the formation of photochemical smog, which can have significant impacts on human health.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -453,9 +453,9 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                     } else if (dominant.equals("so2") && dominant != null) {
                         new AlertDialog.Builder(Main.this)
-                                .setTitle("SO2")
+                                .setTitle("SO₂")
                                 .setCancelable(true)
-                                .setMessage("Sulfur dioxide is the chemical compound with the formula SO2" +
+                                .setMessage("Sulfur dioxide is the chemical compound with the formula SO₂" +
                                         "At standard atmosphere, it is a toxic gas with a pungent, irritating smell. It is released naturally by volcanic activity and is produced as a by-product of the burning of fossil fuels contaminated with sulfur compounds.")
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -892,41 +892,41 @@ public class Main extends AppCompatActivity implements LocationListener {
                     if (aqis.has("no2")) {
                         JSONObject no2 = aqis.getJSONObject("no2");
                         nitrogen = no2.getString("v");
-                        tt5.setText("NO2 :   " + nitrogen);
+                        tt5.setText("NO₂ :   " + nitrogen);
                     } else {
-                        tt5.setText("NO2 : No data");
+                        tt5.setText("NO₂ : No data");
                     }
 
                     if (aqis.has("o3")) {
                         JSONObject o3 = aqis.getJSONObject("o3");
                         ozone = o3.getString("v");
-                        tt4.setText("O3 :   " + ozone);
+                        tt4.setText("O₃ :   " + ozone);
                     } else {
-                        tt4.setText("O3 : No data");
+                        tt4.setText("O₃ : No data");
                     }
 
                     if (aqis.has("pm10")) {
                         JSONObject pm10 = aqis.getJSONObject("pm10");
                         pm_10 = pm10.getString("v");
-                        tt3.setText("PM10 :   " + pm_10);
+                        tt3.setText("PM₁₀ :   " + pm_10);
                     } else {
-                        tt3.setText("PM10 : No data");
+                        tt3.setText("PM₁₀ : No data");
                     }
 
                     if (aqis.has("pm25")) {
                         JSONObject pm25 = aqis.getJSONObject("pm25");
                         pm_25 = pm25.getString("v");
-                        tt2.setText("PM2.5 :   " + pm_25);
+                        tt2.setText("PM₂.₅ :   " + pm_25);
                     } else {
-                        tt2.setText("PM2.5 : No data");
+                        tt2.setText("PM₂.₅ : No data");
                     }
 
                     if (aqis.has("so2")) {
                         JSONObject so2 = aqis.getJSONObject("so2");
                         sulphur = so2.getString("v");
-                        tt6.setText("SO2 :   " + sulphur);
+                        tt6.setText("SO₂ :   " + sulphur);
                     } else {
-                        tt6.setText("SO2 : No data");
+                        tt6.setText("SO₂ : No data");
                     }
 
                 } else {
@@ -958,18 +958,18 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
                 if (dominant.equals("pm25")) {
-                    tt9.setText("PM2.5 :  " + pm_25);
+                    tt9.setText("PM₂.₅ :  " + pm_25);
                 } else if (dominant.equals("pm10")) {
-                    tt9.setText("PM10 :  " + pm_10);
+                    tt9.setText("PM₁₀ :  " + pm_10);
 
                 } else if (dominant.equals("o3")) {
-                    tt9.setText("O3 :  " + ozone);
+                    tt9.setText("O₃ :  " + ozone);
 
                 } else if (dominant.equals("no2")) {
-                    tt9.setText("NO2 :  " + nitrogen);
+                    tt9.setText("NO₂ :  " + nitrogen);
 
                 } else if (dominant.equals("so2")) {
-                    tt9.setText("SO2 :  " + sulphur);
+                    tt9.setText("SO₂ :  " + sulphur);
 
                 } else if (dominant.equals("co")) {
                     tt9.setText("CO :  " + carbon);

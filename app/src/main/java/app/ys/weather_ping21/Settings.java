@@ -200,6 +200,7 @@ public class Settings extends AppCompatActivity {
         else
         {
              sw1.setChecked(false);
+             sw2.setChecked(false);
              sw2.setEnabled(false);
         }
 
@@ -335,6 +336,7 @@ public class Settings extends AppCompatActivity {
                     rba.setEnabled(true);
                     rbb.setEnabled(true);
                     rbc.setEnabled(true);
+                    sw2.setEnabled(true);
                     Snackbar.make(findViewById(android.R.id.content), "Notification On", Snackbar.LENGTH_LONG)
                             .show();
                     Intent startIntent = new Intent(Settings.this, ForegroundService.class);
@@ -347,7 +349,10 @@ public class Settings extends AppCompatActivity {
                 else
                 {
                     ed.putInt("Toggle2",0);
+                    ed.putInt("Toggle3",0);
                     ed.apply();
+                    sw2.setChecked(false);
+                    sw2.setEnabled(false);
                     rba.setEnabled(false);
                     rbb.setEnabled(false);
                     rbc.setEnabled(false);

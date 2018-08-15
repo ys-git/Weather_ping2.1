@@ -60,7 +60,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
-public class Main extends AppCompatActivity implements LocationListener {
+public class Main extends AppCompatActivity {
 
     public ProgressDialog pDialog;
     TextView locationText, tt1, tt2, tt3, tt4, tt5, tt6, tt7, tt8, tt9, tt10, tt11, tt12, tt13, tt14,vis_field;
@@ -73,7 +73,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField, cloud, latt, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField, windspeed, winddeg, sun, set;
 
-    LocationManager locationManager;
+
     Double vis_dou;
     //private AdView mAdView;
     String vis;
@@ -200,16 +200,16 @@ public class Main extends AppCompatActivity implements LocationListener {
         // locationText = (TextView)findViewById(R.id.locationText);
 
 
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        /*if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
             Log.i("WP", "Checking for the Location permission");
-        }
+        }*/
 
 
-        Log.i("WP", "Executing getLocation");
+        /*Log.i("WP", "Executing getLocation");
         getLocation();
-        Log.i("WP", "getLocation executed");
+        Log.i("WP", "getLocation executed");*/
 
 
         /*img.setOnClickListener(new View.OnClickListener() {
@@ -536,7 +536,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 }
                 Log.i("WP", "Again calling getLocation");
-                getLocation();
+                //getLocation();
                 Log.i("WP", "Location Refreshed");
 
                 /*AdRequest adRequest = new AdRequest.Builder()
@@ -619,90 +619,92 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
     }
+// DEPRECATED SECTION-NO LONGER WORKING
+//------------------------------------------------------------------------------------------------------------------------------
+//    /*void getLocation() {
+//        try {Log.i("WP", "Inside getLocation");
+//            Location location;
+//            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, this);
+//            if (locationManager != null) {
+//                location = locationManager
+//                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                if (location != null) {
+//
+//                    lat = location.getLatitude();
+//                    lon = location.getLongitude();
+//                }
+//                s = String.valueOf(lat);
+//                q = String.valueOf(lon);
+//                Log.i("WP", "Getting Lat nad Lon"+"Lat= "+s+"  Long= "+q);
+//            }
+//            final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+//
+//            ex();
+//            //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+//            //        lat, lon, units, APP_ID);
+//            //new Main.GetWeatherTask().execute(url);
+//            new FetchDataTask().execute(URL);
+//        }
+//        catch(SecurityException e) {
+//            e.printStackTrace();
+//        }
+//        if ((switches.getInt("Toggle2",-1)) == 1) {
+//            stopService(new Intent(Main.this, ForegroundService.class));
+//            Intent startIntent = new Intent(Main.this, ForegroundService.class);
+//            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+//            startService(startIntent);
+//        }
+//    }
+//
+//    @Override
+//    public void onLocationChanged(Location location) {
+//        *//*//*/locationText.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
+//        lat = location.getLatitude();
+//        lon = location.getLongitude();
+//        s = String.valueOf(lat);
+//        q = String.valueOf(lon);
+//        final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+//
+//        ex();
+//        //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+//        //        lat, lon, units, APP_ID);
+//        //new Main.GetWeatherTask().execute(url);
+//        new FetchDataTask().execute(URL);*//*
+//
+//
+//
+//    }
+//
+//    @Override
+//    public void onProviderDisabled(String provider) {
+//        provider=null;
+//
+//
+//        if (connected == false&&provider==null) {
+//
+//            Snackbar.make(findViewById(android.R.id.content), "Please Enable Location and Internet", Snackbar.LENGTH_LONG)
+//                    .show();
+//        }
+//        else
+//        {
+//            Snackbar.make(findViewById(android.R.id.content), "Please Enable Location", Snackbar.LENGTH_LONG)
+//                    .show();
+//
+//        }
+//    }
+//
+//    @Override
+//    public void onStatusChanged(String provider, int status, Bundle extras) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderEnabled(String provider) {
+//
+//    }*/
 
-
-    void getLocation() {
-        try {Log.i("WP", "Inside getLocation");
-            Location location;
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, this);
-            if (locationManager != null) {
-                location = locationManager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null) {
-
-                    lat = location.getLatitude();
-                    lon = location.getLongitude();
-                }
-                s = String.valueOf(lat);
-                q = String.valueOf(lon);
-                Log.i("WP", "Getting Lat nad Lon"+"Lat= "+s+"  Long= "+q);
-            }
-            final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
-
-            ex();
-            //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
-            //        lat, lon, units, APP_ID);
-            //new Main.GetWeatherTask().execute(url);
-            new FetchDataTask().execute(URL);
-        }
-        catch(SecurityException e) {
-            e.printStackTrace();
-        }
-        if ((switches.getInt("Toggle2",-1)) == 1) {
-            stopService(new Intent(Main.this, ForegroundService.class));
-            Intent startIntent = new Intent(Main.this, ForegroundService.class);
-            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-            startService(startIntent);
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        /*//locationText.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
-        lat = location.getLatitude();
-        lon = location.getLongitude();
-        s = String.valueOf(lat);
-        q = String.valueOf(lon);
-        final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
-
-        ex();
-        //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
-        //        lat, lon, units, APP_ID);
-        //new Main.GetWeatherTask().execute(url);
-        new FetchDataTask().execute(URL);*/
-
-
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        provider=null;
-
-
-        if (connected == false&&provider==null) {
-
-            Snackbar.make(findViewById(android.R.id.content), "Please Enable Location and Internet", Snackbar.LENGTH_LONG)
-                    .show();
-        }
-        else
-        {
-            Snackbar.make(findViewById(android.R.id.content), "Please Enable Location", Snackbar.LENGTH_LONG)
-                    .show();
-
-        }
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
+    //-----------------------------------------------------------------------------------------------------------------------------
 
     void ex() {
         Log.i("WP", "Inside ex");

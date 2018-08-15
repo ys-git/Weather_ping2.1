@@ -99,11 +99,11 @@ public class Main extends AppCompatActivity implements LocationListener {
         getSupportActionBar().hide();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
-        Log.i(Main.class.getSimpleName(), "Inside Oncreate");
+        Log.i("WP", "Inside Oncreate");
 
         if((switches.getInt("tut", -1))==1)
         {
-            Log.i(Main.class.getSimpleName(), "Handy Info Being displayed");
+            Log.i("WP", "Handy Info Being displayed");
             new AlertDialog.Builder(Main.this)
                     .setTitle("A bit of handy info....")
                     .setCancelable(false)
@@ -119,6 +119,7 @@ public class Main extends AppCompatActivity implements LocationListener {
             SharedPreferences.Editor ed = switches.edit();
             ed.putInt("tut",0);
             ed.apply();
+            Log.i("WP", "Inside InfoPopus");
 
         }
 
@@ -126,16 +127,19 @@ public class Main extends AppCompatActivity implements LocationListener {
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
+
             connected = true;
         } else
             connected = false;
+        Log.i("WP", "Connectivity to the Internet Checked");
 
         if (connected == false) {
 
             Snackbar.make(findViewById(android.R.id.content), "Please Enable Internet", Snackbar.LENGTH_LONG)
                     .show();
+            Log.i("WP", "Connectivity to the Internet Failed");
         }
-        Log.i(Main.class.getSimpleName(), "Checking Connection");
+
 
 
         /*MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
@@ -199,13 +203,14 @@ public class Main extends AppCompatActivity implements LocationListener {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
-
+            Log.i("WP", "Checking for the Location permission");
         }
 
 
-
+        Log.i("WP", "Executing getLocation");
         getLocation();
-        Log.i(Main.class.getSimpleName(), "Checking Permission and getting location");
+        Log.i("WP", "getLocation executed");
+
 
         /*img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -520,6 +525,7 @@ public class Main extends AppCompatActivity implements LocationListener {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Log.i("WP", "Swiped down to refresh");
                 Snackbar.make(findViewById(android.R.id.content), "Refreshing...", Snackbar.LENGTH_LONG)
                         .show();
 
@@ -529,8 +535,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                     Toast.makeText(Main.this, "Denied Location Permission", Toast.LENGTH_LONG).show();
 
                 }
+                Log.i("WP", "Again calling getLocation");
                 getLocation();
-                Log.i(Main.class.getSimpleName(), "Location Refreshed");
+                Log.i("WP", "Location Refreshed");
 
                 /*AdRequest adRequest = new AdRequest.Builder()
                         .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -615,7 +622,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
 
     void getLocation() {
-        try {
+        try {Log.i("WP", "Inside getLocation");
             Location location;
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, this);
@@ -623,13 +630,13 @@ public class Main extends AppCompatActivity implements LocationListener {
                 location = locationManager
                         .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 if (location != null) {
-                    Log.d("activity", "LOC by Network");
+
                     lat = location.getLatitude();
                     lon = location.getLongitude();
                 }
                 s = String.valueOf(lat);
                 q = String.valueOf(lon);
-                Log.i(Main.class.getSimpleName(), "Getting Lat And Lon");
+                Log.i("WP", "Getting Lat nad Lon"+"Lat= "+s+"  Long= "+q);
             }
             final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
@@ -698,6 +705,7 @@ public class Main extends AppCompatActivity implements LocationListener {
     }
 
     void ex() {
+        Log.i("WP", "Inside ex");
 
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/YanoneKaffeesatz-Thin.ttf");
@@ -939,7 +947,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 } else {
 
                 }
-                Log.i(Main.class.getSimpleName(), "Fetching Air Index");
+                Log.i("WP", "Fetching Air Index");
 
                 JSONArray jsonarray = mains.getJSONArray("attributions");
                 JSONObject elearray = jsonarray.getJSONObject(0);
@@ -1057,6 +1065,8 @@ public class Main extends AppCompatActivity implements LocationListener {
                     k = 6;
 
                 }
+
+                Log.i("WP", "Air Quality Fetched");
 
 
             } catch (Exception e) {

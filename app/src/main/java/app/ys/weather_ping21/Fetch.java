@@ -15,9 +15,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import android.util.Log;
 
 
 public class Fetch {
+
 
 
     private static final String OPEN_WEATHER_MAP_URL =
@@ -26,6 +28,8 @@ public class Fetch {
     private static final String OPEN_WEATHER_MAP_API = "1a6b11c1dda6b00770aa9546844f64a7";
 
     public static String setWeatherIcon(int actualId, long sunrise, long sunset){
+        Log.i("WP", "Inside Fetch");
+
         int id = actualId / 100;
         String icon = "";
         if(actualId == 800){
@@ -162,6 +166,7 @@ public class Fetch {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("h:mm a");
                     k=String.valueOf(simpleDateFormat.format(s1));
                     l=String.valueOf(simpleDateFormat.format(s2));
+                    Log.i("WP", "Info Fetched");
 
                     delegate.processFinish(city, description, temperature, humidity, pressure,visibility,wsp,wdeg,updatedOn, iconText,k,l,clo);
 

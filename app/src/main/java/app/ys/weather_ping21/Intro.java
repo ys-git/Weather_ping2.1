@@ -29,9 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.app.ActionBar;
 
-import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+//import com.google.android.gms.ads.MobileAds;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

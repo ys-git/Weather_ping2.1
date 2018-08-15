@@ -610,7 +610,8 @@ public class Main extends AppCompatActivity {
 
                 }
                 Log.i("WP", "Again calling getLocation");
-                //getLocation();
+                startLocationButtonClick();
+                stopLocationButtonClick();
                 Log.i("WP", "Location Refreshed");
 
                 /*AdRequest adRequest = new AdRequest.Builder()

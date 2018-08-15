@@ -210,6 +210,10 @@ public class Main extends AppCompatActivity {
             Log.i("WP", "Connectivity to the Internet Failed");
         }
 
+        init();
+        startLocationButtonClick();
+        stopLocationButtonClick();
+
 
 
         /*MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
@@ -828,16 +832,29 @@ public class Main extends AppCompatActivity {
 
     private void updateLocationUI() {
         if (mCurrentLocation != null) {
-            txtLocationResult.setText(
-                    "Lat: " + mCurrentLocation.getLatitude() + ", " +
-                            "Lng: " + mCurrentLocation.getLongitude()
-            );
-            Log.i("WP", "Location Updated");
+//            txtLocationResult.setText(
+//                    "Lat: " + mCurrentLocation.getLatitude() + ", " +
+//                            "Lng: " + mCurrentLocation.getLongitude()
+//            );
+            lat = mCurrentLocation.getLatitude();
+            lon = mCurrentLocation.getLongitude();
+            Log.i("WP", "Location Fetched");
+            s = String.valueOf(lat);
+            q = String.valueOf(lon);
+                Log.i("WP", "Getting Lat nad Lon"+"Lat= "+s+"  Long= "+q);
+
+            final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+
+            ex();
+            //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+            //        lat, lon, units, APP_ID);
+            //new Main.GetWeatherTask().execute(url);
+            new FetchDataTask().execute(URL);
 
 
             // giving a blink animation on TextView
-            txtLocationResult.setAlpha(0);
-            txtLocationResult.animate().alpha(1).setDuration(300);
+            //txtLocationResult.setAlpha(0);
+            //txtLocationResult.animate().alpha(1).setDuration(300);
 
             // location last updated time
             //txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
@@ -884,7 +901,7 @@ public class Main extends AppCompatActivity {
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTINGS);
+                                    rae.startResolutionForResult(Main.this, REQUEST_CHECK_SETTINGS);
                                 } catch (IntentSender.SendIntentException sie) {
                                     Log.i(TAG, "PendingIntent unable to execute request.");
                                 }
@@ -894,7 +911,7 @@ public class Main extends AppCompatActivity {
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
 
-                                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+                                Toast.makeText(Main.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
                         updateLocationUI();

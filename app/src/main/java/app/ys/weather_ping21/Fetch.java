@@ -59,6 +59,7 @@ public class Fetch {
     public interface AsyncResponse {
 
         void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13);
+
     }
 
 

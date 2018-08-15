@@ -295,7 +295,9 @@ public class ForegroundService extends Service implements LocationListener{ //im
                 des = details.getString("description");
                 capital(des);
                 city = topLevel.getString("name");
-                country = topLevel.getJSONObject("sys").getString("country");
+                JSONObject syst = topLevel.getJSONObject("sys");
+                country = "India";
+                        //topLevel.getJSONObject("sys").getString("country");
                 //city = name.getString("name");
                 weather = String.valueOf(main.getDouble("temp"));
                 sendNotification();

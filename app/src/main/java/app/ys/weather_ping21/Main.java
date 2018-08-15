@@ -99,9 +99,11 @@ public class Main extends AppCompatActivity implements LocationListener {
         getSupportActionBar().hide();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
+        Log.i(Main.class.getSimpleName(), "Inside Oncreate");
 
         if((switches.getInt("tut", -1))==1)
         {
+            Log.i(Main.class.getSimpleName(), "Handy Info Being displayed");
             new AlertDialog.Builder(Main.this)
                     .setTitle("A bit of handy info....")
                     .setCancelable(false)
@@ -133,6 +135,7 @@ public class Main extends AppCompatActivity implements LocationListener {
             Snackbar.make(findViewById(android.R.id.content), "Please Enable Internet", Snackbar.LENGTH_LONG)
                     .show();
         }
+        Log.i(Main.class.getSimpleName(), "Checking Connection");
 
 
         /*MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
@@ -200,7 +203,9 @@ public class Main extends AppCompatActivity implements LocationListener {
         }
 
 
+
         getLocation();
+        Log.i(Main.class.getSimpleName(), "Checking Permission and getting location");
 
         /*img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -525,7 +530,7 @@ public class Main extends AppCompatActivity implements LocationListener {
 
                 }
                 getLocation();
-
+                Log.i(Main.class.getSimpleName(), "Location Refreshed");
 
                 /*AdRequest adRequest = new AdRequest.Builder()
                         .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -624,6 +629,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 }
                 s = String.valueOf(lat);
                 q = String.valueOf(lon);
+                Log.i(Main.class.getSimpleName(), "Getting Lat And Lon");
             }
             final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
@@ -783,8 +789,9 @@ public class Main extends AppCompatActivity implements LocationListener {
                 }
 
 
-
+                Log.i(Main.class.getSimpleName(), "Displaying Fetched data");
             }
+
         });
         asyncTask.execute(s, q); //  asyncTask.execute("Latitude", "Longitude")
     }
@@ -932,6 +939,7 @@ public class Main extends AppCompatActivity implements LocationListener {
                 } else {
 
                 }
+                Log.i(Main.class.getSimpleName(), "Fetching Air Index");
 
                 JSONArray jsonarray = mains.getJSONArray("attributions");
                 JSONObject elearray = jsonarray.getJSONObject(0);

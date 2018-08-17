@@ -48,7 +48,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Intro extends AppCompatActivity implements LocationListener {
@@ -174,7 +175,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
 
                 }
                 else
-                if(isValidEmail(email)==false){
+                if(isValidEmailAddress(e2.getText().toString())==false){
                     e2.setError("Enter a valid email");
                 }
                 else
@@ -368,8 +369,18 @@ public class Intro extends AppCompatActivity implements LocationListener {
         sendPostReqAsyncTask.execute(name, email, gender);
     }
 
-    public static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    public static boolean isValidEmailAddress(String emailAddress) {
+        String emailRegEx;
+        Pattern pattern;
+        // Regex for a valid email address
+        emailRegEx = "^[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,4}$";
+        // Compare the regex with the email address
+        pattern = Pattern.compile(emailRegEx);
+        Matcher matcher = pattern.matcher(emailAddress);
+        if (!matcher.find()) {
+            return false;
+        }
+        return true;
     }
 }
 

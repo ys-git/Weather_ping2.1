@@ -177,7 +177,7 @@ public class Main extends AppCompatActivity {
             new AlertDialog.Builder(Main.this)
                     .setTitle("A bit of handy info....")
                     .setCancelable(false)
-                    .setMessage(" ?    Information Popups"+"\n"+"\n"+" ?     Swipe down to refresh")
+                    .setMessage(" ⓘ    Information Popups"+"\n"+"\n"+" ↓     Swipe down to refresh")
                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

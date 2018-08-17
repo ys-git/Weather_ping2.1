@@ -169,48 +169,6 @@ public class Main extends AppCompatActivity {
         getSupportActionBar().hide();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         setContentView(R.layout.main);
-
-        Typeface tf = Typeface.createFromAsset(getAssets(),
-                "fonts/YanoneKaffeesatz-Thin.ttf");
-
-        Typeface tf3 = Typeface.createFromAsset(getAssets(),
-                "fonts/DINMedium.ttf");
-
-        Typeface tf4 = Typeface.createFromAsset(getAssets(),
-                "fonts/calibril.ttf");
-
-
-        weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
-
-        cityField = (TextView) findViewById(R.id.textView20);
-        updatedField = (TextView) findViewById(R.id.textView2);
-        detailsField = (TextView) findViewById(R.id.textView9);
-        humidity_field = (TextView) findViewById(R.id.textView3);
-        pressure_field = (TextView) findViewById(R.id.textView10);
-        windspeed = (TextView) findViewById(R.id.textView29);
-        winddeg = (TextView) findViewById(R.id.textView30);
-        sun = (TextView) findViewById(R.id.textView26);
-        set = (TextView) findViewById(R.id.textView27);
-        pressure_field = (TextView) findViewById(R.id.textView10);
-        weatherIcon = (TextView) findViewById(R.id.textView19);
-        cloud = (TextView) findViewById(R.id.textView34);
-        latt = (TextView) findViewById(R.id.textView37);
-        weatherIcon.setTypeface(weatherFont);
-
-
-        cityField.setTypeface(tf);
-        vis_field.setTypeface(tf3);
-        updatedField.setTypeface(tf);
-        detailsField.setTypeface(tf3);
-        currentTemperatureField.setTypeface(tf4);
-        humidity_field.setTypeface(tf3);
-        pressure_field.setTypeface(tf3);
-        windspeed.setTypeface(tf3);
-        winddeg.setTypeface(tf3);
-        latt.setTypeface(tf3);
-        cloud.setTypeface(tf3);
-        sun.setTypeface(tf3);
-        set.setTypeface(tf3);
         Log.i("WP", "Inside Oncreate");
 
         if((switches.getInt("tut", -1))==1)
@@ -355,7 +313,7 @@ public class Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(Main.this, Settings.class);
+                Intent i = new Intent(Main.this, app.ys.weather_ping21.Settings.class);
                 startActivity(i);
             }
 
@@ -1053,10 +1011,48 @@ public class Main extends AppCompatActivity {
     void ex() {
         Log.i("WP", "Inside ex");
 
+        Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/YanoneKaffeesatz-Thin.ttf");
+
+        Typeface tf3 = Typeface.createFromAsset(getAssets(),
+                "fonts/DINMedium.ttf");
+
+        Typeface tf4 = Typeface.createFromAsset(getAssets(),
+                "fonts/calibril.ttf");
 
 
+        weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
 
+        cityField = (TextView) findViewById(R.id.textView20);
+        updatedField = (TextView) findViewById(R.id.textView2);
+        detailsField = (TextView) findViewById(R.id.textView9);
+        humidity_field = (TextView) findViewById(R.id.textView3);
+        pressure_field = (TextView) findViewById(R.id.textView10);
+        windspeed = (TextView) findViewById(R.id.textView29);
+        winddeg = (TextView) findViewById(R.id.textView30);
+        sun = (TextView) findViewById(R.id.textView26);
+        set = (TextView) findViewById(R.id.textView27);
+        pressure_field = (TextView) findViewById(R.id.textView10);
+        weatherIcon = (TextView) findViewById(R.id.textView19);
+        cloud = (TextView) findViewById(R.id.textView34);
+        latt = (TextView) findViewById(R.id.textView37);
+        weatherIcon.setTypeface(weatherFont);
+
+
+        cityField.setTypeface(tf);
+        vis_field.setTypeface(tf3);
+        updatedField.setTypeface(tf);
+        detailsField.setTypeface(tf3);
+        currentTemperatureField.setTypeface(tf4);
+        humidity_field.setTypeface(tf3);
+        pressure_field.setTypeface(tf3);
+        windspeed.setTypeface(tf3);
+        winddeg.setTypeface(tf3);
+        latt.setTypeface(tf3);
+        cloud.setTypeface(tf3);
+        sun.setTypeface(tf3);
+        set.setTypeface(tf3);
 
 
 

@@ -18,6 +18,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -105,6 +107,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
         ed.putInt("Toggle2",1);
         ed.putInt("Toggle3",1);
         ed.putInt("Interval",30);
+        ed.putInt("tut",1);
         ed.apply();
 
 
@@ -359,6 +362,10 @@ public class Intro extends AppCompatActivity implements LocationListener {
         }
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
         sendPostReqAsyncTask.execute(name, email, gender);
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }
 

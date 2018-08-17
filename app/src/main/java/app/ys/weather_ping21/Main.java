@@ -851,6 +851,12 @@ public class Main extends AppCompatActivity {
             //        lat, lon, units, APP_ID);
             //new Main.GetWeatherTask().execute(url);
             new FetchDataTask().execute(URL);
+            if ((switches.getInt("Toggle2",-1)) == 1) {
+            stopService(new Intent(Main.this, ForegroundService.class));
+            Intent startIntent = new Intent(Main.this, ForegroundService.class);
+            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+            startService(startIntent);
+        }
 
 
             // giving a blink animation on TextView

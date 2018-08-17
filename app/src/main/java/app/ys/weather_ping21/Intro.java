@@ -174,6 +174,10 @@ public class Intro extends AppCompatActivity implements LocationListener {
 
                 }
                 else
+                if(isValidEmail(email)==false){
+                    e2.setError("Enter a valid email");
+                }
+                else
                 if (radioGroup.getCheckedRadioButtonId() == -1)
                 {
                     // no radio buttons are checked

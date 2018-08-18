@@ -612,6 +612,10 @@ public class Main extends AppCompatActivity {
                 Log.i("WP", "Again calling getLocation");
                 startLocationButtonClick();
                 stopLocationButtonClick();
+                currentTemperatureField.setAlpha(0);
+                currentTemperatureField.animate().alpha(1).setDuration(400);
+                cityField.setAlpha(0);
+                cityField.animate().alpha(1).setDuration(400);
                 Log.i("WP", "Location Refreshed");
 
                 /*AdRequest adRequest = new AdRequest.Builder()
@@ -887,7 +891,7 @@ public class Main extends AppCompatActivity {
                     public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                         Log.i(TAG, "All location settings are satisfied.");
 
-                        Toast.makeText(getApplicationContext(), "Started location updates!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Started location updates!", Toast.LENGTH_SHORT).show();
 
                         //noinspection MissingPermission
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
@@ -967,7 +971,7 @@ public class Main extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
 
                     }
                 });

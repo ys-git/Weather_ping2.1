@@ -2,6 +2,7 @@ package app.ys.weather_ping21;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -257,8 +258,12 @@ public class ForegroundService extends Service{
             lat = mCurrentLocation.getLatitude();
             lon = mCurrentLocation.getLongitude();
             Log.i("WP", "Location Fetched");
-            s = String.valueOf(lat);
-            q = String.valueOf(lon);
+            //s = String.valueOf(lat);
+            //q = String.valueOf(lon);
+            String units = "metric";
+            String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+                    lat, lon, units, APP_ID);
+            new GetWeatherTask().execute(url);
 
         }
 
@@ -313,7 +318,7 @@ public class ForegroundService extends Service{
 
     public void startLocationButtonClick() {
         // Requesting ACCESS_FINE_LOCATION using Dexter library
-        Dexter.withActivity(this)
+        Dexter.withActivity((Activity) getApplicationContext())
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
                     @Override

@@ -7,8 +7,8 @@ android {
         applicationId 'app.ys.weatherping21'
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 5
-        versionName '2.4'
+        versionCode 6
+        versionName '2.4.1'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -27,17 +27,14 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
-     //implementation 'com.google.android.gms:play-services-ads:11.8.0'
+    //implementation 'com.google.android.gms:play-services-ads:11.8.0'
     //implementation 'com.google.android.gms:play-services:11.8.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:design:26.1.0'
-
     implementation 'com.google.android.gms:play-services-location:15.0.1'
-
     implementation 'com.karumi:dexter:4.2.0'
-
     // ButterKnife view binding
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

@@ -43,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.Executors;
@@ -52,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 
 //import static com.google.android.gms.internal.zzip.runOnUiThread;
 
-public class ForegroundService extends Service implements LocationListener{ //implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class ForegroundService extends Service{ //implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     ScheduledFuture beeperHandle;
     private static final String LOG_TAG = "ForegroundService";
@@ -67,6 +68,14 @@ public class ForegroundService extends Service implements LocationListener{ //im
     String weather = "0.0";
     String s, q;
     String city="City",des="Loading...",cap,country=" ";
+
+
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+
+    private final static int ALL_PERMISSIONS_RESULT = 101;
+    LocationTrack locationTrack;
 
 
     @Override
@@ -95,7 +104,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
                     period = 11;
                 }
 
-                getLocation();
+                lx();
 
 
             } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
@@ -129,12 +138,14 @@ public class ForegroundService extends Service implements LocationListener{ //im
                 scheduler.shutdown();
             }catch(NullPointerException e)
             {}
+            locationTrack.stopListener();
 
         }
 
         if ((switches.getInt("Toggle2", -1)) == 0) {
             super.onDestroy();
             Log.i(LOG_TAG, "In onDestroy");
+
 
         }
     }
@@ -146,65 +157,16 @@ public class ForegroundService extends Service implements LocationListener{ //im
 
     }
 
-
-    void getLocation() {
-        try {
-            Location location;
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, this);
-            if (locationManager != null) {
-                location = locationManager
-                        .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                if (location != null) {
-                    Log.d("activity", "LOC by Network");
-
-                    lat = location.getLatitude();
-                    lon = location.getLongitude();
-                }
-            }
-
-
-
-
-        }
-        catch(SecurityException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        //locationText.setText("Latitude: " + location.getLatitude() + "\n Longitude: " + location.getLongitude());
-        lat=location.getLatitude();
-        lon=location.getLongitude();
-        //s=String.valueOf(lat);
-        //q=String.valueOf(lon);
+    public void lx(){
+        locationTrack = new LocationTrack(ForegroundService.this);
+        lon = locationTrack.getLongitude();
+        lat = locationTrack.getLatitude();
+        Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(lon) + "\nLatitude:" + Double.toString(lat), Toast.LENGTH_SHORT).show();
         String units = "metric";
         String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
                 lat, lon, units, APP_ID);
         new GetWeatherTask().execute(url);
-
-
-
-
-
     }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        //Toast.makeText(MainActivity.this, "Please Enable GPS and Internet", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
 
 
 
@@ -219,7 +181,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
         public void run() {
             try {
 
-                getLocation();
+                lx();
 
                 Log.i("MyTestService", "Inside Service");
             } catch (Exception e) {

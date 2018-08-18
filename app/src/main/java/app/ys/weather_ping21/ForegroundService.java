@@ -136,9 +136,10 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
             try {
                 beeperHandle.cancel(true);
                 scheduler.shutdown();
+                locationTrack.stopListener();
             }catch(NullPointerException e)
             {}
-            locationTrack.stopListener();
+
 
         }
 

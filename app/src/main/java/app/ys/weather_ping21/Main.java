@@ -612,10 +612,15 @@ public class Main extends AppCompatActivity {
                 Log.i("WP", "Again calling getLocation");
                 startLocationButtonClick();
                 stopLocationButtonClick();
+                try{
                 currentTemperatureField.setAlpha(0);
                 currentTemperatureField.animate().alpha(1).setDuration(400);
                 cityField.setAlpha(0);
-                cityField.animate().alpha(1).setDuration(400);
+                cityField.animate().alpha(1).setDuration(400);}
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
                 Log.i("WP", "Location Refreshed");
 
                 /*AdRequest adRequest = new AdRequest.Builder()
@@ -836,40 +841,60 @@ public class Main extends AppCompatActivity {
     }
 
     private void updateLocationUI() {
-        if (mCurrentLocation != null) {
+        try {
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+
+                if (mCurrentLocation != null) {
 //            txtLocationResult.setText(
 //                    "Lat: " + mCurrentLocation.getLatitude() + ", " +
 //                            "Lng: " + mCurrentLocation.getLongitude()
 //            );
-            lat = mCurrentLocation.getLatitude();
-            lon = mCurrentLocation.getLongitude();
-            Log.i("WP", "Location Fetched");
-            s = String.valueOf(lat);
-            q = String.valueOf(lon);
-                Log.i("WP", "Getting Lat nad Lon"+"Lat= "+s+"  Long= "+q);
+                    lat = mCurrentLocation.getLatitude();
+                    lon = mCurrentLocation.getLongitude();
+                    Log.i("WP", "Location Fetched");
+                    s = String.valueOf(lat);
+                    q = String.valueOf(lon);
+                    Log.i("WP", "Getting Lat nad Lon" + "Lat= " + s + "  Long= " + q);
 
-            final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
+                    final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
-            ex();
-            //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
-            //        lat, lon, units, APP_ID);
-            //new Main.GetWeatherTask().execute(url);
-            new FetchDataTask().execute(URL);
-            if ((switches.getInt("Toggle2",-1)) == 1) {
-            stopService(new Intent(Main.this, ForegroundService.class));
-            Intent startIntent = new Intent(Main.this, ForegroundService.class);
-            startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
-            startService(startIntent);
+                    ex();
+                    //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+                    //        lat, lon, units, APP_ID);
+                    //new Main.GetWeatherTask().execute(url);
+                    new FetchDataTask().execute(URL);
+                    if ((switches.getInt("Toggle2", -1)) == 1) {
+                        stopService(new Intent(Main.this, ForegroundService.class));
+                        Intent startIntent = new Intent(Main.this, ForegroundService.class);
+                        startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                        startService(startIntent);
+                    }
+
+
+                    // giving a blink animation on TextView
+                    //txtLocationResult.setAlpha(0);
+                    //txtLocationResult.animate().alpha(1).setDuration(300);
+
+                    // location last updated time
+                    //txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
+                }
+
+            } else {
+                Snackbar.make(findViewById(android.R.id.content), "Please Enable Location", Snackbar.LENGTH_LONG)
+                        .show();
+
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
 
-            // giving a blink animation on TextView
-            //txtLocationResult.setAlpha(0);
-            //txtLocationResult.animate().alpha(1).setDuration(300);
-
-            // location last updated time
-            //txtUpdatedOn.setText("Last updated on: " + mLastUpdateTime);
-        }
 
         //toggleButtons();
     }
@@ -933,6 +958,11 @@ public class Main extends AppCompatActivity {
 
     public void startLocationButtonClick() {
         // Requesting ACCESS_FINE_LOCATION using Dexter library
+        if (connected == false) {
+            Snackbar.make(findViewById(android.R.id.content), "Please Enable Internet", Snackbar.LENGTH_LONG)
+                    .show();
+
+        }
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {

@@ -151,7 +151,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
         try {
             Location location;
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, this);
             if (locationManager != null) {
                 location = locationManager
                         .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -163,10 +163,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
                 }
             }
 
-            String units = "metric";
-            String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
-                    lat, lon, units, APP_ID);
-            new GetWeatherTask().execute(url);
+
 
 
         }
@@ -182,6 +179,10 @@ public class ForegroundService extends Service implements LocationListener{ //im
         lon=location.getLongitude();
         //s=String.valueOf(lat);
         //q=String.valueOf(lon);
+        String units = "metric";
+        String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+                lat, lon, units, APP_ID);
+        new GetWeatherTask().execute(url);
 
 
 

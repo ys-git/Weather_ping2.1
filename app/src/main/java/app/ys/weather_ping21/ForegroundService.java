@@ -1,12 +1,14 @@
 package app.ys.weather_ping21;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,10 +19,16 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.provider.*;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
@@ -30,8 +38,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,8 +71,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -52,7 +83,7 @@ import java.util.concurrent.TimeUnit;
 
 //import static com.google.android.gms.internal.zzip.runOnUiThread;
 
-public class ForegroundService extends Service implements LocationListener{ //implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class ForegroundService extends Service{
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     ScheduledFuture beeperHandle;
     private static final String LOG_TAG = "ForegroundService";
@@ -68,14 +99,38 @@ public class ForegroundService extends Service implements LocationListener{ //im
     String s, q;
     String city="City",des="Loading...",cap,country=" ";
 
+    //-------------------------------------location related
+    private String mLastUpdateTime;
+    private static final String TAG = Main.class.getSimpleName();
+
+    // location updates interval - 10sec
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
+
+
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
+
+    private static final int REQUEST_CHECK_SETTINGS = 100;
+
+
+    // bunch of location related apis
+    private FusedLocationProviderClient mFusedLocationClient;
+    private SettingsClient mSettingsClient;
+    private LocationRequest mLocationRequest;
+    private LocationSettingsRequest mLocationSettingsRequest;
+    private LocationCallback mLocationCallback;
+    private Location mCurrentLocation;
+    TextView txtLocationResult;
+
+    // boolean flag to toggle the ui
+    private Boolean mRequestingLocationUpdates;
+
 
     @Override
     public void onCreate() {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         super.onCreate();
 
-        //googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
-        //googleApiClient.connect();
+
 
     }
 
@@ -95,7 +150,9 @@ public class ForegroundService extends Service implements LocationListener{ //im
                     period = 11;
                 }
 
-                getLocation();
+                init();
+                startLocationButtonClick();
+                stopLocationButtonClick();
 
 
             } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
@@ -146,7 +203,161 @@ public class ForegroundService extends Service implements LocationListener{ //im
 
     }
 
+    private void init() {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mSettingsClient = LocationServices.getSettingsClient(this);
 
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                // location is received
+                mCurrentLocation = locationResult.getLastLocation();
+                mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+
+                updateLocationUI();
+            }
+        };
+
+        mRequestingLocationUpdates = false;
+
+        mLocationRequest = new LocationRequest();
+        //mLocationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+        //mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(mLocationRequest);
+        mLocationSettingsRequest = builder.build();
+    }
+    private void restoreValuesFromBundle(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("is_requesting_updates")) {
+                mRequestingLocationUpdates = savedInstanceState.getBoolean("is_requesting_updates");
+            }
+
+            if (savedInstanceState.containsKey("last_known_location")) {
+                mCurrentLocation = savedInstanceState.getParcelable("last_known_location");
+            }
+
+            if (savedInstanceState.containsKey("last_updated_on")) {
+                mLastUpdateTime = savedInstanceState.getString("last_updated_on");
+            }
+        }
+
+        updateLocationUI();
+    }
+
+    private void updateLocationUI() {
+        if (mCurrentLocation != null) {
+//            txtLocationResult.setText(
+//                    "Lat: " + mCurrentLocation.getLatitude() + ", " +
+//                            "Lng: " + mCurrentLocation.getLongitude()
+//            );
+            lat = mCurrentLocation.getLatitude();
+            lon = mCurrentLocation.getLongitude();
+            Log.i("WP", "Location Fetched");
+            s = String.valueOf(lat);
+            q = String.valueOf(lon);
+
+        }
+
+
+    }
+
+
+    private void startLocationUpdates() {
+        mSettingsClient
+                .checkLocationSettings(mLocationSettingsRequest)
+                .addOnSuccessListener((Executor) this, new OnSuccessListener<LocationSettingsResponse>() {
+                    @SuppressLint("MissingPermission")
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                        Log.i(TAG, "All location settings are satisfied.");
+
+                        Toast.makeText(getApplicationContext(), "Started location updates!", Toast.LENGTH_SHORT).show();
+
+                        //noinspection MissingPermission
+                        mFusedLocationClient.requestLocationUpdates(mLocationRequest,
+                                mLocationCallback, Looper.myLooper());
+
+                        updateLocationUI();
+                    }
+                })
+                .addOnFailureListener((Executor) this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        int statusCode = ((ApiException) e).getStatusCode();
+                        switch (statusCode) {
+                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+
+                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                                String errorMessage = "Location settings are inadequate, and cannot be " +
+                                        "fixed here. Fix in Settings.";
+                                Log.e(TAG, errorMessage);
+
+                                Handler handler = new Handler(Looper.getMainLooper());
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //Toast.makeText(ForegroundService.this.getApplicationContext(),"My Awesome service toast...",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        }
+
+                        updateLocationUI();
+                    }
+                });
+    }
+
+
+    public void startLocationButtonClick() {
+        // Requesting ACCESS_FINE_LOCATION using Dexter library
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        mRequestingLocationUpdates = true;
+                        startLocationUpdates();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        if (response.isPermanentlyDenied()) {
+                            // open device settings when the permission is
+                            // denied permanently
+                            openSettings();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+
+    public void stopLocationButtonClick() {
+        mRequestingLocationUpdates = false;
+        stopLocationUpdates();
+    }
+
+    public void stopLocationUpdates() {
+        // Removing location updates
+        mFusedLocationClient
+                .removeLocationUpdates(mLocationCallback)
+                .addOnCompleteListener((Executor) this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
+
+/*
     void getLocation() {
         try {
             Location location;
@@ -186,7 +397,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
 
 
 
-    }
+    /*}
 
     @Override
     public void onProviderDisabled(String provider) {
@@ -202,7 +413,7 @@ public class ForegroundService extends Service implements LocationListener{ //im
     public void onProviderEnabled(String provider) {
 
     }
-
+*/
 
 
 
@@ -217,7 +428,8 @@ public class ForegroundService extends Service implements LocationListener{ //im
         public void run() {
             try {
 
-                getLocation();
+                startLocationButtonClick();
+                stopLocationButtonClick();
 
                 Log.i("MyTestService", "Inside Service");
             } catch (Exception e) {
@@ -340,6 +552,23 @@ public class ForegroundService extends Service implements LocationListener{ //im
         des=cap;
 
     }
+
+    private void openSettings() {
+        Intent intent = new Intent();
+        intent.setAction(
+                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package",
+                BuildConfig.APPLICATION_ID, null);
+        intent.setData(uri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    private boolean checkPermissions() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
 
 
 

@@ -220,10 +220,6 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-
-
-
-
             new AlertDialog.Builder(this)
                     .setTitle("WeatherPing")
                     .setCancelable(false)
@@ -234,6 +230,8 @@ public class Intro extends AppCompatActivity implements LocationListener {
                             ActivityCompat.requestPermissions(Intro.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_LOCATION);
+
+
                             checkLocationPermission();
 
                         }

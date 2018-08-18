@@ -161,7 +161,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
         locationTrack = new LocationTrack(ForegroundService.this);
         lon = locationTrack.getLongitude();
         lat = locationTrack.getLatitude();
-        Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(lon) + "\nLatitude:" + Double.toString(lat), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(lon) + "\nLatitude:" + Double.toString(lat), Toast.LENGTH_SHORT).show();
         String units = "metric";
         String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
                 lat, lon, units, APP_ID);
@@ -260,8 +260,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 capital(des);
                 city = topLevel.getString("name");
                 JSONObject syst = topLevel.getJSONObject("sys");
-                country = "India";
-                        //topLevel.getJSONObject("sys").getString("country");
+                country = topLevel.getJSONObject("sys").getString("country");
                 //city = name.getString("name");
                 weather = String.valueOf(main.getDouble("temp"));
                 sendNotification();

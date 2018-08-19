@@ -7,7 +7,7 @@ android {
         applicationId 'app.ys.weatherping21'
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 6
+        versionCode 7
         versionName '2.4.1'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

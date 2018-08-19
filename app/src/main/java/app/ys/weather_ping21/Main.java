@@ -463,7 +463,7 @@ public class Main extends AppCompatActivity {
             }
 
         });
-        info4.setOnClickListener(new View.OnClickListener() {
+        /*info4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -573,7 +573,7 @@ public class Main extends AppCompatActivity {
 
             }
 
-        });
+        });*/
         info5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1217,7 +1217,7 @@ public class Main extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject(data);
                 JSONObject mains = jsonObject.getJSONObject("data");
-                dominant = mains.getString("dominentpol");
+                //dominant = mains.getString("dominentpol");
                 aqi = mains.getString("aqi");
 
 
@@ -1317,7 +1317,7 @@ public class Main extends AppCompatActivity {
                 te6.setVisibility(View.INVISIBLE);
 
 
-                if (dominant.equals("pm25")) {
+                /*if (dominant.equals("pm25")) {
                     tt9.setText("PM₂.₅ :  " + pm_25);
                 } else if (dominant.equals("pm10")) {
                     tt9.setText("PM₁₀ :  " + pm_10);
@@ -1334,10 +1334,10 @@ public class Main extends AppCompatActivity {
                 } else if (dominant.equals("co")) {
                     tt9.setText("CO :  " + carbon);
 
-                } else {
+                } else {*/
 
-                    tt9.setText(dominant);
-                }
+                    tt9.setText("aqi");
+                //}
 
 
                 tt2.setTypeface(tf3);

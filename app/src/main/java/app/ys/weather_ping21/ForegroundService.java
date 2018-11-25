@@ -2,6 +2,8 @@ package app.ys.weather_ping21;
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -11,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,8 +21,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -78,10 +83,18 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
     LocationTrack locationTrack;
 
 
+
+
+
     @Override
     public void onCreate() {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
         super.onCreate();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            sendNotification();
+        else
+            startForeground(1, new Notification());
 
         //googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
         //googleApiClient.connect();
@@ -194,23 +207,47 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
     };
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendNotification() {
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logonotif);
 
 
+        //------------------------
+        String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
+        String channelName = "My Background Service";
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        chan.setLightColor(Color.BLUE);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        assert manager != null;
+        manager.createNotificationChannel(chan);
 
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        Notification notification = notificationBuilder.setOngoing(true)
+                .setTicker("WeatherPing")
+                .setContentText(des)
+                .setColor(this.getResources().getColor(R.color.colorPrimary))
+                .setSmallIcon(R.drawable.logonotif)
+                .setContentTitle(weather + " °C" + " in "+city+", "+country)
+                .setPriority(NotificationManager.IMPORTANCE_MIN)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
+                        R.drawable.weather))
+                .setOngoing(true)
+                .build();
+        notification.contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, Splashload.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        startForeground(2, notification);
 
-
-
-
+        //------------------------
         Log.i("MyTestService", "Sending notification");
 
 
         //RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
 
-        Notification notification = new NotificationCompat.Builder(this)
+        /*Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle(weather + " °C" + " in "+city+", "+country)
                 .setTicker("WeatherPing")
                 .setContentText(des)
@@ -225,7 +262,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 new Intent(this, Splashload.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
-                notification);
+                notification);*/
     }
 
 
@@ -236,6 +273,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
 
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected String doInBackground(String... strings) {
 
@@ -264,7 +302,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 country = topLevel.getJSONObject("sys").getString("country");
                 //city = name.getString("name");
                 weather = String.valueOf(main.getDouble("temp"));
-                sendNotification();
+               sendNotification();
 
                 urlConnection.disconnect();
             } catch (IOException | JSONException e) {

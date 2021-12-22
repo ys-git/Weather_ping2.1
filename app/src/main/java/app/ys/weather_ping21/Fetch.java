@@ -13,15 +13,13 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import android.util.Log;
 
 public class Fetch {
 
     private static final String OPEN_WEATHER_MAP_URL =
-            "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric";
+            "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric";
 
-    private static final String OPEN_WEATHER_MAP_API = "1a6b11c1dda6b00770aa9546844f64a7";
+    private static final String OPEN_WEATHER_MAP_API_KEY = "1a6b11c1dda6b00770aa9546844f64a7";
 
     public static String setWeatherIcon(int actualId, long sunrise, long sunset){
         Log.i("WP", "Inside Fetch");
@@ -170,7 +168,7 @@ public class Fetch {
             URL url = new URL(String.format(OPEN_WEATHER_MAP_URL, lat, lon));
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
-            connection.addRequestProperty("x-api-key", OPEN_WEATHER_MAP_API);
+            connection.addRequestProperty("x-api-key", OPEN_WEATHER_MAP_API_KEY);
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()));

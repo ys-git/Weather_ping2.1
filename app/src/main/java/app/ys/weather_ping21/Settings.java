@@ -95,7 +95,6 @@ public class Settings extends AppCompatActivity {
         sdata = getSharedPreferences("my", Context.MODE_PRIVATE);
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
 
-
         rate= (Button)findViewById(R.id.button2);
         feedback= (Button)findViewById(R.id.button3);
 
@@ -158,7 +157,6 @@ public class Settings extends AppCompatActivity {
                     Toast.makeText(Settings.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
                 }
             }
-
         });
 
         sw=(Switch) findViewById(R.id.switch4);
@@ -169,7 +167,6 @@ public class Settings extends AppCompatActivity {
         if((switches.getInt("Toggle1", -1))==1)
         {
             sw.setChecked(true);
-
         }
         else
         {
@@ -182,7 +179,6 @@ public class Settings extends AppCompatActivity {
         {
             sw1.setChecked(true);
             sw2.setEnabled(true);
-
         }
         else
         {
@@ -194,7 +190,6 @@ public class Settings extends AppCompatActivity {
         if((switches.getInt("Toggle3", -1))==1)
         {
             sw2.setChecked(true);
-
         }
         else
         {
@@ -206,7 +201,6 @@ public class Settings extends AppCompatActivity {
             rba.setChecked(true);
             rbb.setChecked(false);
             rbc.setChecked(false);
-
         }
         else
         if((switches.getInt("Interval", 30))==30)
@@ -254,7 +248,6 @@ public class Settings extends AppCompatActivity {
                 startService(startIntent);
                 Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 30 mins", Snackbar.LENGTH_LONG)
                         .show();
-
             }
         });
 
@@ -271,7 +264,6 @@ public class Settings extends AppCompatActivity {
                 startService(startIntent);
                 Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 3 hrs", Snackbar.LENGTH_LONG)
                         .show();
-
             }
         });
 
@@ -283,16 +275,13 @@ public class Settings extends AppCompatActivity {
                 SharedPreferences.Editor ed = switches.edit();
                 if(isChecked)
                 {
-
                     //Toast.makeText(Settings.this, "Toggle button is on", Toast.LENGTH_SHORT).show();
 
                     ed.putInt("Toggle1",1);
                     ed.apply();
                     Snackbar.make(findViewById(android.R.id.content), "Fahrenheit Selected", Snackbar.LENGTH_LONG)
                             .show();
-
                 }
-
                 else
                 {
                     //Toast.makeText(Settings.this, "Toggle button is off", Toast.LENGTH_SHORT).show();
@@ -302,7 +291,6 @@ public class Settings extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Celsius Selected", Snackbar.LENGTH_LONG)
                             .show();
                 }
-
             }
         });
 
@@ -323,10 +311,7 @@ public class Settings extends AppCompatActivity {
                     Intent startIntent = new Intent(Settings.this, ForegroundService.class);
                     startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
                     startService(startIntent);
-
                 }
-
-
                 else
                 {
                     ed.putInt("Toggle2",0);
@@ -342,7 +327,6 @@ public class Settings extends AppCompatActivity {
                             .show();
                     stopService(new Intent(Settings.this, ForegroundService.class));
                 }
-
             }
         });
 
@@ -360,15 +344,6 @@ public class Settings extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Start on Boot selected", Snackbar.LENGTH_LONG)
                             .show();
                 }
-
-
-
-
-
-
-
-
-
                 else
                 {
                     ed.putInt("Toggle3",0);
@@ -376,7 +351,6 @@ public class Settings extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Start on Boot denied", Snackbar.LENGTH_LONG)
                             .show();
                 }
-
             }
         });
     }
@@ -389,14 +363,12 @@ public class Settings extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
     }
-
     /*private void showInterstitial() {
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();

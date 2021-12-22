@@ -135,7 +135,7 @@ public class Main extends AppCompatActivity {
     String air = "0.0", url;
     boolean connected = false;
 
-    //-------------------------------------location related
+    // location related
     private String mLastUpdateTime;
     private static final String TAG = Main.class.getSimpleName();
 
@@ -158,6 +158,7 @@ public class Main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
@@ -300,6 +301,7 @@ public class Main extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
         info1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -418,6 +420,7 @@ public class Main extends AppCompatActivity {
                 }
             }
         });
+
         info3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -435,6 +438,7 @@ public class Main extends AppCompatActivity {
                         .show();
             }
         });
+
         /*info4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -544,6 +548,7 @@ public class Main extends AppCompatActivity {
                 }
             }
         });*/
+
         info5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -614,8 +619,6 @@ public class Main extends AppCompatActivity {
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccent, android.R.color.holo_blue_light);
-
-
     }
 
     @Override
@@ -1005,7 +1008,6 @@ public class Main extends AppCompatActivity {
 
         Typeface tf4 = Typeface.createFromAsset(getAssets(),
                 "fonts/calibril.ttf");
-
 
         weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 

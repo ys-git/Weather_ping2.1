@@ -10,6 +10,7 @@ public class ActivityUtils {
 
     public static Activity getInstance()
     {
-        return new Activity();
+        Activity activity = new Activity();
+        return activity;
     }
 }

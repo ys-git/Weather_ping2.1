@@ -84,6 +84,7 @@ import app.ys.weather_ping21.BuildConfig;
 import app.ys.weather_ping21.Constants.WPConstants;
 import app.ys.weather_ping21.Notification.WPForegroundService;
 import app.ys.weather_ping21.R;
+import app.ys.weather_ping21.Utils.ActivityUtils;
 
 public class WPMainScreenService extends AppCompatActivity {
     public ProgressDialog pDialog;
@@ -558,8 +559,15 @@ public class WPMainScreenService extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(WPMainScreenService.this,
                         Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(WPMainScreenService.this, "Denied Location Permission", Toast.LENGTH_LONG).show();
 
+                    Activity bgActivity = ActivityUtils.getInstance();
+
+                    bgActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(WPMainScreenService.this, "Denied Location Permission", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
                 Log.i("WP", "Again calling getLocation");
                 startLocationButtonClick();
@@ -880,7 +888,14 @@ public class WPMainScreenService extends AppCompatActivity {
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
 
-                                Toast.makeText(WPMainScreenService.this, errorMessage, Toast.LENGTH_LONG).show();
+                                Activity bgActivity = ActivityUtils.getInstance();
+
+                                bgActivity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(WPMainScreenService.this, errorMessage, Toast.LENGTH_LONG).show();
+                                    }
+                                });
                         }
 
                         updateLocationUI();

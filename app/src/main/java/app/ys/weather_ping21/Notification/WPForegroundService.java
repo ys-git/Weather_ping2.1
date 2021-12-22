@@ -75,10 +75,13 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
         super.onCreate();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
             sendNotification();
+        }
         else
+        {
             startForeground(1, new Notification());
-
+        }
         //googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
         //googleApiClient.connect();
     }
@@ -157,6 +160,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
 
     public void lx(){
         locationTrack = new WPLocationTrack(WPForegroundService.this);
+        locationTrack.getLocation();
         lon = locationTrack.getLongitude();
         lat = locationTrack.getLatitude();
         //Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(lon) + "\nLatitude:" + Double.toString(lat), Toast.LENGTH_SHORT).show();
@@ -191,10 +195,11 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
 
         //------------------------
         String NOTIFICATION_CHANNEL_ID = "app.ys.weatherping";
-        String channelName = "Weather Ping Background Service";
+        String channelName = "Weather Notification";
         NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        chan.setSound(null,null);
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         assert manager != null;
         manager.createNotificationChannel(chan);
@@ -250,6 +255,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
         protected String doInBackground(String... strings) {
 
             try {
+
                 Log.i("service", "Inside WeatherTask");
                 URL url = new URL(strings[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -277,6 +283,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
                //sendNotification();
 
                 urlConnection.disconnect();
+
             } catch (Exception e) {
                 Log.e("notification error","error while starting notification service" + e);
             }
@@ -285,7 +292,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
 
         @Override
         protected void onPostExecute(String temp) {
-            //textView.setText("Current Weather: " + temp);
+
         }
     }
 
@@ -293,7 +300,6 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
     {
         n=" "+n;
         cap="";
-        Log.i("service", "Inside Capital");
         for(int i=0;i<n.length();i++)
         {
             char x=n.charAt(i);

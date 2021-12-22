@@ -1,5 +1,6 @@
 package app.ys.weather_ping21.Services;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import app.ys.weather_ping21.Constants.WPConstants;
 import app.ys.weather_ping21.Notification.WPForegroundService;
 import app.ys.weather_ping21.R;
+import app.ys.weather_ping21.Utils.ActivityUtils;
 
 public class WPSettingsService extends AppCompatActivity {
 
@@ -150,7 +153,15 @@ public class WPSettingsService extends AppCompatActivity {
                 try {
                     startActivity(Intent.createChooser(emailIntent, null));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(WPSettingsService.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+
+                    Activity bgActivity = ActivityUtils.getInstance();
+
+                    bgActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(WPSettingsService.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });

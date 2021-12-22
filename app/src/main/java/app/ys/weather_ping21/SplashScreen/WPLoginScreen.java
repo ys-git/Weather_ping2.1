@@ -1,6 +1,7 @@
 package app.ys.weather_ping21.SplashScreen;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -51,6 +52,7 @@ import java.util.regex.Pattern;
 
 import app.ys.weather_ping21.R;
 import app.ys.weather_ping21.Services.WPMainScreenService;
+import app.ys.weather_ping21.Utils.ActivityUtils;
 
 
 public class WPLoginScreen extends AppCompatActivity implements LocationListener {
@@ -285,7 +287,14 @@ public class WPLoginScreen extends AppCompatActivity implements LocationListener
         toastView.setBackgroundResource(R.drawable.toast_drawable);
         toast.show();*/
 
-        Toast.makeText(WPLoginScreen.this, "Please Enable Location", Toast.LENGTH_SHORT).show();
+        Activity bgActivity = ActivityUtils.getInstance();
+
+        bgActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(WPLoginScreen.this, "Please Enable Location", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -1,6 +1,7 @@
 package app.ys.weather_ping21.Services;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,10 +12,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
+
+import app.ys.weather_ping21.Utils.ActivityUtils;
 
 public class WPLocationTrack extends Service implements LocationListener {
 
@@ -31,12 +36,12 @@ public class WPLocationTrack extends Service implements LocationListener {
 
     public WPLocationTrack(Context mContext) {
         this.mContext = mContext;
-        getLocation();
     }
 
-    private Location getLocation() {
+    public Location getLocation() {
 
         try {
+
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
@@ -49,7 +54,14 @@ public class WPLocationTrack extends Service implements LocationListener {
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!checkGPS && !checkNetwork) {
-                Toast.makeText(mContext, "No Service Provider is available", Toast.LENGTH_SHORT).show();
+                Activity bgActivity = ActivityUtils.getInstance();
+
+                bgActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "No Service Provider is available", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 this.canGetLocation = true;
 
@@ -59,14 +71,17 @@ public class WPLocationTrack extends Service implements LocationListener {
                     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                     }
+
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
                             MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    if (locationManager != null) {
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this, Looper.getMainLooper());
+
+                    if (null != locationManager) {
+
                         loc = locationManager
                                 .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if (loc != null) {
+                        if (null != loc) {
                             latitude = loc.getLatitude();
                             longitude = loc.getLongitude();
                         }
@@ -82,7 +97,7 @@ public class WPLocationTrack extends Service implements LocationListener {
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this, Looper.getMainLooper());
 
                     if (locationManager != null) {
                         loc = locationManager
@@ -96,10 +111,10 @@ public class WPLocationTrack extends Service implements LocationListener {
                     }
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-
         return loc;
     }
 

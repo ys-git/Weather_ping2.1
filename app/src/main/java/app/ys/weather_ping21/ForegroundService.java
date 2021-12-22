@@ -82,10 +82,6 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
     private final static int ALL_PERMISSIONS_RESULT = 101;
     LocationTrack locationTrack;
 
-
-
-
-
     @Override
     public void onCreate() {
         switches = getSharedPreferences("toggle", Context.MODE_PRIVATE);
@@ -98,9 +94,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
 
         //googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
         //googleApiClient.connect();
-
     }
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -119,7 +113,6 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
 
                 lx();
 
-
             } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
                 Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
                 Log.i(LOG_TAG, "Received Stop Foreground Intent");
@@ -128,16 +121,12 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
             /*beeperHandle.cancel(true);
             scheduler.shutdown();*/
             }
-
             tx(period);
-
-
-        }catch (RuntimeException e) {
+        }
+        catch (RuntimeException e) {
             e.printStackTrace();
         }
         return START_STICKY;
-
-
     }
 
 
@@ -152,21 +141,16 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 locationTrack.stopListener();
             }catch(NullPointerException e)
             {}
-
-
         }
 
         if ((switches.getInt("Toggle2", -1)) == 0) {
             super.onDestroy();
             Log.i(LOG_TAG, "In onDestroy");
-
-
         }
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-
         return null;
 
     }
@@ -182,37 +166,29 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
         new GetWeatherTask().execute(url);
     }
 
-
-
     public void tx(long periods) {
         beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, periods, TimeUnit.MINUTES);
         //Log.i("MyTestService", "Service at tx");
-
     }
 
     final Runnable beeper = new Runnable() {
 
         public void run() {
             try {
-
                 lx();
-
                 Log.i("MyTestService", "Inside Service");
             } catch (Exception e) {
                 Log.e("TAG", "error in executing: It will no longer be run!: " + e.getMessage());
                 e.printStackTrace();
             }
         }
-
     };
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendNotification() {
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.logonotif);
-
 
         //------------------------
         String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
@@ -244,7 +220,6 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
         //------------------------
         Log.i("MyTestService", "Sending notification");
 
-
         //RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
 
         /*Notification notification = new NotificationCompat.Builder(this)
@@ -265,12 +240,9 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 notification);*/
     }
 
-
     private class GetWeatherTask extends AsyncTask<String, Void, String> {
 
-
         public GetWeatherTask() {
-
         }
 
         @RequiresApi(api = Build.VERSION_CODES.O)
@@ -313,7 +285,6 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
 
         @Override
         protected void onPostExecute(String temp) {
-
             //textView.setText("Current Weather: " + temp);
         }
     }
@@ -338,14 +309,8 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 cap=cap+x;
             }
         }
-
         des=cap;
-
     }
-
-
-
-
 }
 
 

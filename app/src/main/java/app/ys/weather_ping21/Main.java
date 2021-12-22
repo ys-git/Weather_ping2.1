@@ -118,15 +118,12 @@ public class Main extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     TextView cityField, cloud, latt, detailsField, currentTemperatureField, humidity_field, pressure_field, weatherIcon, updatedField, windspeed, winddeg, sun, set;
 
-
     Double vis_dou;
     //private AdView mAdView;
     String vis;
     //private static final String APP_ID = "56ff39608b186e1073a21f9eeca85f67";
     //String units="metric";
-
     Integer k = 0;
-
 
     Typeface weatherFont;
     double lat, lon, lng;
@@ -144,12 +141,8 @@ public class Main extends AppCompatActivity {
 
     // location updates interval - 10sec
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-
-
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
-
     private static final int REQUEST_CHECK_SETTINGS = 100;
-
 
     // bunch of location related apis
     private FusedLocationProviderClient mFusedLocationClient;
@@ -197,7 +190,6 @@ public class Main extends AppCompatActivity {
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
             //we are connected to a network
-
             connected = true;
         } else
             connected = false;
@@ -214,8 +206,6 @@ public class Main extends AppCompatActivity {
         startLocationButtonClick();
         stopLocationButtonClick();
 
-
-
         /*MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
 
         mAdView = findViewById(R.id.ad_view);
@@ -225,7 +215,6 @@ public class Main extends AppCompatActivity {
                 .addTestDevice("F6FD88C8AC1C935CB11EFA4E910FE1B0")
                 .build();
         mAdView.loadAd(adRequest);*/
-
 
         //img=(ImageView)findViewById(R.id.rld);
         setts = (ImageView) findViewById(R.id.sett);
@@ -247,14 +236,12 @@ public class Main extends AppCompatActivity {
         tt14 = (TextView) findViewById(R.id.textView54);
         vis_field = (TextView) findViewById(R.id.textView55);
 
-
         te1 = (TextView) findViewById(R.id.textView40);
         te2 = (TextView) findViewById(R.id.textView42);
         te3 = (TextView) findViewById(R.id.textView43);
         te4 = (TextView) findViewById(R.id.textView44);
         te5 = (TextView) findViewById(R.id.textView45);
         te6 = (TextView) findViewById(R.id.textView46);
-
 
         img1 = (ImageView) findViewById(R.id.imageView23);
         img2 = (ImageView) findViewById(R.id.imageView22);
@@ -269,10 +256,8 @@ public class Main extends AppCompatActivity {
         info4 = (ImageView) findViewById(R.id.imageView34);
         info5 = (ImageView) findViewById(R.id.imageView35);
 
-
         //getLocationBtn = (Button)findViewById(R.id.getLocationBtn);
         // locationText = (TextView)findViewById(R.id.locationText);
-
 
         /*if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -280,11 +265,9 @@ public class Main extends AppCompatActivity {
             Log.i("WP", "Checking for the Location permission");
         }*/
 
-
         /*Log.i("WP", "Executing getLocation");
         getLocation();
         Log.i("WP", "getLocation executed");*/
-
 
         /*img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,7 +299,6 @@ public class Main extends AppCompatActivity {
                 Intent i = new Intent(Main.this, app.ys.weather_ping21.Settings.class);
                 startActivity(i);
             }
-
         });
         info1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,7 +321,6 @@ public class Main extends AppCompatActivity {
                         .create()
                         .show();
             }
-
         });
 
         info2.setOnClickListener(new View.OnClickListener() {
@@ -359,7 +340,6 @@ public class Main extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
                 }
 
                 if (k == 2) {
@@ -375,7 +355,6 @@ public class Main extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
                 }
 
                 if (k == 3) {
@@ -391,7 +370,6 @@ public class Main extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
                 }
 
                 if (k == 4) {
@@ -407,7 +385,6 @@ public class Main extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
                 }
 
                 if (k == 5) {
@@ -423,7 +400,6 @@ public class Main extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
                 }
 
                 if (k == 6) {
@@ -439,11 +415,8 @@ public class Main extends AppCompatActivity {
                             })
                             .create()
                             .show();
-
                 }
-
             }
-
         });
         info3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -461,7 +434,6 @@ public class Main extends AppCompatActivity {
                         .create()
                         .show();
             }
-
         });
         /*info4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -570,9 +542,7 @@ public class Main extends AppCompatActivity {
                 } catch (Exception e) {
 
                 }
-
             }
-
         });*/
         info5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -592,9 +562,7 @@ public class Main extends AppCompatActivity {
                         .create()
                         .show();
             }
-
         });
-
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -643,17 +611,12 @@ public class Main extends AppCompatActivity {
                                 .show();
                     }
                 }, 700);
-
             }
-
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccent, android.R.color.holo_blue_light);
 
 
     }
-
-
-
 
     @Override
     public void onPause() {
@@ -667,8 +630,6 @@ public class Main extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     public void onDestroy() {
         // if (mAdView != null) {
@@ -676,7 +637,6 @@ public class Main extends AppCompatActivity {
         //}
         super.onDestroy();
     }
-
 
     @Override
     public void onResume() {
@@ -697,7 +657,6 @@ public class Main extends AppCompatActivity {
                 } catch (NumberFormatException nfe) {
                     nfe.printStackTrace();
                 }
-
             }
 
             if ((switches.getInt("Toggle1", -1)) == 0) {
@@ -706,9 +665,8 @@ public class Main extends AppCompatActivity {
                 }
             }
         }
-
-
     }
+
 // DEPRECATED SECTION-NO LONGER WORKING
 //------------------------------------------------------------------------------------------------------------------------------
 //    /*void getLocation() {
@@ -836,15 +794,12 @@ public class Main extends AppCompatActivity {
                 mLastUpdateTime = savedInstanceState.getString("last_updated_on");
             }
         }
-
         updateLocationUI();
     }
 
     private void updateLocationUI() {
         try {
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-
 
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
@@ -875,7 +830,6 @@ public class Main extends AppCompatActivity {
                         startService(startIntent);
                     }
 
-
                     // giving a blink animation on TextView
                     //txtLocationResult.setAlpha(0);
                     //txtLocationResult.animate().alpha(1).setDuration(300);
@@ -887,14 +841,11 @@ public class Main extends AppCompatActivity {
             } else {
                 Snackbar.make(findViewById(android.R.id.content), "Please Enable Location", Snackbar.LENGTH_LONG)
                         .show();
-
             }
         }catch (Exception e)
         {
             e.printStackTrace();
         }
-
-
 
         //toggleButtons();
     }
@@ -955,7 +906,6 @@ public class Main extends AppCompatActivity {
                 });
     }
 
-
     public void startLocationButtonClick() {
         // Requesting ACCESS_FINE_LOCATION using Dexter library
         if (connected == false) {
@@ -987,7 +937,6 @@ public class Main extends AppCompatActivity {
                     }
                 }).check();
     }
-
 
     public void stopLocationButtonClick() {
         mRequestingLocationUpdates = false;
@@ -1036,15 +985,12 @@ public class Main extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
     private boolean checkPermissions() {
         int permissionState = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
-
-
-
-
 
     //------------------------------------------------------------------------------------------------------------------
 
@@ -1063,7 +1009,6 @@ public class Main extends AppCompatActivity {
 
         weatherFont = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/weathericons-regular-webfont.ttf");
 
-
         cityField = (TextView) findViewById(R.id.textView20);
         updatedField = (TextView) findViewById(R.id.textView2);
         detailsField = (TextView) findViewById(R.id.textView9);
@@ -1079,7 +1024,6 @@ public class Main extends AppCompatActivity {
         latt = (TextView) findViewById(R.id.textView37);
         weatherIcon.setTypeface(weatherFont);
 
-
         cityField.setTypeface(tf);
         vis_field.setTypeface(tf3);
         updatedField.setTypeface(tf);
@@ -1093,8 +1037,6 @@ public class Main extends AppCompatActivity {
         cloud.setTypeface(tf3);
         sun.setTypeface(tf3);
         set.setTypeface(tf3);
-
-
 
         Fetch.placeIdTask asyncTask = new Fetch.placeIdTask(new Fetch.AsyncResponse() {
             public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String vis, String wind_sp, String wind_deg, String weather_updatedOn, String weather_iconText, String sun_rise, String sun_set, String cloudss) {
@@ -1140,10 +1082,8 @@ public class Main extends AppCompatActivity {
 
                 }
 
-
                 Log.i(Main.class.getSimpleName(), "Displaying Fetched data");
             }
-
         });
         asyncTask.execute(s, q); //  asyncTask.execute("Latitude", "Longitude")
     }
@@ -1197,7 +1137,6 @@ public class Main extends AppCompatActivity {
             parseJSON(dataFetched);
         }
 
-
         private String convertInputStreamToString(InputStream inputStream) throws IOException {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line = "";
@@ -1207,19 +1146,15 @@ public class Main extends AppCompatActivity {
 
             inputStream.close();
             return result;
-
         }
 
         private void parseJSON(String data) {
 
             try {
-
-
                 JSONObject jsonObject = new JSONObject(data);
                 JSONObject mains = jsonObject.getJSONObject("data");
                 //dominant = mains.getString("dominentpol");
                 aqi = mains.getString("aqi");
-
 
                 if (mains.has("city")) {
                     JSONObject name = mains.getJSONObject("city");
@@ -1316,7 +1251,6 @@ public class Main extends AppCompatActivity {
                 te5.setVisibility(View.INVISIBLE);
                 te6.setVisibility(View.INVISIBLE);
 
-
                 /*if (dominant.equals("pm25")) {
                     tt9.setText("PM₂.₅ :  " + pm_25);
                 } else if (dominant.equals("pm10")) {
@@ -1335,11 +1269,8 @@ public class Main extends AppCompatActivity {
                     tt9.setText("CO :  " + carbon);
 
                 } else {*/
-
                     tt9.setText("aqi");
                 //}
-
-
                 tt2.setTypeface(tf3);
                 tt3.setTypeface(tf3);
 
@@ -1407,12 +1338,8 @@ public class Main extends AppCompatActivity {
                     tt14.setText(" Hazardous");
                     tt13.setTextColor(Color.parseColor("#88001b"));
                     k = 6;
-
                 }
-
                 Log.i("WP", "Air Quality Fetched");
-
-
             } catch (Exception e) {
                 Log.i("App", "Error parsing data" + e.getMessage());
 
@@ -1448,6 +1375,3 @@ public class Main extends AppCompatActivity {
     }
 
 }
-
-
-

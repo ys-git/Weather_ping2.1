@@ -61,6 +61,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
         <service android:name=".ForegroundService" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 

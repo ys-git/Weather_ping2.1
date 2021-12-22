@@ -55,7 +55,17 @@ public class Splashload extends Activity {
                 tv2.startAnimation(a2);
                 finish();
 
-                if (sdata.getString("Name", null)!=null) {
+                Intent intent = new Intent();
+                intent.setClass(Splashload.this, Main.class);
+                Splashload.this.startActivity(intent);
+                Splashload.this.finish();
+                // transition from splash to main menu
+                overridePendingTransition(R.anim.activityfadein,
+                        R.anim.splashfadeout);
+
+                /*removing this code block cuz of google play developer policy voilation*/
+
+                /*if (sdata.getString("Name", null)!=null) {
 
                     Intent intent = new Intent();
                     intent.setClass(Splashload.this, Main.class);
@@ -72,8 +82,7 @@ public class Splashload extends Activity {
                     Splashload.this.finish();
                     // transition from splash to main menu
                     overridePendingTransition(R.anim.activityfadein,
-                            R.anim.splashfadeout);}
-
+                            R.anim.splashfadeout);}*/
             }
 
             @Override

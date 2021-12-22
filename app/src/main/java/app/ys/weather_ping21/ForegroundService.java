@@ -210,7 +210,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 .setPriority(NotificationManager.IMPORTANCE_MIN)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),
-                        R.drawable.weather))
+                        R.drawable.weather1))
                 .setOngoing(true)
                 .build();
         notification.contentIntent = PendingIntent.getActivity(this, 0,

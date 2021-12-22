@@ -116,7 +116,7 @@ public class Settings extends AppCompatActivity {
         rbc = (RadioButton) findViewById(R.id.radioButton5);
         rg = (RadioGroup)findViewById(R.id.radioGroup2);
 
-        t.setText("Hey "+user+"!!");
+        t.setText("Hey "+user+"");
         t.setTypeface(tf);
         t2.setTypeface(tf);
         t3.setTypeface(tf);

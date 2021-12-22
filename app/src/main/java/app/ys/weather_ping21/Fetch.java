@@ -1,6 +1,5 @@
 package app.ys.weather_ping21;
 
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,10 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 import android.util.Log;
 
-
 public class Fetch {
-
-
 
     private static final String OPEN_WEATHER_MAP_URL =
             "http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric";
@@ -58,17 +54,9 @@ public class Fetch {
         return icon;
     }
 
-
-
     public interface AsyncResponse {
-
         void processFinish(String output1, String output2, String output3, String output4, String output5, String output6, String output7, String output8,String output9,String output10,String output11,String output12,String output13);
-
     }
-
-
-
-
 
     public static class placeIdTask extends AsyncTask<String, Void, JSONObject> {
         public String humidity,pressure,temperature,wsp,wdeg,clo,visibility;
@@ -174,7 +162,6 @@ public class Fetch {
             } catch (JSONException e) {
                 //Log.e(LOG_TAG, "Cannot process JSON results", e);
             }
-
         }
     }
 
@@ -196,19 +183,15 @@ public class Fetch {
 
             JSONObject data = new JSONObject(json.toString());
 
-
             // successful
             if(data.getInt("cod") != 200){
                 return null;
             }
 
             return data;
-        }catch(Exception e){
+        }
+        catch(Exception e){
             return null;
         }
     }
-
-
-
-
 }

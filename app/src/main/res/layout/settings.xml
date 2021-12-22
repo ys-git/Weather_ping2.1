@@ -17,13 +17,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
             android:background="#000000">
 
             <ImageView
@@ -83,14 +81,12 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView7"
-                android:layout_marginLeft="30dp"
+                android:layout_alignParentLeft="true"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
                 android:fontFamily="@font/yanone_kaffeesatz_light"
-                android:text="Tweaks:"
+                android:text="Settings:"
                 android:textColor="#ffcc0000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -172,12 +168,12 @@
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView18"
-                android:layout_alignStart="@+id/textView18"
                 android:layout_below="@+id/textView18"
+                android:layout_alignStart="@+id/textView18"
+                android:layout_alignLeft="@+id/textView18"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/yanone_kaffeesatz_light"
-                android:text="Version 2.4.1"
+                android:text="Version 2.5"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -186,9 +182,9 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView12"
-                android:layout_alignStart="@+id/textView12"
                 android:layout_below="@+id/imageView19"
+                android:layout_alignStart="@+id/textView12"
+                android:layout_alignLeft="@+id/textView12"
                 android:layout_marginTop="19dp"
                 android:fontFamily="@font/yanone_kaffeesatz_light"
                 android:text="Developer :"
@@ -313,11 +309,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imageView20"
                     android:layout_marginTop="14dp"
-                    android:layout_toLeftOf="@+id/textView56"
                     android:layout_toStartOf="@+id/textView56"
+                    android:layout_toLeftOf="@+id/textView56"
                     android:adjustViewBounds="true"
-                    android:maxHeight="30dp"
                     android:maxWidth="30dp"
+                    android:maxHeight="30dp"
                     app:srcCompat="@drawable/plus" />
 
                 <ImageView

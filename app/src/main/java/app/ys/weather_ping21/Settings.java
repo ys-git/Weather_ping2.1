@@ -34,7 +34,7 @@ import java.util.Set;
 
 public class Settings extends AppCompatActivity {
 
-    SharedPreferences sdata,switches;
+    SharedPreferences sdata, switches;
     String user;
     TextView t,t2,t3,t4,t5,t6,t7,t8,te,t9;
     Switch sw,sw1,sw2;

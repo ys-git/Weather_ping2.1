@@ -10,7 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-
 public class Splashload extends Activity {
     SharedPreferences sdata;
 
@@ -42,12 +41,12 @@ public class Splashload extends Activity {
 
             }
         });
+
         tv2.startAnimation(a1);
 
         a1.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -82,7 +81,5 @@ public class Splashload extends Activity {
 
             }
         });
-
-
     }
 }

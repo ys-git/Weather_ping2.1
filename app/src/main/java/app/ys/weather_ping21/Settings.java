@@ -41,8 +41,6 @@ public class Settings extends AppCompatActivity {
     RadioButton rba,rbb,rbc;
     RadioGroup rg;
     Button rate,feedback;
-
-
     //private InterstitialAd mInterstitialAd;
 
     @Override
@@ -50,7 +48,6 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.settings);
-
         //
         // te = (TextView) findViewById(R.id.textView59);
         // Initialize the Mobile Ads SDK.
@@ -93,7 +90,6 @@ public class Settings extends AppCompatActivity {
             }
         });*/
 
-
         Typeface tf = Typeface.createFromAsset(getAssets(),
                 "fonts/calibril.ttf");
         sdata = getSharedPreferences("my", Context.MODE_PRIVATE);
@@ -121,7 +117,6 @@ public class Settings extends AppCompatActivity {
         rbc = (RadioButton) findViewById(R.id.radioButton5);
         rg = (RadioGroup)findViewById(R.id.radioGroup2);
 
-
         t.setText("Hey "+user+"!!");
         t.setTypeface(tf);
         t2.setTypeface(tf);
@@ -132,7 +127,6 @@ public class Settings extends AppCompatActivity {
         t7.setTypeface(tf);
         t8.setTypeface(tf);
         t9.setTypeface(tf);
-
 
         rate.setOnClickListener(new View.OnClickListener() {
 
@@ -147,7 +141,6 @@ public class Settings extends AppCompatActivity {
                     //Toast.makeText(this, " unable to find market app", Toast.LENGTH_LONG).show();
                 }
             }
-
             });
 
         feedback.setOnClickListener(new View.OnClickListener() {
@@ -168,10 +161,6 @@ public class Settings extends AppCompatActivity {
 
         });
 
-
-
-
-
         sw=(Switch) findViewById(R.id.switch4);
         sw1=(Switch) findViewById(R.id.switch3);
         sw2=(Switch) findViewById(R.id.switch1);
@@ -187,9 +176,7 @@ public class Settings extends AppCompatActivity {
             sw.setChecked(false);
         }
 
-
         //te.setText((switches.getInt("Toggle2", null)));
-
 
         if((switches.getInt("Toggle2", -1))==1)
         {
@@ -214,7 +201,6 @@ public class Settings extends AppCompatActivity {
             sw2.setChecked(false);
         }
 
-
         if((switches.getInt("Interval", 10))==10)
         {
             rba.setChecked(true);
@@ -237,8 +223,6 @@ public class Settings extends AppCompatActivity {
             rba.setChecked(false);
             rbb.setChecked(false);
         }
-
-
 
         rba.setOnClickListener(new View.OnClickListener() {
             SharedPreferences.Editor ed = switches.edit();
@@ -291,8 +275,6 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-
-
         sw.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
         {
             @Override
@@ -323,7 +305,6 @@ public class Settings extends AppCompatActivity {
 
             }
         });
-
 
         sw1.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
         {
@@ -365,7 +346,6 @@ public class Settings extends AppCompatActivity {
             }
         });
 
-
         sw2.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener()
         {
             SharedPreferences.Editor ed = switches.edit();
@@ -399,24 +379,18 @@ public class Settings extends AppCompatActivity {
 
             }
         });
-
-
-
     }
-
 
     @Override
     public void onPause() {
         super.onPause();
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
 
     }
-
 
     @Override
     public void onResume() {
@@ -428,7 +402,4 @@ public class Settings extends AppCompatActivity {
             mInterstitialAd.show();
         }
     }*/
-
-
-
 }

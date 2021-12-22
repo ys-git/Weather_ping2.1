@@ -1,64 +1,52 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.Notification;
 
-import android.Manifest;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
-import android.text.Html;
 import android.util.Log;
-import android.widget.RemoteViews;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import app.ys.weather_ping21.Constants.WPConstants;
+import app.ys.weather_ping21.Services.WPLocationTrack;
+import app.ys.weather_ping21.R;
+import app.ys.weather_ping21.SplashScreen.WPSplashLoad;
+import app.ys.weather_ping21.Utils.ActivityUtils;
+
 //import static com.google.android.gms.internal.zzip.runOnUiThread;
 
-public class ForegroundService extends Service{ //implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class WPForegroundService extends Service{ //implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     ScheduledFuture beeperHandle;
     private static final String LOG_TAG = "ForegroundService";
@@ -72,15 +60,14 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
     SharedPreferences switches;
     String weather = "0.0";
     String s, q;
-    String city="City",des="Loading...",cap,country=" ";
-
+    String city="City", des="Loading...", cap, country=" ";
 
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
     private ArrayList<String> permissions = new ArrayList<>();
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
-    LocationTrack locationTrack;
+    WPLocationTrack locationTrack;
 
     @Override
     public void onCreate() {
@@ -99,7 +86,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
+            if (intent.getAction().equals(WPConstants.ACTION.STARTFOREGROUND_ACTION)) {
                 Log.i(LOG_TAG, "Received Start Foreground Intent ");
                 if ((switches.getInt("Interval", 10)) == 10) {
                     period = 3;
@@ -111,24 +98,36 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                     period = 11;
                 }
 
-                lx();
+                //lx();
 
-            } else if (intent.getAction().equals(Constants.ACTION.STOPFOREGROUND_ACTION)) {
-                Toast.makeText(this, "Stop Service", Toast.LENGTH_SHORT).show();
-                Log.i(LOG_TAG, "Received Stop Foreground Intent");
-                stopForeground(true);
-                stopSelf();
-            /*beeperHandle.cancel(true);
-            scheduler.shutdown();*/
+                tx(period);
+
+            } else {
+                if (intent.getAction().equals(WPConstants.ACTION.STOPFOREGROUND_ACTION)) {
+
+                    Activity foregroundActivity = ActivityUtils.getInstance();
+
+                    foregroundActivity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(foregroundActivity, "Stop Service", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    Log.i(LOG_TAG, "Received Stop Foreground Intent");
+                    stopForeground(true);
+                    stopSelf();
+                /*beeperHandle.cancel(true);
+                scheduler.shutdown();*/
+                }
+
+                tx(period);
             }
-            tx(period);
         }
-        catch (RuntimeException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
         return START_STICKY;
     }
-
 
     @Override
     public void onDestroy() {
@@ -139,8 +138,10 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 beeperHandle.cancel(true);
                 scheduler.shutdown();
                 locationTrack.stopListener();
-            }catch(NullPointerException e)
-            {}
+            }catch(Exception e)
+            {
+
+            }
         }
 
         if ((switches.getInt("Toggle2", -1)) == 0) {
@@ -152,23 +153,21 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-
     }
 
     public void lx(){
-        locationTrack = new LocationTrack(ForegroundService.this);
+        locationTrack = new WPLocationTrack(WPForegroundService.this);
         lon = locationTrack.getLongitude();
         lat = locationTrack.getLatitude();
         //Toast.makeText(getApplicationContext(), "Longitude:" + Double.toString(lon) + "\nLatitude:" + Double.toString(lat), Toast.LENGTH_SHORT).show();
         String units = "metric";
-        String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
+        String url = String.format("https://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
                 lat, lon, units, APP_ID);
         new GetWeatherTask().execute(url);
     }
 
     public void tx(long periods) {
         beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, periods, TimeUnit.MINUTES);
-        //Log.i("MyTestService", "Service at tx");
     }
 
     final Runnable beeper = new Runnable() {
@@ -176,7 +175,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
         public void run() {
             try {
                 lx();
-                Log.i("MyTestService", "Inside Service");
+                Log.i("service", "Inside Service");
             } catch (Exception e) {
                 Log.e("TAG", "error in executing: It will no longer be run!: " + e.getMessage());
                 e.printStackTrace();
@@ -191,8 +190,8 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 R.drawable.logonotif);
 
         //------------------------
-        String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
-        String channelName = "My Background Service";
+        String NOTIFICATION_CHANNEL_ID = "app.ys.weatherping";
+        String channelName = "Weather Ping Background Service";
         NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
@@ -213,12 +212,13 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                         R.drawable.weather1))
                 .setOngoing(true)
                 .build();
+
         notification.contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, Splashload.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(this, WPSplashLoad.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
         startForeground(2, notification);
 
-        //------------------------
-        Log.i("MyTestService", "Sending notification");
+        Log.i("service", "Sending notification");
 
         //RemoteViews notificationView = new RemoteViews(this.getPackageName(),R.layout.notification_dark);
 
@@ -250,7 +250,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
         protected String doInBackground(String... strings) {
 
             try {
-                Log.i("MyTestService", "Inside WeatherTask");
+                Log.i("service", "Inside WeatherTask");
                 URL url = new URL(strings[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
@@ -274,11 +274,11 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
                 country = topLevel.getJSONObject("sys").getString("country");
                 //city = name.getString("name");
                 weather = String.valueOf(main.getDouble("temp"));
-               sendNotification();
+               //sendNotification();
 
                 urlConnection.disconnect();
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Log.e("notification error","error while starting notification service" + e);
             }
             return weather;
         }
@@ -293,7 +293,7 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
     {
         n=" "+n;
         cap="";
-        Log.i("MyTestService", "Inside Capital");
+        Log.i("service", "Inside Capital");
         for(int i=0;i<n.length();i++)
         {
             char x=n.charAt(i);
@@ -312,5 +312,3 @@ public class ForegroundService extends Service{ //implements GoogleApiClient.Con
         des=cap;
     }
 }
-
-

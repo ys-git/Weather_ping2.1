@@ -1,4 +1,4 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.SplashScreen;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -18,8 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -51,8 +49,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import app.ys.weather_ping21.R;
+import app.ys.weather_ping21.Services.WPMainScreenService;
 
-public class Intro extends AppCompatActivity implements LocationListener {
+
+public class WPLoginScreen extends AppCompatActivity implements LocationListener {
 
     Button next;
     public Double lat;
@@ -227,7 +228,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ActivityCompat.requestPermissions(Intro.this,
+                            ActivityCompat.requestPermissions(WPLoginScreen.this,
                                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                     MY_PERMISSIONS_REQUEST_LOCATION);
 
@@ -284,7 +285,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
         toastView.setBackgroundResource(R.drawable.toast_drawable);
         toast.show();*/
 
-        Toast.makeText(Intro.this, "Please Enable Location", Toast.LENGTH_SHORT).show();
+        Toast.makeText(WPLoginScreen.this, "Please Enable Location", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -308,7 +309,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                pDialog = new ProgressDialog(Intro.this);
+                pDialog = new ProgressDialog(WPLoginScreen.this);
                 pDialog.setMessage("Patience is bitter....");
                 pDialog.setIndeterminate(false);
                 pDialog.setCancelable(false);
@@ -353,7 +354,7 @@ public class Intro extends AppCompatActivity implements LocationListener {
                 super.onPostExecute(result);
                 pDialog.dismiss();
 
-                Intent i= new Intent(Intro.this,Main.class);
+                Intent i= new Intent(WPLoginScreen.this, WPMainScreenService.class);
                 i.putExtra("lat",lat);
                 i.putExtra("lon",lon);
                 startActivity(i);

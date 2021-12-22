@@ -1,4 +1,4 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.Services;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -14,7 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Fetch {
+public class WeatherPullService {
 
     private static final String OPEN_WEATHER_MAP_URL =
             "https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&units=metric";

@@ -1,4 +1,4 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.SplashScreen;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-public class Splashload extends Activity {
+import app.ys.weather_ping21.Services.WPMainScreenService;
+import app.ys.weather_ping21.R;
+
+public class WPSplashLoad extends Activity {
     SharedPreferences sdata;
 
     @Override
@@ -56,9 +59,9 @@ public class Splashload extends Activity {
                 finish();
 
                 Intent intent = new Intent();
-                intent.setClass(Splashload.this, Main.class);
-                Splashload.this.startActivity(intent);
-                Splashload.this.finish();
+                intent.setClass(WPSplashLoad.this, WPMainScreenService.class);
+                WPSplashLoad.this.startActivity(intent);
+                WPSplashLoad.this.finish();
                 // transition from splash to main menu
                 overridePendingTransition(R.anim.activityfadein,
                         R.anim.splashfadeout);

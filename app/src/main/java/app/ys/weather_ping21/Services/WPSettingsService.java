@@ -1,18 +1,14 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.Services;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -20,9 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.view.View;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 //import com.google.android.gms.ads.AdListener;
 //import com.google.android.gms.ads.AdRequest;
@@ -30,9 +24,11 @@ import android.widget.ToggleButton;
 //import com.google.android.gms.ads.InterstitialAd;
 //import com.google.android.gms.ads.MobileAds;
 
-import java.util.Set;
+import app.ys.weather_ping21.Constants.WPConstants;
+import app.ys.weather_ping21.Notification.WPForegroundService;
+import app.ys.weather_ping21.R;
 
-public class Settings extends AppCompatActivity {
+public class WPSettingsService extends AppCompatActivity {
 
     SharedPreferences sdata, switches;
     String user;
@@ -154,7 +150,7 @@ public class Settings extends AppCompatActivity {
                 try {
                     startActivity(Intent.createChooser(emailIntent, null));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(Settings.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WPSettingsService.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -202,16 +198,14 @@ public class Settings extends AppCompatActivity {
             rbb.setChecked(false);
             rbc.setChecked(false);
         }
-        else
-        if((switches.getInt("Interval", 30))==30)
+        else if((switches.getInt("Interval", 30))==30)
         {
             rbb.setChecked(true);
             rba.setChecked(false);
             rbc.setChecked(false);
             //sw2.setEnabled(false);
         }
-        else
-        if((switches.getInt("Interval", 180))==180)
+        else if((switches.getInt("Interval", 180))==180)
         {
             rbc.setChecked(true);
             rba.setChecked(false);
@@ -225,9 +219,9 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 ed.putInt("Interval",10);
                 ed.apply();
-                stopService(new Intent(Settings.this, ForegroundService.class));
-                Intent startIntent = new Intent(Settings.this, ForegroundService.class);
-                startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                stopService(new Intent(WPSettingsService.this, WPForegroundService.class));
+                Intent startIntent = new Intent(WPSettingsService.this, WPForegroundService.class);
+                startIntent.setAction(WPConstants.ACTION.STARTFOREGROUND_ACTION);
                 startService(startIntent);
                 Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 10 mins", Snackbar.LENGTH_LONG)
                         .show();
@@ -242,9 +236,9 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 ed.putInt("Interval",30);
                 ed.apply();
-                stopService(new Intent(Settings.this, ForegroundService.class));
-                Intent startIntent = new Intent(Settings.this, ForegroundService.class);
-                startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                stopService(new Intent(WPSettingsService.this, WPForegroundService.class));
+                Intent startIntent = new Intent(WPSettingsService.this, WPForegroundService.class);
+                startIntent.setAction(WPConstants.ACTION.STARTFOREGROUND_ACTION);
                 startService(startIntent);
                 Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 30 mins", Snackbar.LENGTH_LONG)
                         .show();
@@ -258,9 +252,9 @@ public class Settings extends AppCompatActivity {
             public void onClick(View v) {
                 ed.putInt("Interval",180);
                 ed.apply();
-                stopService(new Intent(Settings.this, ForegroundService.class));
-                Intent startIntent = new Intent(Settings.this, ForegroundService.class);
-                startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                stopService(new Intent(WPSettingsService.this, WPForegroundService.class));
+                Intent startIntent = new Intent(WPSettingsService.this, WPForegroundService.class);
+                startIntent.setAction(WPConstants.ACTION.STARTFOREGROUND_ACTION);
                 startService(startIntent);
                 Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 3 hrs", Snackbar.LENGTH_LONG)
                         .show();
@@ -276,7 +270,6 @@ public class Settings extends AppCompatActivity {
                 if(isChecked)
                 {
                     //Toast.makeText(Settings.this, "Toggle button is on", Toast.LENGTH_SHORT).show();
-
                     ed.putInt("Toggle1",1);
                     ed.apply();
                     Snackbar.make(findViewById(android.R.id.content), "Fahrenheit Selected", Snackbar.LENGTH_LONG)
@@ -285,7 +278,6 @@ public class Settings extends AppCompatActivity {
                 else
                 {
                     //Toast.makeText(Settings.this, "Toggle button is off", Toast.LENGTH_SHORT).show();
-
                     ed.putInt("Toggle1",0);
                     ed.apply();
                     Snackbar.make(findViewById(android.R.id.content), "Celsius Selected", Snackbar.LENGTH_LONG)
@@ -308,8 +300,8 @@ public class Settings extends AppCompatActivity {
                     sw2.setEnabled(true);
                     Snackbar.make(findViewById(android.R.id.content), "Notification On", Snackbar.LENGTH_LONG)
                             .show();
-                    Intent startIntent = new Intent(Settings.this, ForegroundService.class);
-                    startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                    Intent startIntent = new Intent(WPSettingsService.this, WPForegroundService.class);
+                    startIntent.setAction(WPConstants.ACTION.STARTFOREGROUND_ACTION);
                     startService(startIntent);
                 }
                 else
@@ -325,7 +317,7 @@ public class Settings extends AppCompatActivity {
 
                     Snackbar.make(findViewById(android.R.id.content), "Notification Off", Snackbar.LENGTH_LONG)
                             .show();
-                    stopService(new Intent(Settings.this, ForegroundService.class));
+                    stopService(new Intent(WPSettingsService.this, WPForegroundService.class));
                 }
             }
         });

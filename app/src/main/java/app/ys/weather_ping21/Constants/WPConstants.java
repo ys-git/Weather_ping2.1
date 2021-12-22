@@ -1,6 +1,6 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.Constants;
 
-public class Constants {
+public class WPConstants {
         public interface ACTION {
             public static String MAIN_ACTION = "com.nkdroid.alertdialog.action.main";
             public static String STARTFOREGROUND_ACTION = "com.nkdroid.alertdialog.action.startforeground";

@@ -1,4 +1,4 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.Services;
 
 import android.Manifest;
 import android.app.Service;
@@ -16,7 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
-public class LocationTrack extends Service implements LocationListener {
+public class WPLocationTrack extends Service implements LocationListener {
 
     private final Context mContext;
     boolean checkGPS = false;
@@ -29,7 +29,7 @@ public class LocationTrack extends Service implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
 
-    public LocationTrack(Context mContext) {
+    public WPLocationTrack(Context mContext) {
         this.mContext = mContext;
         getLocation();
     }
@@ -57,13 +57,7 @@ public class LocationTrack extends Service implements LocationListener {
                 if (checkGPS) {
 
                     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
+
                     }
                     locationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER,
@@ -79,17 +73,10 @@ public class LocationTrack extends Service implements LocationListener {
                     }
                 }
 
-
                 if (checkNetwork) {
 
                     if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
+
                     }
 
                     locationManager.requestLocationUpdates(
@@ -155,22 +142,14 @@ public class LocationTrack extends Service implements LocationListener {
         alertDialog.show();
     }
 
-
     public void stopListener() {
         if (locationManager != null) {
 
             if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
 
-            locationManager.removeUpdates(LocationTrack.this);
+            locationManager.removeUpdates(WPLocationTrack.this);
         }
     }
 

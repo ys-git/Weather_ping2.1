@@ -1,7 +1,6 @@
-package app.ys.weather_ping21;
+package app.ys.weather_ping21.Services;
 
 
-import android.*;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,10 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -29,32 +25,17 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
-import android.location.Location;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.IntentSender;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -88,25 +69,23 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
-public class Main extends AppCompatActivity {
+import app.ys.weather_ping21.BuildConfig;
+import app.ys.weather_ping21.Constants.WPConstants;
+import app.ys.weather_ping21.Notification.WPForegroundService;
+import app.ys.weather_ping21.R;
 
+public class WPMainScreenService extends AppCompatActivity {
     public ProgressDialog pDialog;
     TextView locationText, tt1, tt2, tt3, tt4, tt5, tt6, tt7, tt8, tt9, tt10, tt11, tt12, tt13, tt14,vis_field;
     TextView te1, te2, te3, te4, te5, te6;
@@ -137,7 +116,7 @@ public class Main extends AppCompatActivity {
 
     // location related
     private String mLastUpdateTime;
-    private static final String TAG = Main.class.getSimpleName();
+    private static final String TAG = WPMainScreenService.class.getSimpleName();
 
     // location updates interval - 10sec
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
@@ -168,7 +147,7 @@ public class Main extends AppCompatActivity {
         if((switches.getInt("tut", -1))==1)
         {
             Log.i("WP", "Handy Info Being displayed");
-            new AlertDialog.Builder(Main.this)
+            new AlertDialog.Builder(WPMainScreenService.this)
                     .setTitle("A bit of handy info....")
                     .setCancelable(false)
                     .setMessage(" ⓘ    Information Popups"+"\n"+"\n"+" ↓     Swipe down to refresh")
@@ -297,7 +276,7 @@ public class Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(Main.this, app.ys.weather_ping21.Settings.class);
+                Intent i = new Intent(WPMainScreenService.this, WPSettingsService.class);
                 startActivity(i);
             }
         });
@@ -305,7 +284,7 @@ public class Main extends AppCompatActivity {
         info1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(Main.this)
+                new AlertDialog.Builder(WPMainScreenService.this)
                         .setTitle("Info")
                         .setCancelable(true)
                         .setMessage("Since it is not possible to measure pollutant concentrations in every part of the country, the app shows the air index of the most nearby location.\n" +
@@ -330,7 +309,7 @@ public class Main extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (k == 1) {
-                    new AlertDialog.Builder(Main.this)
+                    new AlertDialog.Builder(WPMainScreenService.this)
                             .setTitle("Good")
                             .setCancelable(true)
                             .setMessage("Air quality is considered satisfactory, and air pollution poses little or no risk.")
@@ -345,7 +324,7 @@ public class Main extends AppCompatActivity {
                 }
 
                 if (k == 2) {
-                    new AlertDialog.Builder(Main.this)
+                    new AlertDialog.Builder(WPMainScreenService.this)
                             .setTitle("Moderate")
                             .setCancelable(true)
                             .setMessage("Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.")
@@ -360,7 +339,7 @@ public class Main extends AppCompatActivity {
                 }
 
                 if (k == 3) {
-                    new AlertDialog.Builder(Main.this)
+                    new AlertDialog.Builder(WPMainScreenService.this)
                             .setTitle("High")
                             .setCancelable(true)
                             .setMessage("Members of sensitive groups may experience health effects. The general public is not likely to be affected.")
@@ -375,7 +354,7 @@ public class Main extends AppCompatActivity {
                 }
 
                 if (k == 4) {
-                    new AlertDialog.Builder(Main.this)
+                    new AlertDialog.Builder(WPMainScreenService.this)
                             .setTitle("Unhealthy")
                             .setCancelable(true)
                             .setMessage("Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.")
@@ -390,7 +369,7 @@ public class Main extends AppCompatActivity {
                 }
 
                 if (k == 5) {
-                    new AlertDialog.Builder(Main.this)
+                    new AlertDialog.Builder(WPMainScreenService.this)
                             .setTitle("Very Unhealthy")
                             .setCancelable(true)
                             .setMessage("Health warnings of emergency conditions. The entire population is more likely to be affected.")
@@ -405,7 +384,7 @@ public class Main extends AppCompatActivity {
                 }
 
                 if (k == 6) {
-                    new AlertDialog.Builder(Main.this)
+                    new AlertDialog.Builder(WPMainScreenService.this)
                             .setTitle("Hazardous")
                             .setCancelable(true)
                             .setMessage("Health alert: everyone may experience more serious health effects.")
@@ -424,7 +403,7 @@ public class Main extends AppCompatActivity {
         info3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(Main.this)
+                new AlertDialog.Builder(WPMainScreenService.this)
                         .setTitle("Info")
                         .setCancelable(true)
                         .setMessage("Pollutant which exceeds its presence with respect to other pollutants present in the atmosphere.")
@@ -552,7 +531,7 @@ public class Main extends AppCompatActivity {
         info5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(Main.this)
+                new AlertDialog.Builder(WPMainScreenService.this)
                         .setTitle("Why air quality monitoring is essential?")
                         .setCancelable(true)
                         .setMessage("The starting point of air quality monitoring is to first study if an area has an air pollution problem. Monitoring helps in assessing the level of pollution in relation to the ambient air quality standards. " +
@@ -576,10 +555,10 @@ public class Main extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), "Refreshing...", Snackbar.LENGTH_LONG)
                         .show();
 
-                if (ContextCompat.checkSelfPermission(Main.this,
+                if (ContextCompat.checkSelfPermission(WPMainScreenService.this,
                         Manifest.permission.ACCESS_FINE_LOCATION)
                         != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(Main.this, "Denied Location Permission", Toast.LENGTH_LONG).show();
+                    Toast.makeText(WPMainScreenService.this, "Denied Location Permission", Toast.LENGTH_LONG).show();
 
                 }
                 Log.i("WP", "Again calling getLocation");
@@ -603,9 +582,9 @@ public class Main extends AppCompatActivity {
                 mAdView.loadAd(adRequest);*/
 
                 if ((switches.getInt("Toggle2", -1)) == 1) {
-                    stopService(new Intent(Main.this, ForegroundService.class));
-                    Intent startIntent = new Intent(Main.this, ForegroundService.class);
-                    startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                    stopService(new Intent(WPMainScreenService.this, WPForegroundService.class));
+                    Intent startIntent = new Intent(WPMainScreenService.this, WPForegroundService.class);
+                    startIntent.setAction(WPConstants.ACTION.STARTFOREGROUND_ACTION);
                     startService(startIntent);
                 }
                 new Handler().postDelayed(new Runnable() {
@@ -827,9 +806,9 @@ public class Main extends AppCompatActivity {
                     //new Main.GetWeatherTask().execute(url);
                     new FetchDataTask().execute(URL);
                     if ((switches.getInt("Toggle2", -1)) == 1) {
-                        stopService(new Intent(Main.this, ForegroundService.class));
-                        Intent startIntent = new Intent(Main.this, ForegroundService.class);
-                        startIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
+                        stopService(new Intent(WPMainScreenService.this, WPForegroundService.class));
+                        Intent startIntent = new Intent(WPMainScreenService.this, WPForegroundService.class);
+                        startIntent.setAction(WPConstants.ACTION.STARTFOREGROUND_ACTION);
                         startService(startIntent);
                     }
 
@@ -891,7 +870,7 @@ public class Main extends AppCompatActivity {
                                     // Show the dialog by calling startResolutionForResult(), and check the
                                     // result in onActivityResult().
                                     ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(Main.this, REQUEST_CHECK_SETTINGS);
+                                    rae.startResolutionForResult(WPMainScreenService.this, REQUEST_CHECK_SETTINGS);
                                 } catch (IntentSender.SendIntentException sie) {
                                     Log.i(TAG, "PendingIntent unable to execute request.");
                                 }
@@ -901,7 +880,7 @@ public class Main extends AppCompatActivity {
                                         "fixed here. Fix in Settings.";
                                 Log.e(TAG, errorMessage);
 
-                                Toast.makeText(Main.this, errorMessage, Toast.LENGTH_LONG).show();
+                                Toast.makeText(WPMainScreenService.this, errorMessage, Toast.LENGTH_LONG).show();
                         }
 
                         updateLocationUI();
@@ -1040,7 +1019,7 @@ public class Main extends AppCompatActivity {
         sun.setTypeface(tf3);
         set.setTypeface(tf3);
 
-        Fetch.placeIdTask asyncTask = new Fetch.placeIdTask(new Fetch.AsyncResponse() {
+        WeatherPullService.placeIdTask asyncTask = new WeatherPullService.placeIdTask(new WeatherPullService.AsyncResponse() {
             public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure,String vis, String wind_sp, String wind_deg, String weather_updatedOn, String weather_iconText, String sun_rise, String sun_set, String cloudss) {
 
                 tempp = weather_temperature;
@@ -1084,7 +1063,7 @@ public class Main extends AppCompatActivity {
 
                 }
 
-                Log.i(Main.class.getSimpleName(), "Displaying Fetched data");
+                Log.i(WPMainScreenService.class.getSimpleName(), "Displaying Fetched data");
             }
         });
         asyncTask.execute(s, q); //  asyncTask.execute("Latitude", "Longitude")

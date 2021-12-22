@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Splashload"
+        <activity android:name=".SplashScreen.WPSplashLoad"
             android:theme="@style/AppTheme2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,27 +29,27 @@
         </activity>
 
         <activity
-            android:name=".Main"
+            android:name=".Services.WPMainScreenService"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">
         </activity>
         <activity
-            android:name=".Settings"
+            android:name=".Services.WPSettingsService"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">
         </activity>
 
         <activity
-            android:name=".Intro"
+            android:name=".SplashScreen.WPLoginScreen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance">
         </activity>
 
         <receiver
-            android:name=".BReceiver"
+            android:name=".Notification.WPBroadcastReceiverService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -60,7 +60,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <service android:name=".ForegroundService" />
+        <service android:name=".Notification.WPForegroundService" />
 
         <uses-library
             android:name="org.apache.http.legacy"

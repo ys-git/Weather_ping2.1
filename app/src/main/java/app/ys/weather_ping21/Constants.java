@@ -1,7 +1,5 @@
 package app.ys.weather_ping21;
 
-
-
 public class Constants {
         public interface ACTION {
             public static String MAIN_ACTION = "com.nkdroid.alertdialog.action.main";
@@ -13,4 +11,3 @@ public class Constants {
             public static int FOREGROUND_SERVICE = 101;
         }
     }
-

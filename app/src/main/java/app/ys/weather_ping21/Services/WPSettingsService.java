@@ -10,10 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -40,6 +41,7 @@ public class WPSettingsService extends AppCompatActivity {
     RadioButton rba,rbb,rbc;
     RadioGroup rg;
     Button rate,feedback;
+    ImageView linkedin;
     //private InterstitialAd mInterstitialAd;
 
     @Override
@@ -96,6 +98,7 @@ public class WPSettingsService extends AppCompatActivity {
 
         rate= (Button)findViewById(R.id.button2);
         feedback= (Button)findViewById(R.id.button3);
+        linkedin = (ImageView)findViewById(R.id.imageView30);
 
         Typeface tf3 = Typeface.createFromAsset(getAssets(),
                 "fonts/DINMedium.ttf");
@@ -163,6 +166,35 @@ public class WPSettingsService extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        linkedin.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+
+                        Intent intent = null;
+                        try {
+                            getPackageManager().getPackageInfo("com.linkedin.android", 0);
+                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/in/yogendrasingh890/"));
+                        }catch (Exception e) {
+
+                        }finally {
+                            startActivity(intent);
+                        }
+
+                        break;
+                    }
+                    case MotionEvent.ACTION_CANCEL:{
+
+                        break;
+                    }
+                }
+
+                return false;
             }
         });
 

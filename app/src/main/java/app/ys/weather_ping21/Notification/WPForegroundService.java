@@ -103,13 +103,13 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
             if (intent.getAction().equals(WPConstants.ACTION.STARTFOREGROUND_ACTION)) {
                 Log.i(LOG_TAG, "Received Start Foreground Intent ");
                 if ((switches.getInt("Interval", 10)) == 10) {
-                    period = 3;
-                }
-                if ((switches.getInt("Interval", 30)) == 30) {
                     period = 10;
                 }
+                if ((switches.getInt("Interval", 30)) == 30) {
+                    period = 30;
+                }
                 if ((switches.getInt("Interval", 180)) == 180) {
-                    period = 11;
+                    period = 180;
                 }
 
                 startForegroundNotification();

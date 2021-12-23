@@ -208,7 +208,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
         //------------------------
         String NOTIFICATION_CHANNEL_ID = "app.ys.weatherping";
         String channelName = "Weather Notification";
-        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_NONE);
+        NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_LOW);
         chan.setLightColor(Color.BLUE);
         chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         chan.setSound(null,null);

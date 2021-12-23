@@ -183,9 +183,12 @@ public class WPMainScreenService extends AppCompatActivity {
             Log.i("WP", "Connectivity to the Internet Failed");
         }
 
-        init();
         startLocationButtonClick();
-        stopLocationButtonClick();
+
+        if(null != mFusedLocationClient)
+        {
+            stopLocationButtonClick();
+        }
 
         /*MobileAds.initialize(this, "ca-app-pub-1967731466728317~5398191171");
 
@@ -569,18 +572,26 @@ public class WPMainScreenService extends AppCompatActivity {
                         }
                     });
                 }
+
                 Log.i("WP", "Again calling getLocation");
                 startLocationButtonClick();
-                stopLocationButtonClick();
+
+                if(null != mFusedLocationClient)
+                {
+                    stopLocationButtonClick();
+                }
+
                 try{
-                currentTemperatureField.setAlpha(0);
-                currentTemperatureField.animate().alpha(1).setDuration(400);
-                cityField.setAlpha(0);
-                cityField.animate().alpha(1).setDuration(400);}
+                    currentTemperatureField.setAlpha(0);
+                    currentTemperatureField.animate().alpha(1).setDuration(400);
+                    cityField.setAlpha(0);
+                    cityField.animate().alpha(1).setDuration(400);
+                }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
+
                 Log.i("WP", "Location Refreshed");
 
                 /*AdRequest adRequest = new AdRequest.Builder()
@@ -595,6 +606,7 @@ public class WPMainScreenService extends AppCompatActivity {
                     startIntent.setAction(WPConstants.ACTION.STARTFOREGROUND_ACTION);
                     startService(startIntent);
                 }
+
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -605,6 +617,7 @@ public class WPMainScreenService extends AppCompatActivity {
                 }, 700);
             }
         });
+
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccent, android.R.color.holo_blue_light);
     }
 
@@ -614,7 +627,7 @@ public class WPMainScreenService extends AppCompatActivity {
         //    mAdView.pause();
         //}
         super.onPause();
-        if (mRequestingLocationUpdates) {
+        if (null != mRequestingLocationUpdates && mRequestingLocationUpdates) {
             // pausing location updates
             stopLocationUpdates();
         }
@@ -755,7 +768,9 @@ public class WPMainScreenService extends AppCompatActivity {
                 mCurrentLocation = locationResult.getLastLocation();
                 mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
 
-                updateLocationUI();
+                if (mCurrentLocation != null) {
+                    updateLocationUI();
+                }
             }
         };
 
@@ -770,7 +785,9 @@ public class WPMainScreenService extends AppCompatActivity {
         builder.addLocationRequest(mLocationRequest);
         mLocationSettingsRequest = builder.build();
     }
+
     private void restoreValuesFromBundle(Bundle savedInstanceState) {
+
         if (savedInstanceState != null) {
             if (savedInstanceState.containsKey("is_requesting_updates")) {
                 mRequestingLocationUpdates = savedInstanceState.getBoolean("is_requesting_updates");
@@ -784,7 +801,7 @@ public class WPMainScreenService extends AppCompatActivity {
                 mLastUpdateTime = savedInstanceState.getString("last_updated_on");
             }
         }
-        updateLocationUI();
+        //updateLocationUI();
     }
 
     private void updateLocationUI() {
@@ -809,10 +826,8 @@ public class WPMainScreenService extends AppCompatActivity {
                     final String URL = "https://api.waqi.info/feed/geo:" + lat + ";" + lon + "/?token=7b119f79e8a4e507e6f9719a1015f4ac0a0cb3d4";
 
                     ex();
-                    //String url = String.format("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&units=%s&appid=%s",
-                    //        lat, lon, units, APP_ID);
-                    //new Main.GetWeatherTask().execute(url);
                     new FetchDataTask().execute(URL);
+
                     if ((switches.getInt("Toggle2", -1)) == 1) {
                         stopService(new Intent(WPMainScreenService.this, WPForegroundService.class));
                         Intent startIntent = new Intent(WPMainScreenService.this, WPForegroundService.class);
@@ -849,6 +864,7 @@ public class WPMainScreenService extends AppCompatActivity {
     }
 
     private void startLocationUpdates() {
+
         mSettingsClient
                 .checkLocationSettings(mLocationSettingsRequest)
                 .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
@@ -863,7 +879,7 @@ public class WPMainScreenService extends AppCompatActivity {
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest,
                                 mLocationCallback, Looper.myLooper());
 
-                        updateLocationUI();
+                        //updateLocationUI();
                     }
                 })
                 .addOnFailureListener(this, new OnFailureListener() {
@@ -910,12 +926,14 @@ public class WPMainScreenService extends AppCompatActivity {
                     .show();
 
         }
+
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         mRequestingLocationUpdates = true;
+                        init();
                         startLocationUpdates();
                     }
 
@@ -948,7 +966,6 @@ public class WPMainScreenService extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         //Toast.makeText(getApplicationContext(), "Location updates stopped!", Toast.LENGTH_SHORT).show();
-
                     }
                 });
     }
@@ -988,8 +1005,6 @@ public class WPMainScreenService extends AppCompatActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
-
-    //------------------------------------------------------------------------------------------------------------------
 
     void ex() {
         Log.i("WP", "Inside ex");

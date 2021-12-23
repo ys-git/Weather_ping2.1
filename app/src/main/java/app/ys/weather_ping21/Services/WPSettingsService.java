@@ -236,7 +236,6 @@ public class WPSettingsService extends AppCompatActivity {
                 startService(startIntent);
                 Snackbar.make(findViewById(android.R.id.content), "Notification refresh interval set to 10 mins", Snackbar.LENGTH_LONG)
                         .show();
-
             }
         });
 

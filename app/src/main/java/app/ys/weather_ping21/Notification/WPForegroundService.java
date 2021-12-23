@@ -32,6 +32,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -61,6 +63,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
     String weather = "0.0";
     String s, q;
     String city="City", des="Loading...", cap, country=" ";
+    public static Instant start;
 
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
@@ -76,7 +79,8 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         {
-            sendNotification();
+            Log.i("WP", "sending NEW notification");
+            //sendNotification();
         }
         else
         {
@@ -86,6 +90,13 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
         //googleApiClient.connect();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startForegroundNotification()
+    {
+        tx(period);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
@@ -101,9 +112,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
                     period = 11;
                 }
 
-                //lx();
-
-                tx(period);
+                startForegroundNotification();
 
             } else {
                 if (intent.getAction().equals(WPConstants.ACTION.STOPFOREGROUND_ACTION)) {
@@ -119,11 +128,9 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
                     Log.i(LOG_TAG, "Received Stop Foreground Intent");
                     stopForeground(true);
                     stopSelf();
-                /*beeperHandle.cancel(true);
-                scheduler.shutdown();*/
                 }
 
-                tx(period);
+                startForegroundNotification();
             }
         }
         catch (Exception e) {
@@ -159,6 +166,9 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
     }
 
     public void lx(){
+
+        Log.i("WP", "inside lx");
+
         locationTrack = new WPLocationTrack(WPForegroundService.this);
         locationTrack.getLocation();
         lon = locationTrack.getLongitude();
@@ -171,6 +181,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
     }
 
     public void tx(long periods) {
+        Log.i("WP", "created new beeper handle");
         beeperHandle = scheduler.scheduleAtFixedRate(beeper, 0, periods, TimeUnit.MINUTES);
     }
 
@@ -178,6 +189,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
 
         public void run() {
             try {
+                Log.i("WP", "inside beeper runnable");
                 lx();
                 Log.i("service", "Inside Service");
             } catch (Exception e) {
@@ -205,6 +217,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
         manager.createNotificationChannel(chan);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+
         Notification notification = notificationBuilder.setOngoing(true)
                 .setTicker("WeatherPing")
                 .setContentText(des)
@@ -280,7 +293,7 @@ public class WPForegroundService extends Service{ //implements GoogleApiClient.C
                 country = topLevel.getJSONObject("sys").getString("country");
                 //city = name.getString("name");
                 weather = String.valueOf(main.getDouble("temp"));
-               //sendNotification();
+               sendNotification();
 
                 urlConnection.disconnect();
 

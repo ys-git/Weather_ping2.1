@@ -66,7 +66,7 @@ public class WPSplashLoad extends Activity {
                 overridePendingTransition(R.anim.activityfadein,
                         R.anim.splashfadeout);
 
-                /*removing this code block cuz of google play developer policy voilation*/
+                /*commenting this code block cuz of google play developer policy voilation*/
 
                 /*if (sdata.getString("Name", null)!=null) {
 

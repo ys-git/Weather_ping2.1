@@ -35,6 +35,7 @@ public class WPLocationTrack extends Service implements LocationListener {
     protected LocationManager locationManager;
 
     public WPLocationTrack(Context mContext) {
+
         this.mContext = mContext;
     }
 

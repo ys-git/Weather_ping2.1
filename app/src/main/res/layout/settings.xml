@@ -46,8 +46,9 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="11dp"
                 android:adjustViewBounds="true"
-                android:maxHeight="5dp"
                 android:maxWidth="200dp"
+                android:maxHeight="5dp"
+                android:visibility="invisible"
                 app:srcCompat="@drawable/and" />
 
             <ImageView
@@ -164,7 +165,8 @@
                 android:text="Hello User!"
                 android:textColor="#2F4F4F"
                 android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textView13"
